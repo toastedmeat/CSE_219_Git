@@ -1,0 +1,5 @@
+By submitting this form, I am verifying that I have completed and understand the contents of all of the required HW 1 tutorials. In addition, I understand CSE219's course policies with regards to academic dishonesty. One may discuss the homework in this course with anyone one likes, however one's submission, including written material and coding, must be entirely one's own work. Any evidence that written homework submissions or source code have been copied, shared, or transmitted in any way between students (this includes using source code downloaded from the Internet or written by others) will be regarded as evidence of academic dishonesty. Additionally, any evidence of sharing of information or using unauthorized information during an examination will also be regarded as evidence of academic dishonesty.
+
+Signed: Eric Loo
+
+Version Control Technology I plan to use: Git
