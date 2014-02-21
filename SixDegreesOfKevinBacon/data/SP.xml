@@ -13,9 +13,9 @@
         <property name="HOME_IMG_NAME"          value="SP_Home.png"></property>
         
         <!-- DATA FILES TO LOAD -->
-        <property name="GAME_FILE_NAME"         value="EN_GameDisplay.html"></property>
-        <property name="STATS_FILE_NAME"        value="EN_StatsDisplay.html"></property>
-        <property name="HELP_FILE_NAME"         value="EN_Help.html"></property>
+        <property name="GAME_FILE_NAME"         value="SP_GameDisplay.html"></property>
+        <property name="STATS_FILE_NAME"        value="SP_StatsDisplay.html"></property>
+        <property name="HELP_FILE_NAME"         value="SP_Help.html"></property>
 
         <!-- IN-GAME TEXT -->
         <property name="ACTOR_LABEL"            value="Seleccionar un Actor:"></property>
