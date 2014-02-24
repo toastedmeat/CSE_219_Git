@@ -133,13 +133,15 @@ public class KevinBaconDocumentManager
         KevinBaconGameStateManager gsm = ui.getGSM();
         KevinBaconGameData gameInProgress = gsm.getGameInProgress();
         KevinBaconGameGraphManager graph = gsm.getGameGraphManager();
+        
 
         try
         {
             Element ol = gameDoc.getElement(GUESSES_LIST_ID);
             String liText = START_TAG + HTML.Tag.LI + END_TAG
-                            + "BLAH BLAH BLAH BLAH BLAH"
-                            + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+                    + gsm.getGameInProgress().getStartingActor().toString() + " is in the film "
+                    + ui.getSelectedItem() + " with "
+                    + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
             gameDoc.insertBeforeEnd(ol, liText);
         } 
         // THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING

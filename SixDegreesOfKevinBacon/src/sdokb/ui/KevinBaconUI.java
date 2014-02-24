@@ -744,6 +744,10 @@ public class KevinBaconUI
         Collections.sort(films);
         return films;
     }
+    
+    public String getSelectedItem(){
+        return guessComboBox.getSelectedItem().toString();
+    }
 
     /**
      * Gets and returns the actors to be loaded into the combo box.
