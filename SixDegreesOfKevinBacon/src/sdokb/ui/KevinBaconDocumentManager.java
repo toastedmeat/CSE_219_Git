@@ -141,11 +141,7 @@ public class KevinBaconDocumentManager {
                 ol = gameDoc.getElement(GUESSES_LIST_ID);
                 liText = START_TAG + HTML.Tag.LI + END_TAG
                     + gsm.getGameInProgress().getStartingActor().toString() + " --- "
-                    + ui.getSelectedItem() + " --- Dead End"
-                    + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
-                gameDoc.insertBeforeEnd(ol, liText);
-                liText = START_TAG + HTML.Tag.LI + END_TAG
-                    + " You Won!"
+                    + ui.getSelectedItem() + " --- Dead End --- You Lose!"
                     + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
                 gameDoc.insertBeforeEnd(ol, liText);
             }
