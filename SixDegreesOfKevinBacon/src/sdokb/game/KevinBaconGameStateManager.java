@@ -2,6 +2,7 @@ package sdokb.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import sdokb.SixDegreesOfKevinBacon;
 import sdokb.ui.KevinBaconUI;
 
 /**
@@ -42,6 +43,8 @@ public class KevinBaconGameStateManager
 
     // THIS IS 
     private final String NEWLINE_DELIMITER = "\n";
+    
+    private Connection connect;
 
     /**
      * This constructor initializes this class for use, but does not start a
@@ -185,19 +188,40 @@ public class KevinBaconGameStateManager
 
         ArrayList<String> nonCircularEdges = gameInProgress.getNonRepeatingIds(guess.getId(), gameGraphManager);
 
+        if(nonCircularEdges.contains(gameInProgress.getStartingActor().getId())){
+            nonCircularEdges.remove(gameInProgress.getStartingActor().getId());
+        }
         // DEAD END, NOWHERE TO GO
         if (nonCircularEdges.isEmpty())
         {
             // END THE GAME IN A LOSS
+            gameInProgress.setLastConnection(new Connection(gameInProgress.getStartingActor().getId(), guess.getId()));
             currentGameState = KevinBaconGameState.GAME_OVER;
             gamesHistory.add(gameInProgress);
             ui.enableGuessComboBox(false);
             ui.getDocManager().updateGuessesList();
             ui.getDocManager().addGameResultToStatsPage(gameInProgress);
             throw new DeadEndException(guess.toString());
+        } else if(guess.getId().substring(0, 2).equalsIgnoreCase("tt")){
+            ui.setComboAcceptingInput(false);
+            gameInProgress.setIsWaitingForFilm(false);
+            // UPDATE THE GAME DISPLAY
+            ui.getDocManager().updateGuessesList();  
+            
+            ui.setGuessPromptText(true);
+            ui.reloadComboBox(nonCircularEdges);
+        } else {
+            ui.setComboAcceptingInput(true);
+            gameInProgress.setIsWaitingForFilm(true);
+            gameInProgress.setStartingActor(getGameGraphManager().getActor(guess.getId()));
+            
+            // UPDATE THE GAME DISPLAY
+            ui.getDocManager().updateGuessesList();
+            
+            ui.setGuessPromptText(false);
+            ui.reloadComboBox(nonCircularEdges);
         }
-
-        // UPDATE THE GAME DISPLAY
-        ui.getDocManager().updateGuessesList();        
+        
+              
     }
 }

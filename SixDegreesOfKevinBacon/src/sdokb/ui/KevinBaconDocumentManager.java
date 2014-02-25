@@ -17,16 +17,15 @@ import sdokb.game.KevinBaconGameGraphManager;
 /**
  * Generates HTML content for display inside the game application, including \
  * the in-game GUI and the stats page. Note that we maintain both of these \
- * pages inside Documents, which store trees containing all the HTML. We 
- * will make use of HTML.Tag constants to update these DOMs
- * (Document Object Models).
+ * pages inside Documents, which store trees containing all the HTML. We will
+ * make use of HTML.Tag constants to update these DOMs (Document Object Models).
  *
  * @author Richard McKenna & ____________________
  */
-public class KevinBaconDocumentManager
-{
+public class KevinBaconDocumentManager {
     // THE GAME'S UI HAS ACCESS TO ALL COMPONENTS, SO
     // IT'S USEFUL TO HAVE IT WHEN WE NEED IT
+
     private KevinBaconUI ui;
 
     // THESE ARE THE DOCUMENTS WE'LL BE UPDATING HERE
@@ -64,14 +63,16 @@ public class KevinBaconDocumentManager
     private final String GAME_RESULTS_HEADER_ID = "game_results_header";
     private final String GAME_RESULTS_LIST_ID = "game_results_list";
 
+    public String finalText = "";
+    public int counter = 0;
+
     /**
      * This constructor just keeps the UI for later. Note that once constructed,
      * the docs will need to be set before this class can be used.
      *
      * @param initUI
      */
-    public KevinBaconDocumentManager(KevinBaconUI initUI)
-    {
+    public KevinBaconDocumentManager(KevinBaconUI initUI) {
         // KEEP THE UI FOR LATER
         ui = initUI;
     }
@@ -84,8 +85,7 @@ public class KevinBaconDocumentManager
      * @param initGameDoc The game document to be displayed while the game is
      * being played.
      */
-    public void setGameDoc(HTMLDocument initGameDoc)
-    {
+    public void setGameDoc(HTMLDocument initGameDoc) {
         gameDoc = initGameDoc;
     }
 
@@ -97,26 +97,22 @@ public class KevinBaconDocumentManager
      * @param initStatsDoc The stats document to be displayed on the stats
      * screen.
      */
-    public void setStatsDoc(HTMLDocument initStatsDoc)
-    {
+    public void setStatsDoc(HTMLDocument initStatsDoc) {
         statsDoc = initStatsDoc;
     }
 
     /**
      * Called when a new game starts, it updates the starting actor display.
      */
-    public void updateActorInGamePage()
-    {
-        try
-        {
+    public void updateActorInGamePage() {
+        try {
             // NOW FILL IN THE STARTING ACTOR
             Element sH = gameDoc.getElement(SUBHEADER_TEXT_ID);
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             String subheadText = props.getProperty(KevinBaconPropertyType.GAME_SUBHEADER_TEXT);
             Actor startingActor = ui.getGSM().getGameInProgress().getStartingActor();
             gameDoc.setInnerHTML(sH, subheadText + startingActor.toString());
-        } catch (BadLocationException | IOException e)
-        {
+        } catch (BadLocationException | IOException e) {
             KevinBaconErrorHandler errorHandler = ui.getErrorHandler();
             errorHandler.processError(KevinBaconPropertyType.INVALID_DOC_ERROR_TEXT);
         }
@@ -127,57 +123,81 @@ public class KevinBaconDocumentManager
      * to rebuild the entire page. We just rebuild the list item each time guess
      * is made.
      */
-    public void updateGuessesList()
-    {
+    public void updateGuessesList() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         KevinBaconGameStateManager gsm = ui.getGSM();
         KevinBaconGameData gameInProgress = gsm.getGameInProgress();
         KevinBaconGameGraphManager graph = gsm.getGameGraphManager();
-        
 
-        try
-        {
-            Element ol = gameDoc.getElement(GUESSES_LIST_ID);
-            String liText = START_TAG + HTML.Tag.LI + END_TAG
-                    + gsm.getGameInProgress().getStartingActor().toString() + " is in the film "
-                    + ui.getSelectedItem() + " with "
+        try {
+            Element ol;
+            String liText = "";
+            
+            if (counter <= 1 && ui.getGuessPromptText().equalsIgnoreCase("Select a Film:")) {
+                finalText = "";
+                counter = 0;
+            }
+            if(!ui.isGuessComboBoxEnabled()){
+                ol = gameDoc.getElement(GUESSES_LIST_ID);
+                liText = START_TAG + HTML.Tag.LI + END_TAG
+                    + gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                    + ui.getSelectedItem() + " --- Dead End"
                     + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
             gameDoc.insertBeforeEnd(ol, liText);
-        } 
-        // THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING
+            }
+            
+            if (ui.getSelectedItem().contains("(")) {
+                counter += 1;
+                ol = gameDoc.getElement(GUESSES_LIST_ID);
+                liText = START_TAG + HTML.Tag.LI + END_TAG
+                    + gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                    + ui.getSelectedItem() + " --- ";
+                finalText = finalText.concat(liText);
+
+                System.out.println(" 1" + " Counter: " + counter + " finalText: " + finalText);
+            } else {
+                counter += 1;
+                ol = gameDoc.getElement(GUESSES_LIST_ID);
+                liText = ui.getSelectedItem()
+                        + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+                finalText = finalText.concat(liText);
+
+                System.out.println(" 2" + " Counter: " + counter + " finalText: " + finalText);
+            }
+            
+            if (counter >= 2) {
+                gameDoc.insertBeforeEnd(ol, finalText);
+                counter = 0;
+                finalText = "";
+            }
+        }// THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING
         // THE HTML FOR THE PAGE, WHICH WOULD LIKELY BE DUE TO BAD DATA FROM
         // AN XML SETUP FILE
-        catch (BadLocationException | IOException e)
-        {
+        catch (BadLocationException | IOException e) {
             KevinBaconErrorHandler errorHandler = ui.getErrorHandler();
             errorHandler.processError(KevinBaconPropertyType.INVALID_DOC_ERROR_TEXT);
         }
     }
-
-    /**
-     * When a new game starts the game page should not have a sub-header or
-     * display guesses or a win state, so all of that has to be cleared out of
-     * the DOM at that time. This method does the work of clearing out these
-     * nodes.
-     */
-    public void clearGamePage()
-    {
-        try
-        {
+        /**
+         * When a new game starts the game page should not have a sub-header or
+         * display guesses or a win state, so all of that has to be cleared out
+         * of the DOM at that time. This method does the work of clearing out
+         * these nodes.
+         */
+    public void clearGamePage() {
+        try {
             // CLEAR THE GUESS LIST
             Element ol = gameDoc.getElement(GUESSES_LIST_ID);
             gameDoc.setInnerHTML(ol, START_TAG + HTML.Tag.BR + END_TAG);
-            
+
             // CLEAR THE WIN DISPLAY
             Element winH2 = gameDoc.getElement(WIN_DISPLAY_ID);
             gameDoc.setInnerHTML(winH2, START_TAG + HTML.Tag.BR + END_TAG);
             this.printDoc(gameDoc);
-        } 
-        // THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING
+        } // THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING
         // THE HTML FOR THE PAGE, WHICH WOULD LIKELY BE DUE TO BAD DATA FROM
         // AN XML SETUP FILE
-        catch (BadLocationException | IOException ex)
-        {
+        catch (BadLocationException | IOException ex) {
             KevinBaconErrorHandler errorHandler = ui.getErrorHandler();
             errorHandler.processError(KevinBaconPropertyType.INVALID_DOC_ERROR_TEXT);
         }
@@ -190,23 +210,19 @@ public class KevinBaconDocumentManager
      *
      * @param completedGame Game whose summary will be added to the stats page.
      */
-    public void addGameResultToStatsPage(KevinBaconGameData completedGame)
-    {
+    public void addGameResultToStatsPage(KevinBaconGameData completedGame) {
         // GET THE GAME STATS
         KevinBaconGameStateManager gsm = ui.getGSM();
         KevinBaconGameGraphManager graph = gsm.getGameGraphManager();
 
-        try
-        {
+        try {
             // USE THE STATS TO UPDATE THE TABLE AT THE TOP OF THE PAGE
             Element gamePlayedElement = statsDoc.getElement(GAMES_PLAYED_ID);
-            statsDoc.setInnerHTML(gamePlayedElement, EMPTY_TEXT + "BLAH BLAH BLAH");
-        }
-        // WE'LL LET THE ERROR HANDLER TAKE CARE OF ANY ERRORS,
+            statsDoc.setInnerHTML(gamePlayedElement, Integer.toString(ui.getGSM().getNumGamesPlayed()));
+        } // WE'LL LET THE ERROR HANDLER TAKE CARE OF ANY ERRORS,
         // WHICH COULD HAPPEN IF XML SETUP FILES ARE IMPROPERLY
         // FORMATTED
-        catch (BadLocationException | IOException e)
-        {
+        catch (BadLocationException | IOException e) {
             KevinBaconErrorHandler errorHandler = ui.getErrorHandler();
             errorHandler.processError(KevinBaconPropertyType.INVALID_DOC_ERROR_TEXT);
         }
@@ -216,8 +232,7 @@ public class KevinBaconDocumentManager
      * This helper method lets you print the contents of a DOM (i.e. a doc) to
      * the console, which can help with error checking during testing.
      */
-    public void printDoc(HTMLDocument doc) throws BadLocationException, IOException
-    {
+    public void printDoc(HTMLDocument doc) throws BadLocationException, IOException {
         StringWriter writer = new StringWriter();
         HTMLEditorKit kit = new HTMLEditorKit();
         kit.write(writer, doc, 0, doc.getLength());

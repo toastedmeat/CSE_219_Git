@@ -504,7 +504,6 @@ public class KevinBaconUI
                         && (!selectedItem.equals(dummyComboSelection))
                         && (ie.getStateChange() == ItemEvent.SELECTED))
                 {
-                    setComboAcceptingInput(false);
                     eventHandler.respondToGuessRequest(selectedItem);
                 }
             }    
@@ -746,7 +745,27 @@ public class KevinBaconUI
     }
     
     public String getSelectedItem(){
-        return guessComboBox.getSelectedItem().toString();
+        String selected = guessComboBox.getSelectedItem().toString();
+        return selected;
+    }
+    
+    /**
+    *True for Actors Label and False for Film Label
+    */
+    public void setGuessPromptText(Boolean actors){
+        if(actors){
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String guessPromptText = props.getProperty(KevinBaconPropertyType.ACTOR_LABEL);
+            guessLabel.setText(guessPromptText);
+        } else {
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String guessPromptText = props.getProperty(KevinBaconPropertyType.FILM_LABEL);
+            guessLabel.setText(guessPromptText);
+        }
+    }
+    
+    public String getGuessPromptText(){
+        return guessLabel.getText();
     }
 
     /**
@@ -819,5 +838,9 @@ public class KevinBaconUI
     public void enableGuessComboBox(boolean enabled)
     {
         guessComboBox.setEnabled(enabled);
+    }
+    
+    public boolean isGuessComboBoxEnabled(){
+        return guessComboBox.isEnabled();
     }
 }
