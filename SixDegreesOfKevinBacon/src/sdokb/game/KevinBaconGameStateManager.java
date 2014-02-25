@@ -209,12 +209,16 @@ public class KevinBaconGameStateManager
             ui.getDocManager().updateGuessesList();  
             
             ui.setGuessPromptText(true);
+            gameInProgress.setLastConnection(new Connection(gameInProgress.getStartingActor().getId(), guess.getId()));
             ui.reloadComboBox(nonCircularEdges);
         } else {
             ui.setComboAcceptingInput(true);
             gameInProgress.setIsWaitingForFilm(true);
+            gameInProgress.setLastConnection(new Connection(
+                    gameInProgress.getLastConnection().getActor1Id()
+                    , gameInProgress.getLastConnection().getFilmId()
+                    , guess.getId()));
             gameInProgress.setStartingActor(getGameGraphManager().getActor(guess.getId()));
-            
             // UPDATE THE GAME DISPLAY
             ui.getDocManager().updateGuessesList();
             

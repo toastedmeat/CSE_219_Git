@@ -154,7 +154,7 @@ public class KevinBaconDocumentManager {
                     + ui.getSelectedItem() + " --- ";
                 finalText = finalText.concat(liText);
 
-                System.out.println(" 1" + " Counter: " + counter + " finalText: " + finalText);
+                //System.out.println(" 1" + " Counter: " + counter + " finalText: " + finalText);
             } else {
                 counter += 1;
                 ol = gameDoc.getElement(GUESSES_LIST_ID);
@@ -162,7 +162,7 @@ public class KevinBaconDocumentManager {
                         + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
                 finalText = finalText.concat(liText);
 
-                System.out.println(" 2" + " Counter: " + counter + " finalText: " + finalText);
+                //System.out.println(" 2" + " Counter: " + counter + " finalText: " + finalText);
             }
             
             if (counter >= 2) {
