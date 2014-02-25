@@ -143,7 +143,11 @@ public class KevinBaconDocumentManager {
                     + gsm.getGameInProgress().getStartingActor().toString() + " --- "
                     + ui.getSelectedItem() + " --- Dead End"
                     + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
-            gameDoc.insertBeforeEnd(ol, liText);
+                gameDoc.insertBeforeEnd(ol, liText);
+                liText = START_TAG + HTML.Tag.LI + END_TAG
+                    + " You Won!"
+                    + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+                gameDoc.insertBeforeEnd(ol, liText);
             }
             
             if (ui.getSelectedItem().contains("(")) {
