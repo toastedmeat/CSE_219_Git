@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sdokb.SixDegreesOfKevinBacon.KevinBaconPropertyType;
 import properties_manager.PropertiesManager;
+import sdokb.game.DeadEndException;
 
 /**
  * This class handles any expected problems that could happen

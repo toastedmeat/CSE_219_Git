@@ -219,6 +219,12 @@ public class KevinBaconDocumentManager {
             // USE THE STATS TO UPDATE THE TABLE AT THE TOP OF THE PAGE
             Element gamePlayedElement = statsDoc.getElement(GAMES_PLAYED_ID);
             statsDoc.setInnerHTML(gamePlayedElement, Integer.toString(ui.getGSM().getNumGamesPlayed()));
+            
+            Element gameWonElement = statsDoc.getElement(WINS_ID);
+            statsDoc.setInnerHTML(gameWonElement, Integer.toString(ui.getGSM().getGamesWon()));
+            
+            Element gamePerfectWinElement = statsDoc.getElement(PERFECT_WINS_ID);
+            statsDoc.setInnerHTML(gamePerfectWinElement, Integer.toString(ui.getGSM().getGamesPerfectWin()));
         } // WE'LL LET THE ERROR HANDLER TAKE CARE OF ANY ERRORS,
         // WHICH COULD HAPPEN IF XML SETUP FILES ARE IMPROPERLY
         // FORMATTED

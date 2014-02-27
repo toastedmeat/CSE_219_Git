@@ -115,6 +115,13 @@ public class KevinBaconGameData {
     public boolean isKevinBaconFound() {
         return kevinBaconFound;
     }
+    public void setKevinBaconFound(boolean found){
+        kevinBaconFound = found;
+    }
+    
+    public ArrayList<Connection> getGamePath(){
+        return gamePath;
+    }
 
     /**
      * Tests to see if the game was a perfect win, meaning it was done via the

@@ -9,6 +9,7 @@ import sdokb.game.KevinBaconGameStateManager;
 import xml_utilities.InvalidXMLFileFormatException;
 import properties_manager.PropertiesManager;
 import sdokb.game.DeadEndException;
+import sdokb.game.GameWonException;
 import sdokb.game.IMDBObject;
 
 /**
@@ -116,9 +117,14 @@ public class KevinBaconEventHandler
         {
             gsm.processGuess(guess);
         }
-        catch(DeadEndException dee)
+        catch(DeadEndException | GameWonException dee)
         {
-            ui.getErrorHandler().processError(KevinBaconPropertyType.DEAD_END_GUESS_ERROR_TEXT);
+            if(dee instanceof DeadEndException){
+               ui.getErrorHandler().processError(KevinBaconPropertyType.DEAD_END_GUESS_ERROR_TEXT); 
+            } else {
+               ui.getErrorHandler().processError(KevinBaconPropertyType.WON_GAME_GUESS_TEXT);
+            }
+            
         }
     }        
 

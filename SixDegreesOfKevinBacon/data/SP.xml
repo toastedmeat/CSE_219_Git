@@ -41,6 +41,7 @@
         
         <!-- ERROR FEEDBACK TEXT -->
         <property name="DEAD_END_GUESS_ERROR_TEXT"      value="Has llegado a un punto muerto. Usted pierde!"></property>
+        <property name="WON_GAME_GUESS_TEXT"            value="Usted ha ganado el juego!"></property>
         <property name="IMAGE_LOADING_ERROR_TEXT"       value="Una imagen no pudo cargar correctamente"></property>
         <property name="INVALID_URL_ERROR_TEXT"         value="El intento de cargar una página con una URL inválida"></property>
         <property name="INVALID_DOC_ERROR_TEXT"         value="Error con la edición de un documento HTML"></property>

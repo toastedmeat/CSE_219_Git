@@ -13,6 +13,7 @@ import sdokb.ui.KevinBaconUI;
  */
 public class KevinBaconGameStateManager
 {
+
     // THE GAME WILL ALWAYS BE IN
     // ONE OF THESE THREE STATES
     public enum KevinBaconGameState
@@ -45,6 +46,10 @@ public class KevinBaconGameStateManager
     private final String NEWLINE_DELIMITER = "\n";
     
     private Connection connect;
+        
+    private int gamesWon = 0;
+    private int gamesPerfectWin = 0;
+    private int gamesLost = 0;
 
     /**
      * This constructor initializes this class for use, but does not start a
@@ -167,6 +172,18 @@ public class KevinBaconGameStateManager
         // THE GAME IS OFFICIALLY UNDERWAY
         currentGameState = KevinBaconGameState.GAME_IN_PROGRESS;
     }
+    
+    public int getGamesWon() {
+        return gamesWon;
+    }
+
+    public int getGamesPerfectWin() {
+        return gamesPerfectWin;
+    }
+
+    public int getGamesLost() {
+        return gamesLost;
+    }
 
     /**
      * This method processes the guess, checking to make sure it's in the
@@ -176,9 +193,10 @@ public class KevinBaconGameStateManager
      * Note that it must be in the dictionary.
      *
      * @throws sdokb.game.DeadEndException
+     * @throws sdokb.game.GameWonException
      */
     public void processGuess(IMDBObject guess) throws
-            DeadEndException
+            DeadEndException, GameWonException
     {
         // ONLY PROCESS GUESSES IF A GAME IS IN PROGRESS
         if (!isGameInProgress())
@@ -195,35 +213,60 @@ public class KevinBaconGameStateManager
         if (nonCircularEdges.isEmpty())
         {
             // END THE GAME IN A LOSS
-            gameInProgress.setLastConnection(new Connection(gameInProgress.getStartingActor().getId(), guess.getId()));
+            
+            connect = new Connection(gameInProgress.getStartingActor().getId(), guess.getId());
+            gameInProgress.setLastConnection(connect);
+            //Add lost game to gamePath
+            gameInProgress.getGamePath().add(connect);
+            
             currentGameState = KevinBaconGameState.GAME_OVER;
             gamesHistory.add(gameInProgress);
+            
+            //Losses counter
+            gamesLost++;
+            
             ui.enableGuessComboBox(false);
             ui.getDocManager().updateGuessesList();
             ui.getDocManager().addGameResultToStatsPage(gameInProgress);
             throw new DeadEndException(guess.toString());
-        } else if(guess.getId().substring(0, 2).equalsIgnoreCase("tt")){
+            
+        } else if(guess.getId().substring(0, 2).equalsIgnoreCase("tt")){ //Picked a film
             ui.setComboAcceptingInput(false);
             gameInProgress.setIsWaitingForFilm(false);
             // UPDATE THE GAME DISPLAY
             ui.getDocManager().updateGuessesList();  
-            
             ui.setGuessPromptText(true);
-            gameInProgress.setLastConnection(new Connection(gameInProgress.getStartingActor().getId(), guess.getId()));
+            connect = new Connection(gameInProgress.getStartingActor().getId(), guess.getId());
+            gameInProgress.setLastConnection(connect);
             ui.reloadComboBox(nonCircularEdges);
-        } else {
+            
+        } else { // Picked an actor
             ui.setComboAcceptingInput(true);
             gameInProgress.setIsWaitingForFilm(true);
-            gameInProgress.setLastConnection(new Connection(
-                    gameInProgress.getLastConnection().getActor1Id()
-                    , gameInProgress.getLastConnection().getFilmId()
-                    , guess.getId()));
+            
+            connect = new Connection(gameInProgress.getLastConnection().getActor1Id()
+                    , gameInProgress.getLastConnection().getFilmId(), guess.getId());
+            gameInProgress.setLastConnection(connect);
+            
+            //Add Last path into GamePath
+            gameInProgress.getGamePath().add(connect);
+            
             gameInProgress.setStartingActor(getGameGraphManager().getActor(guess.getId()));
             // UPDATE THE GAME DISPLAY
             ui.getDocManager().updateGuessesList();
-            
             ui.setGuessPromptText(false);
             ui.reloadComboBox(nonCircularEdges);
+            
+            //Increment counter
+            if(guess.getId().equalsIgnoreCase(gameGraphManager.kevinBacon.getId())){
+                gamesWon++;
+                ui.enableGuessComboBox(false);
+                if(gameInProgress.isPerfectWin()){
+                    gamesPerfectWin++;
+                }
+                ui.getDocManager().addGameResultToStatsPage(gameInProgress);
+                throw new GameWonException(guess.toString());
+            }
         }
         
               

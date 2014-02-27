@@ -40,6 +40,7 @@
         
         <!-- ERROR FEEDBACK TEXT -->
         <property name="DEAD_END_GUESS_ERROR_TEXT"      value="You've reached a dead end. You Lose!"></property>
+        <property name="WON_GAME_GUESS_TEXT"            value="You've Won the game!"></property>
         <property name="IMAGE_LOADING_ERROR_TEXT"       value="An image was unable to load properly"></property>
         <property name="INVALID_URL_ERROR_TEXT"         value="Attempting to load a page with an invalid URL"></property>
         <property name="INVALID_DOC_ERROR_TEXT"         value="Error encountered editing an HTML Document"></property>
