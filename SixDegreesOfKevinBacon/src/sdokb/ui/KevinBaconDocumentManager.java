@@ -36,6 +36,9 @@ public class KevinBaconDocumentManager {
     private final String DASHES = "---";
     private final String START_TAG = "<";
     private final String END_TAG = ">";
+    private final String FONT_COLOR_RED = "<FONT COLOR=#FF0000>";
+    private final String FONT_COLOR_GREEN = "<FONT COLOR=#00FF00>";
+    private final String FONT_COLOR_CLOSE = "</FONT>";
     private final String SLASH = "/";
     private final String SPACE = " ";
     private final String EMPTY_TEXT = "";
@@ -63,8 +66,8 @@ public class KevinBaconDocumentManager {
     private final String GAME_RESULTS_HEADER_ID = "game_results_header";
     private final String GAME_RESULTS_LIST_ID = "game_results_list";
 
-    public String finalText = "";
-    public int counter = 0;
+    public String finalText = "", completedText = "";
+    public int counter = 0, clone = 0;
 
     /**
      * This constructor just keeps the UI for later. Note that once constructed,
@@ -75,6 +78,10 @@ public class KevinBaconDocumentManager {
     public KevinBaconDocumentManager(KevinBaconUI initUI) {
         // KEEP THE UI FOR LATER
         ui = initUI;
+    }
+
+    public void setCompletedText(String arg) {
+        completedText = arg;
     }
 
     /**
@@ -130,45 +137,70 @@ public class KevinBaconDocumentManager {
         KevinBaconGameGraphManager graph = gsm.getGameGraphManager();
 
         try {
-            Element ol;
-            String liText = "";
-            
+            Element ol = gameDoc.getElement(GUESSES_LIST_ID);;
+            String liText = "", tempText = "", startTags = START_TAG + HTML.Tag.LI + END_TAG, endTags = START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+
             if (counter <= 1 && ui.getGuessPromptText().equalsIgnoreCase("Select a Film:")) {
                 finalText = "";
                 counter = 0;
+                clone = 0;
             }
-            if(!ui.isGuessComboBoxEnabled()){
-                ol = gameDoc.getElement(GUESSES_LIST_ID);
+            if (!ui.isGuessComboBoxEnabled()) {
                 liText = START_TAG + HTML.Tag.LI + END_TAG
-                    + gsm.getGameInProgress().getStartingActor().toString() + " --- "
-                    + ui.getSelectedItem() + " --- Dead End --- You Lose!"
-                    + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+                        + gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                        + ui.getSelectedItem() + " --- Dead End."
+                        + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
                 gameDoc.insertBeforeEnd(ol, liText);
+                tempText = gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                        + ui.getSelectedItem() + " --- Dead End.";
+                completedText = completedText.concat(tempText);
+                // Loss Text on gamePage
+                ol = gameDoc.getElement(WIN_DISPLAY_ID);
+                liText = props.getProperty(KevinBaconPropertyType.LOSS_DISPLAY_TEXT);
+                gameDoc.insertBeforeEnd(ol, liText);
+
+                //Stats page connections
+                completedText = startTags.concat(gsm.getGameInProgress().getGameTimeDescription())
+                        .concat("/")
+                        .concat(Integer.toString(gsm.getGameInProgress().getDegrees()) + " --- ")
+                        .concat(completedText)
+                        .concat(endTags);
+
+                //System.out.println(completedText);
+                Element gameResult = statsDoc.getElement(GAME_RESULTS_LIST_ID);
+                statsDoc.insertBeforeEnd(gameResult, completedText);
             }
-            
+            /* FILM CONNECTION */
             if (ui.getSelectedItem().contains("(")) {
                 counter += 1;
-                ol = gameDoc.getElement(GUESSES_LIST_ID);
+                clone += 1;
                 liText = START_TAG + HTML.Tag.LI + END_TAG
-                    + gsm.getGameInProgress().getStartingActor().toString() + " --- "
-                    + ui.getSelectedItem() + " --- ";
+                        + gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                        + ui.getSelectedItem() + " --- ";
                 finalText = finalText.concat(liText);
 
+                // Stats page
+                tempText = gsm.getGameInProgress().getStartingActor().toString() + " --- "
+                        + ui.getSelectedItem() + " --- ";
+                completedText = completedText.concat(tempText);
+
                 //System.out.println(" 1" + " Counter: " + counter + " finalText: " + finalText);
+            /* ACTOR CONNECTION */
             } else {
                 counter += 1;
-                ol = gameDoc.getElement(GUESSES_LIST_ID);
+                clone += 1;
                 liText = ui.getSelectedItem()
                         + START_TAG + SLASH + HTML.Tag.LI + END_TAG;
                 finalText = finalText.concat(liText);
 
                 //System.out.println(" 2" + " Counter: " + counter + " finalText: " + finalText);
             }
-            
+            // Print it out to HTML
             if (counter >= 2) {
                 gameDoc.insertBeforeEnd(ol, finalText);
                 counter = 0;
                 finalText = "";
+                
             }
         }// THE ERROR HANDLER WILL DEAL WITH ERRORS ASSOCIATED WITH BUILDING
         // THE HTML FOR THE PAGE, WHICH WOULD LIKELY BE DUE TO BAD DATA FROM
@@ -178,12 +210,13 @@ public class KevinBaconDocumentManager {
             errorHandler.processError(KevinBaconPropertyType.INVALID_DOC_ERROR_TEXT);
         }
     }
-        /**
-         * When a new game starts the game page should not have a sub-header or
-         * display guesses or a win state, so all of that has to be cleared out
-         * of the DOM at that time. This method does the work of clearing out
-         * these nodes.
-         */
+
+    /**
+     * When a new game starts the game page should not have a sub-header or
+     * display guesses or a win state, so all of that has to be cleared out of
+     * the DOM at that time. This method does the work of clearing out these
+     * nodes.
+     */
     public void clearGamePage() {
         try {
             // CLEAR THE GUESS LIST
@@ -219,12 +252,45 @@ public class KevinBaconDocumentManager {
             // USE THE STATS TO UPDATE THE TABLE AT THE TOP OF THE PAGE
             Element gamePlayedElement = statsDoc.getElement(GAMES_PLAYED_ID);
             statsDoc.setInnerHTML(gamePlayedElement, Integer.toString(ui.getGSM().getNumGamesPlayed()));
-            
+
+            Element gameLost = statsDoc.getElement(LOSSES_ID);
+            statsDoc.setInnerHTML(gameLost, Integer.toString(ui.getGSM().getGamesLost()));
+
             Element gameWonElement = statsDoc.getElement(WINS_ID);
             statsDoc.setInnerHTML(gameWonElement, Integer.toString(ui.getGSM().getGamesWon()));
-            
+
             Element gamePerfectWinElement = statsDoc.getElement(PERFECT_WINS_ID);
             statsDoc.setInnerHTML(gamePerfectWinElement, Integer.toString(ui.getGSM().getGamesPerfectWin()));
+            
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String startTags = START_TAG + HTML.Tag.LI + END_TAG, endTags = START_TAG + SLASH + HTML.Tag.LI + END_TAG;
+            
+            System.out.println(gsm.getGameInProgress().isPerfectWin());
+            if (clone >= 2) {
+                if (gsm.getGameInProgress().getLastConnection().getActor2Id().equalsIgnoreCase(graph.kevinBacon.getId())) {
+                    if (gsm.getGameInProgress().isPerfectWin()) {
+                        completedText = startTags.concat(FONT_COLOR_RED)
+                                .concat(gsm.getGameInProgress().getGameTimeDescription())
+                                .concat("/")
+                                .concat(Integer.toString(gsm.getGameInProgress().getDegrees()) + " --- ")
+                                .concat(completedText).concat("Kevin Bacon").concat(FONT_COLOR_CLOSE)
+                                .concat(endTags);
+                    } else {
+                        completedText = startTags.concat(FONT_COLOR_GREEN).concat(gsm.getGameInProgress().getGameTimeDescription())
+                                .concat("/")
+                                .concat(Integer.toString(gsm.getGameInProgress().getDegrees()) + " --- ")
+                                .concat(completedText).concat("Kevin Bacon").concat(FONT_COLOR_CLOSE)
+                                .concat(endTags);
+                    }
+                    Element gameResult = statsDoc.getElement(GAME_RESULTS_LIST_ID);
+                    statsDoc.insertBeforeEnd(gameResult, completedText);
+                    Element ol = gameDoc.getElement(WIN_DISPLAY_ID);
+                    String liText = props.getProperty(KevinBaconPropertyType.WIN_DISPLAY_TEXT);
+                    gameDoc.insertBeforeEnd(ol, liText);
+                    clone = 0;
+                }
+            }
+            
         } // WE'LL LET THE ERROR HANDLER TAKE CARE OF ANY ERRORS,
         // WHICH COULD HAPPEN IF XML SETUP FILES ARE IMPROPERLY
         // FORMATTED

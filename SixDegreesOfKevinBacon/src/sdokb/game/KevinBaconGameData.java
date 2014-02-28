@@ -209,6 +209,7 @@ public class KevinBaconGameData {
 
     /**
      * Ends the game as a win.
+     * @param kevinBacon kevin bacon
      */
     public void endGameAsWin(Actor kevinBacon) {
         kevinBaconFound = true;

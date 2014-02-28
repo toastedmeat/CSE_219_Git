@@ -18,7 +18,6 @@ public class KevinBaconGameStateManager
     // ONE OF THESE THREE STATES
     public enum KevinBaconGameState
     {
-
         GAME_NOT_STARTED,
         GAME_IN_PROGRESS,
         GAME_OVER
@@ -50,6 +49,7 @@ public class KevinBaconGameStateManager
     private int gamesWon = 0;
     private int gamesPerfectWin = 0;
     private int gamesLost = 0;
+    
 
     /**
      * This constructor initializes this class for use, but does not start a
@@ -67,6 +67,8 @@ public class KevinBaconGameStateManager
         // WE HAVE NOT STARTED A GAME YET
         currentGameState = KevinBaconGameState.GAME_NOT_STARTED;
 
+        //Perf Boolean
+        
         // NO GAMES HAVE BEEN PLAYED YET, BUT INITIALIZE
         // THE DATA STRCUTURE FOR PLACING COMPLETED GAMES
         gamesHistory = new ArrayList();
@@ -139,14 +141,17 @@ public class KevinBaconGameStateManager
         {
             // QUIT THE GAME, WHICH SETS THE END TIME
             gameInProgress.endGameAsLoss();
-
+            //Losses counter
+            gamesLost++;
             // MAKE SURE THE STATS PAGE KNOWS ABOUT THE COMPLETED GAME
             ui.getDocManager().addGameResultToStatsPage(gameInProgress);
         }
 
         // AND NOW MAKE A NEW GAME
         makeNewGame();
-
+        
+        //Reset the connections 
+        ui.getDocManager().setCompletedText("");
         // AND UPDATE THE GAME DISPLAY
         ui.resetUI();
         ui.getDocManager().updateActorInGamePage();
@@ -171,6 +176,7 @@ public class KevinBaconGameStateManager
 
         // THE GAME IS OFFICIALLY UNDERWAY
         currentGameState = KevinBaconGameState.GAME_IN_PROGRESS;
+        
     }
     
     public int getGamesWon() {
@@ -184,7 +190,7 @@ public class KevinBaconGameStateManager
     public int getGamesLost() {
         return gamesLost;
     }
-
+    
     /**
      * This method processes the guess, checking to make sure it's in the
      * dictionary in use and then updating the game accordingly.
@@ -224,7 +230,7 @@ public class KevinBaconGameStateManager
             
             //Losses counter
             gamesLost++;
-            
+            gameInProgress.endGameAsLoss();
             ui.enableGuessComboBox(false);
             ui.getDocManager().updateGuessesList();
             ui.getDocManager().addGameResultToStatsPage(gameInProgress);
@@ -241,28 +247,30 @@ public class KevinBaconGameStateManager
             ui.reloadComboBox(nonCircularEdges);
             
         } else { // Picked an actor
+            gamesHistory.add(gameInProgress);
             ui.setComboAcceptingInput(true);
             gameInProgress.setIsWaitingForFilm(true);
             
             connect = new Connection(gameInProgress.getLastConnection().getActor1Id()
                     , gameInProgress.getLastConnection().getFilmId(), guess.getId());
             gameInProgress.setLastConnection(connect);
-            
             //Add Last path into GamePath
+            ui.getDocManager().updateGuessesList();
             gameInProgress.getGamePath().add(connect);
-            
             gameInProgress.setStartingActor(getGameGraphManager().getActor(guess.getId()));
             // UPDATE THE GAME DISPLAY
-            ui.getDocManager().updateGuessesList();
             ui.setGuessPromptText(false);
             ui.reloadComboBox(nonCircularEdges);
             
             //Increment counter
             if(guess.getId().equalsIgnoreCase(gameGraphManager.kevinBacon.getId())){
-                gamesWon++;
+                gameInProgress.setKevinBaconFound(true);
+                gameInProgress.endGameAsWin(gameGraphManager.kevinBacon);
                 ui.enableGuessComboBox(false);
                 if(gameInProgress.isPerfectWin()){
                     gamesPerfectWin++;
+                } else {
+                    gamesWon++;
                 }
                 ui.getDocManager().addGameResultToStatsPage(gameInProgress);
                 throw new GameWonException(guess.toString());
