@@ -20,7 +20,7 @@ import sdokb.game.KevinBaconGameGraphManager;
  * pages inside Documents, which store trees containing all the HTML. We will
  * make use of HTML.Tag constants to update these DOMs (Document Object Models).
  *
- * @author Richard McKenna & ____________________
+ * @author Richard McKenna & Eric Loo
  */
 public class KevinBaconDocumentManager {
     // THE GAME'S UI HAS ACCESS TO ALL COMPONENTS, SO

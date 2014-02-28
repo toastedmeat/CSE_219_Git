@@ -7,7 +7,7 @@ import java.util.Collections;
  * Actor stores the data associated with an individual actor, which might be a
  * male or female.
  * 
- * @author Richard McKenna & ______________
+ * @author Richard McKenna & Eric Loo
  */
 public class Actor extends IMDBObject
 {

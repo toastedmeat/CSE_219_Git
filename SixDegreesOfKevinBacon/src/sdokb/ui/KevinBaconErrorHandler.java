@@ -12,7 +12,7 @@ import sdokb.game.DeadEndException;
  * improperly XML files are loaded or the user provides improper
  * input.
  * 
- * @author Richard McKenna & _______________________
+ * @author Richard McKenna & Eric Loo
  */
 public class KevinBaconErrorHandler
 {

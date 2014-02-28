@@ -11,7 +11,7 @@ import java.util.Map;
  * path the user has followed thus far. It is important that this class works in
  * concert with the KevinBaconGameStateManager.
  *
- * @author Richard McKenna & ________________
+ * @author Richard McKenna & Eric Loo
  */
 public class KevinBaconGameData {
     // THE STARTING ACTOR FOR THIS GAME, THE PLAYER MUST MAKE IT

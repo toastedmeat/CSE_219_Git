@@ -9,7 +9,7 @@ import sdokb.ui.KevinBaconUI;
  * KevinBaconGameStateManager runs the game. Note that it does so completely
  * independent of the presentation of the game.
  *
- * @author Richard McKenna & _________________
+ * @author Richard McKenna & Eric Loo
  */
 public class KevinBaconGameStateManager
 {

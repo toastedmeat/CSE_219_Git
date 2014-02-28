@@ -45,7 +45,7 @@ import sdokb.game.KevinBaconGameGraphManager;
  * This class contains all user interface components and maintains
  * all presentation and interaction objects for running the game.
  * 
- * @author Richard McKenna & _________________
+ * @author Richard McKenna & Eric Loo
  */
 public class KevinBaconUI
 {   
