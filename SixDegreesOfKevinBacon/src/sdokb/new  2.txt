@@ -1,0 +1,21 @@
+if (gsm.getGameInProgress().getLastConnection().getActor2Id().equalsIgnoreCase(graph.kevinBacon.getId())) {
+                    if (gsm.getGameInProgress().isPerfectWin()) {
+                        completedText = startTags.concat(FONT_COLOR_RED)
+                                .concat(gsm.getGameInProgress().getGameTimeDescription())
+                                .concat("/")
+                                .concat(Integer.toString(gsm.getGameInProgress().getDegrees()) + " --- ")
+                                .concat(completedText).concat("Kevin Bacon").concat(FONT_COLOR_CLOSE)
+                                .concat(endTags);
+                    } else {
+                        completedText = startTags.concat(FONT_COLOR_GREEN).concat(gsm.getGameInProgress().getGameTimeDescription())
+                                .concat("/")
+                                .concat(Integer.toString(gsm.getGameInProgress().getDegrees()) + " --- ")
+                                .concat(completedText).concat("Kevin Bacon").concat(FONT_COLOR_CLOSE)
+                                .concat(endTags);
+                    }
+                    Element gameResult = statsDoc.getElement(GAME_RESULTS_LIST_ID);
+                    statsDoc.insertBeforeEnd(gameResult, completedText);
+                    ol = gameDoc.getElement(WIN_DISPLAY_ID);
+                    liText = props.getProperty(KevinBaconPropertyType.WIN_DISPLAY_TEXT);
+                    gameDoc.insertBeforeEnd(ol, liText);
+                }
