@@ -80,7 +80,9 @@ public class SortingHatFileManager
             // FIRST READ THE ALGORITHM NAME TO USE FOR THE LEVEL
             String algorithmName = dis.readUTF();
             SortingHatAlgorithmType algorithmTypeToUse = SortingHatAlgorithmType.valueOf(algorithmName);
-            SortingHatAlgorithm algorithmToUse = SortingHatAlgorithmFactory.buildSortingHatAlgorithm(algorithmTypeToUse, ((SortingHatDataModel)miniGame.getDataModel()).getTilesToSort());
+            SortingHatAlgorithm algorithmToUse = SortingHatAlgorithmFactory.
+                    buildSortingHatAlgorithm(algorithmTypeToUse,
+                    ((SortingHatDataModel)miniGame.getDataModel()).getTilesToSort());
             
             // THEN READ THE GRID DIMENSIONS
             // WE DON'T ACTUALLY USE THESE

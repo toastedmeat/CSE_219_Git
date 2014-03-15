@@ -23,7 +23,7 @@ import sorting_hat.data.SortingHatRecord;
 /**
  * This class performs all of the rendering for The Sorting Hat game application.
  * 
- * @author Richard McKenna
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatPanel extends JPanel
 {
@@ -259,7 +259,7 @@ public class SortingHatPanel extends JPanel
             x = TEMP_TILE_X + TEMP_TILE_OFFSET_X;
             String algorithm = record.getAlgorithm(currentLevel);
             algorithm = algorithm.replace('_', ' ');
-            g.drawString(algorithm, x - 14, 45);
+            g.drawString(algorithm, x - 18, 45);
         }        
         
         // IF THE STATS DIALOG IS VISIBLE, ADD THE TEXTUAL STATS

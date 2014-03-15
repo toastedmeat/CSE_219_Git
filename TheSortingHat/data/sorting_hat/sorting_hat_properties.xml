@@ -60,22 +60,23 @@
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->
     <property_options_list>
         <property_options name="LEVEL_OPTIONS">
-            <option>./sorting_hat/BubbleSortCoil.sort</option>
-            <option>./sorting_hat/BubbleSortO.sort</option>
             <option>./sorting_hat/SelectionSnake.sort</option>
+            <option>./sorting_hat/BubbleSortCoil.sort</option>
             <option>./sorting_hat/SelectionL.sort</option>
+            <option>./sorting_hat/BubbleSortO.sort</option>
+            
         </property_options>
         <property_options name="LEVEL_IMAGE_OPTIONS">
-            <option>./sorting_hat/ButtonBubbleSortCoil.png</option>
-            <option>./sorting_hat/ButtonBubbleSortO.png</option>
             <option>./sorting_hat/ButtonSelectionSortSnake.png</option>
+            <option>./sorting_hat/ButtonBubbleSortCoil.png</option>
             <option>./sorting_hat/ButtonSelectionSortL.png</option>
+            <option>./sorting_hat/ButtonBubbleSortO.png</option>
         </property_options>
         <property_options name="LEVEL_MOUSE_OVER_IMAGE_OPTIONS">
-            <option>./sorting_hat/ButtonBubbleSortCoilMouseOver.png</option>
-            <option>./sorting_hat/ButtonBubbleSortOMouseOver.png</option>
             <option>./sorting_hat/ButtonSelectionSortSnakeMouseOver.png</option>
+            <option>./sorting_hat/ButtonBubbleSortCoilMouseOver.png</option>
             <option>./sorting_hat/ButtonSelectionSortLMouseOver.png</option>
+            <option>./sorting_hat/ButtonBubbleSortOMouseOver.png</option>
         </property_options>
     </property_options_list>
 </properties>

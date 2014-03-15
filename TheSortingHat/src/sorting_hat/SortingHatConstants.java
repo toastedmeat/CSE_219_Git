@@ -3,6 +3,7 @@ package sorting_hat;
 import java.awt.Color;
 import java.awt.Font;
 
+
 /**
  * This class stores all the constants used by The Sorting Hat application. We'll
  * do this here rather than load them from files because many of these are
@@ -43,7 +44,7 @@ public class SortingHatConstants
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
-    public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE";    
+    public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
 
     // ANIMATION SPEED
     public static final int FPS = 30;

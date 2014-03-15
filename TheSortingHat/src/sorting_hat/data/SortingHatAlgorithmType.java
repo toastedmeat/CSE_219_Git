@@ -9,5 +9,5 @@ package sorting_hat.data;
 public enum SortingHatAlgorithmType
 {
     BUBBLE_SORT,
-    SELECTION_SORT    
+    SELECTION_SORT
 }
