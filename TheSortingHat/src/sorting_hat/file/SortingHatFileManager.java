@@ -28,7 +28,7 @@ import sorting_hat.data.SortingHatAlgorithmType;
  * This class provides services for efficiently loading and saving
  * binary files for The Sorting Hat game application.
  * 
- * @author Richard McKenna & ___________________
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatFileManager
 {

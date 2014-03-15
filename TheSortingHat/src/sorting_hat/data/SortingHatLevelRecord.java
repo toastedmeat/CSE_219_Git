@@ -6,7 +6,7 @@ package sorting_hat.data;
  * SortingHatRecord class, which stores all the records and manages
  * loading and saving.
  * 
- * @author Richard McKenna & ____________________
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatLevelRecord
 {

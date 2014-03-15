@@ -9,7 +9,7 @@ import java.awt.Font;
  * do this here rather than load them from files because many of these are
  * derived from each other.
  * 
- * @author Richard McKenna
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatConstants
 {

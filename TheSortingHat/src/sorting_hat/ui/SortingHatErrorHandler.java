@@ -8,7 +8,7 @@ import properties_manager.PropertiesManager;
 /**
  * This class provides dialog box responses to when errors happen.
  * 
- * @author Richard McKenna & _________________
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatErrorHandler
 {

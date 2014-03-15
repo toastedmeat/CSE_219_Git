@@ -11,7 +11,7 @@ import sorting_hat.file.SortingHatFileManager;
 
 /**
  *
- * @author Richard McKenna & _____________________
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatEventHandler {
     // THE SORTING HAT GAME, IT PROVIDES ACCESS TO EVERYTHING
