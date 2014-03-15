@@ -231,10 +231,13 @@ public class SortingHatPanel extends JPanel
      */
     public void renderStats(Graphics g)
     {
+        
         // RENDER THE GAME TIME AND THE TILES LEFT FOR IN-GAME
         if (((SortingHatMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
                 && data.inProgress() || data.isPaused())
         {
+            String currentLevel = data.getCurrentLevel();
+            SortingHatRecord record = ((SortingHatMiniGame)game).getPlayerRecord();
             // RENDER THE TILES LEFT
             g.setFont(FONT_TEXT_DISPLAY);
             g.setColor(Color.BLACK);
@@ -244,6 +247,19 @@ public class SortingHatPanel extends JPanel
             int x = TIME_X + TIME_OFFSET;
             int y = TIME_Y + TIME_TEXT_OFFSET;
             g.drawString(time, x, y);
+            
+            // Render the Miscasts
+            x = TILE_COUNT_X + TILE_COUNT_OFFSET;
+            y = TILE_COUNT_Y + TILE_TEXT_OFFSET;
+            g.drawString(Integer.toString(data.getBadSpellsCounter()), x, y);
+            
+            // Render the Sorting Type
+            g.setFont(FONT_STATS);
+            g.setColor(COLOR_ALGORITHM_HEADER);
+            x = TEMP_TILE_X + TEMP_TILE_OFFSET_X;
+            String algorithm = record.getAlgorithm(currentLevel);
+            algorithm = algorithm.replace('_', ' ');
+            g.drawString(algorithm, x - 14, 45);
         }        
         
         // IF THE STATS DIALOG IS VISIBLE, ADD THE TEXTUAL STATS
@@ -260,12 +276,16 @@ public class SortingHatPanel extends JPanel
             String algorithm = record.getAlgorithm(currentLevel);
             int games = record.getGamesPlayed(currentLevel);
             int wins = record.getWins(currentLevel);
+            int perfectWins = record.getWins(currentLevel);
+            
 
             // GET ALL THE STATS PROMPTS
             PropertiesManager props = PropertiesManager.getPropertiesManager();            
             String algorithmPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_ALGORITHM);
             String gamesPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_GAMES);
             String winsPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_WINS);
+            String perfectWinsPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_PERFECT_WINS);
+            String fastestPerfectWinPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_FASTEST_PERFECT_WIN);
 
             // NOW DRAW ALL THE STATS WITH THEIR LABELS
             int dot = levelName.indexOf(".");
@@ -274,6 +294,8 @@ public class SortingHatPanel extends JPanel
             g.drawString(algorithmPrompt + algorithm,                   STATS_LEVEL_X, STATS_ALGORITHM_Y);
             g.drawString(gamesPrompt + games,                           STATS_LEVEL_X, STATS_GAMES_Y);
             g.drawString(winsPrompt + wins,                             STATS_LEVEL_X, STATS_WINS_Y);
+            g.drawString(perfectWinsPrompt + wins,                      STATS_LEVEL_X, STATS_PERFECT_WINS_Y);
+            g.drawString(fastestPerfectWinPrompt + wins,                STATS_LEVEL_X, STATS_FASTEST_PERFECT_WIN_Y);
         }
     }
         

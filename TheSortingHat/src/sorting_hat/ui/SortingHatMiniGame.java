@@ -174,7 +174,7 @@ public class SortingHatMiniGame extends MiniGame
 
         // PLAY THE GAMEPLAY SCREEN SONG
         audio.stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
-        audio.play(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);        
+        //audio.play(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);        
     }
     
     /**
@@ -223,7 +223,8 @@ public class SortingHatMiniGame extends MiniGame
         data.setGameState(MiniGameState.NOT_STARTED);
         
         // PLAY THE WELCOME SCREEN SONG
-        audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
+        audio.stop(SortingHatPropertyType.AUDIO_CUE_WIN.toString());
+        //audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
         audio.stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
     }
     
@@ -258,7 +259,7 @@ public class SortingHatMiniGame extends MiniGame
             loadAudioCue(SortingHatPropertyType.SONG_CUE_GAME_SCREEN);
 
             // PLAY THE WELCOME SCREEN SONG
-            audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+            //audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
         }
         catch(UnsupportedAudioFileException | IOException | LineUnavailableException | InvalidMidiDataException | MidiUnavailableException e)
         {
@@ -525,6 +526,7 @@ public class SortingHatMiniGame extends MiniGame
     @Override
     public void reset()
     {
+        audio.stop(SortingHatPropertyType.AUDIO_CUE_WIN.toString());
         data.reset(this);
     }
     
