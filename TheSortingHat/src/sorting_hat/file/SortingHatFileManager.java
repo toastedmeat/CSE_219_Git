@@ -145,21 +145,13 @@ public class SortingHatFileManager
      */
     public void saveRecord(SortingHatRecord record)
     {
-        
-        // LOAD THE RAW DATA SO WE CAN USE IT
-        // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
-        // FOLLOWED BY THE GRID VALUES
         try
         {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             String recordPath = PATH_DATA + props.getProperty(SortingHatPropertyType.FILE_PLAYER_RECORD);
             File fileToSave = new File(recordPath);
 
-            // LET'S USE A FAST LOADING TECHNIQUE. WE'LL LOAD ALL OF THE
-            // BYTES AT ONCE INTO A BYTE ARRAY, AND THEN PICK THAT APART.
-            // THIS IS FAST BECAUSE IT ONLY HAS TO DO FILE READING ONCE
             byte[] bytes = record.toByteArray();
-            //ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             FileOutputStream fos = new FileOutputStream(fileToSave);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             

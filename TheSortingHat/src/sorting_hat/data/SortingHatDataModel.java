@@ -634,7 +634,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         // AND PLAY THE WIN AUDIO
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString());
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
-        //miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_WIN.toString(), false);
+        miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_WIN.toString(), false);
     }
 
     /**
