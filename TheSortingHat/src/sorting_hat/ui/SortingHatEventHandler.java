@@ -53,6 +53,18 @@ public class SortingHatEventHandler
         // RESET THE GAME AND ITS DATA
         game.reset();        
     }
+    
+    public void respondToBackRequest()
+    {
+        // IF THERE IS A GAME UNDERWAY, COUNT IT AS A LOSS
+        if (game.getDataModel().inProgress())
+        {
+            game.getDataModel().endGameAsLoss();
+        }
+        // RESET THE GAME AND ITS DATA
+        game.reset();
+        game.switchToSplashScreen();
+    }
 
     /**
      * Called when the user clicks a button to select a level.

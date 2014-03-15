@@ -34,6 +34,7 @@ public class SortingHatConstants
     public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
     public static final String TIME_TYPE = "TIME_TYPE"; 
     public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
+    public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
 
     // DIALOG TYPES
@@ -76,6 +77,8 @@ public class SortingHatConstants
     public static final int CONTROLS_MARGIN = 0;
     public static final int NEW_BUTTON_X = 0;
     public static final int NEW_BUTTON_Y = 0;
+    public static final int BACK_BUTTON_X = 130;
+    public static final int BACK_BUTTON_Y = 0;
     public static final int TILE_COUNT_X = NEW_BUTTON_X + 260 + CONTROLS_MARGIN;
     public static final int TILE_COUNT_Y = 0;
     public static final int TILE_COUNT_OFFSET = 145;
@@ -86,7 +89,9 @@ public class SortingHatConstants
     public static final int TIME_TEXT_OFFSET = 55;
     public static final int STATS_X = TIME_X + 310 + CONTROLS_MARGIN;
     public static final int STATS_Y = 0;
-    public static final int TEMP_TILE_X = STATS_X + 189 + CONTROLS_MARGIN;
+    public static final int UNDO_BUTTON_X = STATS_X + 160 + CONTROLS_MARGIN;
+    public static final int UNDO_BUTTON_Y = 0;
+    public static final int TEMP_TILE_X = STATS_X + 290 + CONTROLS_MARGIN;
     public static final int TEMP_TILE_Y = 0;
     public static final int TEMP_TILE_OFFSET_X = 30;
     public static final int TEMP_TILE_OFFSET_Y = 12;
