@@ -512,6 +512,11 @@ public class SortingHatMiniGame extends MiniGame
             {   eventHandler.respondToDisplayStatsRequest();    }
         });
         
+        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToUndoRequest();    }
+        });
+        
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
         this.setKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent ke)

@@ -125,8 +125,6 @@ class SelectionSortAlgorithm extends SortingHatAlgorithm {
                     
                 }
             }
-            System.out.println(min);
-            System.out.println(minSpot);
             // BUILD AND KEEP THE TRANSACTION
             if (minSpot != i) {
                 SortTransaction sT = new SortTransaction(i, minSpot);

@@ -71,6 +71,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
     // THE PROPER TRANSACTIONS TO USE FOR COMPARISION AGAINST PLAYER MOVES
     private ArrayList<SortTransaction> properTransactionOrder;
     private int transactionCounter;
+    boolean previous = true;
 
     /**
      * Constructor for initializing this data model, it will create the data
@@ -379,6 +380,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         moveTiles(movingTiles, stackTiles);
         moveTiles(tilesToSort, stackTiles);
     }
+
     /**
      * This method removes all the tiles in from argument and moves them to
      * argument.
@@ -422,9 +424,9 @@ public class SortingHatDataModel extends MiniGameDataModel {
         moveAllTilesToStack();
 
         // START THE ANIMATION FOR ALL THE TILES
-        for (int i = 0; i < tilesToSort.size(); i++) {
+        for (int i = 0; i < stackTiles.size(); i++) {
             // GET EACH TILE
-            SortingHatTile tile = tilesToSort.get(i);
+            SortingHatTile tile = stackTiles.get(i);
 
             // MAKE SURE IT'S MOVED EACH FRAME
             movingTiles.add(tile);
@@ -439,6 +441,11 @@ public class SortingHatDataModel extends MiniGameDataModel {
      * algorithm.
      */
     public SortTransaction getNextSwapTransaction() {
+        previous = true;
+        return properTransactionOrder.get(transactionCounter);
+    }
+    
+    public SortTransaction getPreviousSwapTransaction(){
         return properTransactionOrder.get(transactionCounter);
     }
 
@@ -471,15 +478,27 @@ public class SortingHatDataModel extends MiniGameDataModel {
         tile2.startMovingToTarget(MAX_TILE_VELOCITY);
 
         // AND ON TO THE NEXT TRANSACTION
-        transactionCounter++;
-
+        if (previous) {
+            transactionCounter++;
+        }
         // HAS THE PLAYER WON?
         if (transactionCounter == this.properTransactionOrder.size()) {
             // YUP UPDATE EVERYTHING ACCORDINGLY
             for (int i = 0; i < tilesToSort.size(); i++) {
-            tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
-        }
+                tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+            }
             endGameAsWin();
+        }
+    }
+
+    public boolean processUndo() {
+        if (transactionCounter < 1) {
+            previous = false;
+            return false;
+        } else {
+            this.transactionCounter = transactionCounter - 1;
+            previous = false;
+            return true;
         }
     }
 
@@ -589,7 +608,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
      */
     @Override
     public void endGameAsWin() {
-        
+
         // UPDATE THE GAME STATE USING THE INHERITED FUNCTIONALITY
         super.endGameAsWin();
 
@@ -607,7 +626,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
 
         // AND PLAY THE WIN ANIMATION
         playWinAnimation();
-        
+
         // AND PLAY THE WIN AUDIO
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString());
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
