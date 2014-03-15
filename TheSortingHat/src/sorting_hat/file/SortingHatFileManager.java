@@ -1,12 +1,15 @@
 package sorting_hat.file;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import mini_game.Viewport;
 import sorting_hat.TheSortingHat.SortingHatPropertyType;
@@ -143,6 +146,32 @@ public class SortingHatFileManager
     public void saveRecord(SortingHatRecord record)
     {
         
+        // LOAD THE RAW DATA SO WE CAN USE IT
+        // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
+        // FOLLOWED BY THE GRID VALUES
+        try
+        {
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String recordPath = PATH_DATA + props.getProperty(SortingHatPropertyType.FILE_PLAYER_RECORD);
+            File fileToSave = new File(recordPath);
+
+            // LET'S USE A FAST LOADING TECHNIQUE. WE'LL LOAD ALL OF THE
+            // BYTES AT ONCE INTO A BYTE ARRAY, AND THEN PICK THAT APART.
+            // THIS IS FAST BECAUSE IT ONLY HAS TO DO FILE READING ONCE
+            byte[] bytes = record.toByteArray();
+            //ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            FileOutputStream fos = new FileOutputStream(fileToSave);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            
+            // HERE IT IS, THE ONLY READY REQUEST WE NEED
+            bos.write(bytes);
+            bos.close();            
+        }
+        catch(Exception e)
+        {
+            // THERE WAS NO RECORD TO LOAD, SO WE'LL JUST RETURN AN
+            // EMPTY ONE AND SQUELCH THIS EXCEPTION
+        }
     }
 
     /**
@@ -191,6 +220,8 @@ public class SortingHatFileManager
                 rec.algorithm = dis.readUTF();
                 rec.gamesPlayed = dis.readInt();
                 rec.wins = dis.readInt();
+                rec.perfectWins = dis.readInt();
+                rec.fastestPerfectWinTime = dis.readLong();
                 recordToLoad.addSortingHatLevelRecord(levelName, rec);
             }
         }
