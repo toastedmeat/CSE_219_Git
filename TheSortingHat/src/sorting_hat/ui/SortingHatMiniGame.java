@@ -365,7 +365,7 @@ public class SortingHatMiniGame extends MiniGame
         
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
                 
-         // THEN THE NEW BUTTON
+        // THEN THE NEW BUTTON
         String newButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
 	img = loadImage(imgPath + newButton);
@@ -376,7 +376,7 @@ public class SortingHatMiniGame extends MiniGame
         s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
         guiButtons.put(NEW_GAME_BUTTON_TYPE, s);
         
-         // THEN THE BACK BUTTON
+        // THEN THE BACK BUTTON
         String backButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_BACK);
         sT = new SpriteType(BACK_BUTTON_TYPE);
 	img = loadImage(imgPath + backButton);
@@ -457,6 +457,8 @@ public class SortingHatMiniGame extends MiniGame
 		
         // THEN THE TILES STACKED TO THE TOP LEFT
         ((SortingHatDataModel)data).initTiles();
+        
+        
     }		
     
     /**

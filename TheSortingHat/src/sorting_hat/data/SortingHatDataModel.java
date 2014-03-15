@@ -670,7 +670,7 @@ public class SortingHatDataModel extends MiniGameDataModel
         // AND PLAY THE WIN AUDIO
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString());
         miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
-        miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_WIN.toString(), false);
+        //miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_WIN.toString(), false);
     }
     
     /**
@@ -774,6 +774,30 @@ public class SortingHatDataModel extends MiniGameDataModel
             {
                 // KEEP THE GAME TIMER GOING IF THE GAME STILL IS
                 endTime = new GregorianCalendar();
+                
+                // FIGURE OUT THE CELL IN THE GRID
+                int col = calculateGridCellColumn(getLastMouseX());
+                int row = calculateGridCellRow(getLastMouseY());
+                
+                // CHECK THE CELL AT col, row
+                int index = getSnakeIndex(col, row);
+                if (index >= 0){
+                    for(int i = 0; i < tilesToSort.size(); i++){
+                        if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile == null){
+                            tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+                        }
+                    }
+                    SortingHatTile mousedOver = tilesToSort.get(index);
+                    if(mousedOver.containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile == null){
+                       mousedOver.setState(SortingHatTileState.MOUSE_OVER_STATE.toString()); 
+                    }
+                } else {
+                    for(int i = 0; i < tilesToSort.size(); i++){
+                        if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile == null){
+                            tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+                        }
+                    }
+                }
             }
         } finally
         {
