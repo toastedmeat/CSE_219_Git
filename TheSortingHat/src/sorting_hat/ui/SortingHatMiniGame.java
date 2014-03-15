@@ -26,7 +26,6 @@ import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
-import sorting_hat.SortingHatConstants;
 import sorting_hat.TheSortingHat.SortingHatPropertyType;
 import sorting_hat.file.SortingHatFileManager;
 import sorting_hat.data.SortingHatRecord;
@@ -35,7 +34,7 @@ import sorting_hat.data.SortingHatRecord;
  * This is the actual mini game, as extended from the mini game framework. It
  * manages all the UI elements.
  * 
- * @author Richard McKenna
+ * @author Richard McKenna & Eric Loo
  */
 public class SortingHatMiniGame extends MiniGame
 {
@@ -53,6 +52,8 @@ public class SortingHatMiniGame extends MiniGame
     
     // THE SCREEN CURRENTLY BEING PLAYED
     private String currentScreenState;
+    
+    private static SortingHatDataModel dataCopy;
 
     // ACCESSOR METHODS
         // - getPlayerRecord
@@ -301,8 +302,12 @@ public class SortingHatMiniGame extends MiniGame
         
         // INIT OUR DATA MANAGER
         data = new SortingHatDataModel(this);
+        dataCopy = (SortingHatDataModel) data;
     }
     
+    public static SortingHatDataModel getData(){
+        return dataCopy;
+    }
     /**
      * Initializes the game controls, like buttons, used by
      * the game application. Note that this includes the tiles,

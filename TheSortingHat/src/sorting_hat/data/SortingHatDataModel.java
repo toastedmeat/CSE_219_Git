@@ -139,6 +139,10 @@ public class SortingHatDataModel extends MiniGameDataModel {
     public Iterator<SortingHatTile> getMovingTiles() {
         return movingTiles.iterator();
     }
+    
+    public long getTimeInMillis(){
+        return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+    }
 
     // MUTATOR METHODS
     public void setCurrentLevel(String initCurrentLevel) {

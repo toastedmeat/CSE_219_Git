@@ -142,7 +142,7 @@ public class SortingHatFileManager
      */
     public void saveRecord(SortingHatRecord record)
     {
-
+        
     }
 
     /**

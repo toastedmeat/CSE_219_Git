@@ -275,8 +275,9 @@ public class SortingHatPanel extends JPanel
             // GET ALL THE STATS
             String algorithm = record.getAlgorithm(currentLevel);
             int games = record.getGamesPlayed(currentLevel);
-            int wins = record.getWins(currentLevel);
-            int perfectWins = record.getWins(currentLevel);
+            int wins = record.getWins(currentLevel, false);
+            int perfectWins = record.getWins(currentLevel, true);
+            long fastestPerfectWinTime = record.getFastestWinTime(currentLevel);
             
 
             // GET ALL THE STATS PROMPTS
@@ -294,8 +295,9 @@ public class SortingHatPanel extends JPanel
             g.drawString(algorithmPrompt + algorithm,                   STATS_LEVEL_X, STATS_ALGORITHM_Y);
             g.drawString(gamesPrompt + games,                           STATS_LEVEL_X, STATS_GAMES_Y);
             g.drawString(winsPrompt + wins,                             STATS_LEVEL_X, STATS_WINS_Y);
-            g.drawString(perfectWinsPrompt + wins,                      STATS_LEVEL_X, STATS_PERFECT_WINS_Y);
-            g.drawString(fastestPerfectWinPrompt + wins,                STATS_LEVEL_X, STATS_FASTEST_PERFECT_WIN_Y);
+            g.drawString(perfectWinsPrompt + perfectWins,               STATS_LEVEL_X, STATS_PERFECT_WINS_Y);
+            g.drawString(fastestPerfectWinPrompt + data.timeToText(fastestPerfectWinTime),
+                    STATS_LEVEL_X, STATS_FASTEST_PERFECT_WIN_Y);
         }
     }
         
