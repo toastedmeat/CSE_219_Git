@@ -1,27 +1,27 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 import java.awt.event.KeyEvent;
-import static sorting_hat.SortingHatConstants.GAME_SCREEN_STATE;
-import static sorting_hat.SortingHatConstants.MENU_SCREEN_STATE;
-import static sorting_hat.SortingHatConstants.VIEWPORT_INC;
-import sorting_hat.TheSortingHat;
-import sorting_hat.data.SortTransaction;
-import sorting_hat.data.SortingHatDataModel;
-import sorting_hat.file.SortingHatFileManager;
+import static PathX.PathXConstants.GAME_SCREEN_STATE;
+import static PathX.PathXConstants.MENU_SCREEN_STATE;
+import static PathX.PathXConstants.VIEWPORT_INC;
+import PathX.PathX;
+import PathX.data.SortTransaction;
+import PathX.data.PathXDataModel;
+import PathX.file.PathXFileManager;
 
 /**
  *
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatEventHandler {
+public class PathXEventHandler {
     // THE SORTING HAT GAME, IT PROVIDES ACCESS TO EVERYTHING
 
-    private SortingHatMiniGame game;
+    private PathXMiniGame game;
 
     /**
      * Constructor, it just keeps the game for when the events happen.
      */
-    public SortingHatEventHandler(SortingHatMiniGame initGame) {
+    public PathXEventHandler(PathXMiniGame initGame) {
         game = initGame;
     }
 
@@ -66,10 +66,10 @@ public class SortingHatEventHandler {
         // WE ONLY LET THIS HAPPEN IF THE MENU SCREEN IS VISIBLE
         if (game.isCurrentScreenState(MENU_SCREEN_STATE)) {
             // GET THE GAME'S DATA MODEL, WHICH IS ALREADY LOCKED FOR US
-            SortingHatDataModel data = (SortingHatDataModel) game.getDataModel();
+            PathXDataModel data = (PathXDataModel) game.getDataModel();
 
             // UPDATE THE DATA
-            SortingHatFileManager fileManager = game.getFileManager();
+            PathXFileManager fileManager = game.getFileManager();
             fileManager.loadLevel(levelFile);
             data.reset(game);
 
@@ -87,14 +87,14 @@ public class SortingHatEventHandler {
     }
 
     public void respondToUndoRequest() {
-        SortingHatDataModel data = (SortingHatDataModel) game.getDataModel();
+        PathXDataModel data = (PathXDataModel) game.getDataModel();
         if (data.inProgress()) {
                 if (data.processUndo()) {
                     // FIND A MOVE IF THERE IS ONE
                     SortTransaction move = data.getPreviousSwapTransaction();
                     if (move != null) {
                         data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(TheSortingHat.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
+                        game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class SortingHatEventHandler {
      * Called when the user presses a key on the keyboard.
      */
     public void respondToKeyPress(int keyCode) {
-        SortingHatDataModel data = (SortingHatDataModel) game.getDataModel();
+        PathXDataModel data = (PathXDataModel) game.getDataModel();
 
         // CHEAT BY ONE MOVE. NOTE THAT IF WE HOLD THE C
         // KEY DOWN IT WILL CONTINUALLY CHEAT
@@ -114,7 +114,7 @@ public class SortingHatEventHandler {
                 SortTransaction move = data.getNextSwapTransaction();
                 if (move != null) {
                     data.swapTiles(move.getFromIndex(), move.getToIndex());
-                    game.getAudio().play(TheSortingHat.SortingHatPropertyType.AUDIO_CUE_CHEAT.toString(), false);
+                    game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_CHEAT.toString(), false);
                 }
             }
         }
@@ -127,7 +127,7 @@ public class SortingHatEventHandler {
                     SortTransaction move = data.getPreviousSwapTransaction();
                     if (move != null) {
                         data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(TheSortingHat.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
+                        game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
                     }
                 }
             }

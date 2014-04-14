@@ -1,9 +1,9 @@
-package sorting_hat.data;
+package PathX.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import sorting_hat.ui.SortingHatTile;
-import static sorting_hat.SortingHatConstants.*;
+import PathX.ui.PathXTile;
+import static PathX.PathXConstants.*;
 
 /**
  * This factory class builds the sorting algorithm objects to be used for
@@ -11,27 +11,27 @@ import static sorting_hat.SortingHatConstants.*;
  *
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatAlgorithmFactory {
+public class PathXAlgorithmFactory {
     // STORES THE SORTING ALGORITHMS WE MAY WISH TO USE
 
-    static HashMap<SortingHatAlgorithmType, SortingHatAlgorithm> premadeSortingHatAlgorithms = null;
+    static HashMap<PathXAlgorithmType, PathXAlgorithm> premadeSortingHatAlgorithms = null;
 
     /**
      * For getting a particular sorting algorithm. Note that the first time it
      * is called it initializes all the sorting algorithms and puts them in a
      * hash map to be retrieved as needed to setup levels when loaded.
      */
-    public static SortingHatAlgorithm buildSortingHatAlgorithm(SortingHatAlgorithmType algorithmType,
-            ArrayList<SortingHatTile> initDataToSort) {
+    public static PathXAlgorithm buildSortingHatAlgorithm(PathXAlgorithmType algorithmType,
+            ArrayList<PathXTile> initDataToSort) {
         // INIT ALL THE ALGORITHMS WE'LL USE IF IT HASN'T DONE SO ALREADY
         if (premadeSortingHatAlgorithms == null) {
             premadeSortingHatAlgorithms = new HashMap();
-            premadeSortingHatAlgorithms.put(SortingHatAlgorithmType.BUBBLE_SORT,
+            premadeSortingHatAlgorithms.put(PathXAlgorithmType.BUBBLE_SORT,
                     new BubbleSortAlgorithm(initDataToSort,
-                    SortingHatAlgorithmType.BUBBLE_SORT.toString()));
-            premadeSortingHatAlgorithms.put(SortingHatAlgorithmType.SELECTION_SORT,
+                    PathXAlgorithmType.BUBBLE_SORT.toString()));
+            premadeSortingHatAlgorithms.put(PathXAlgorithmType.SELECTION_SORT,
                     new SelectionSortAlgorithm(initDataToSort,
-                    SortingHatAlgorithmType.SELECTION_SORT.toString()));
+                    PathXAlgorithmType.SELECTION_SORT.toString()));
         }
         // RETURN THE REQUESTED ONE
         return premadeSortingHatAlgorithms.get(algorithmType);
@@ -43,12 +43,12 @@ public class SortingHatAlgorithmFactory {
  * on the data structure. This can then be used to compare to student moves
  * during the game.
  */
-class BubbleSortAlgorithm extends SortingHatAlgorithm {
+class BubbleSortAlgorithm extends PathXAlgorithm {
 
     /**
      * Constructor only needs to init the inherited stuff.
      */
-    public BubbleSortAlgorithm(ArrayList<SortingHatTile> initDataToSort, String initName) {
+    public BubbleSortAlgorithm(ArrayList<PathXTile> initDataToSort, String initName) {
         // INVOKE THE PARENT CONSTRUCTOR
         super(initDataToSort, initName);
     }
@@ -62,7 +62,7 @@ class BubbleSortAlgorithm extends SortingHatAlgorithm {
         ArrayList<SortTransaction> transactions = new ArrayList();
 
         // FIRST LET'S COPY THE DATA TO A TEMPORARY ArrayList
-        ArrayList<SortingHatTile> copy = new ArrayList();
+        ArrayList<PathXTile> copy = new ArrayList();
         for (int i = 0; i < dataToSort.size(); i++) {
             copy.add(dataToSort.get(i));
         }
@@ -77,7 +77,7 @@ class BubbleSortAlgorithm extends SortingHatAlgorithm {
                     transactions.add(sT);
 
                     // SWAP
-                    SortingHatTile temp = copy.get(j);
+                    PathXTile temp = copy.get(j);
                     copy.set(j, copy.get(j + 1));
                     copy.set(j + 1, temp);
                 }
@@ -87,12 +87,12 @@ class BubbleSortAlgorithm extends SortingHatAlgorithm {
     }
 }
 
-class SelectionSortAlgorithm extends SortingHatAlgorithm {
+class SelectionSortAlgorithm extends PathXAlgorithm {
 
     /**
      * Constructor only needs to init the inherited stuff.
      */
-    public SelectionSortAlgorithm(ArrayList<SortingHatTile> initDataToSort, String initName) {
+    public SelectionSortAlgorithm(ArrayList<PathXTile> initDataToSort, String initName) {
         // INVOKE THE PARENT CONSTRUCTOR
         super(initDataToSort, initName);
     }
@@ -106,7 +106,7 @@ class SelectionSortAlgorithm extends SortingHatAlgorithm {
         ArrayList<SortTransaction> transactions = new ArrayList();
 
         // FIRST LET'S COPY THE DATA TO A TEMPORARY ArrayList
-        ArrayList<SortingHatTile> copy = new ArrayList();
+        ArrayList<PathXTile> copy = new ArrayList();
         for (int i = 0; i < dataToSort.size(); i++) {
             copy.add(dataToSort.get(i));
         }
@@ -131,7 +131,7 @@ class SelectionSortAlgorithm extends SortingHatAlgorithm {
                 transactions.add(sT);
 
                 // SWAP
-                SortingHatTile temp = copy.get(i);
+                PathXTile temp = copy.get(i);
                 copy.set(i, copy.get(minSpot));
                 copy.set(minSpot, temp);
             }

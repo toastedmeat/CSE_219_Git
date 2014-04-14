@@ -1,7 +1,7 @@
-package sorting_hat.data;
+package PathX.data;
 
 import java.util.ArrayList;
-import sorting_hat.ui.SortingHatTile;
+import PathX.ui.PathXTile;
 
 /**
  * This class provides the framework for the algorithms
@@ -9,10 +9,10 @@ import sorting_hat.ui.SortingHatTile;
  *
  * @author Richard McKenna & _____________________
  */
-public abstract class SortingHatAlgorithm
+public abstract class PathXAlgorithm
 {
     // THIS IS THE DATA STRUCTURE TO SORT
-    protected ArrayList<SortingHatTile> dataToSort;
+    protected ArrayList<PathXTile> dataToSort;
     
     // THE NAME OF THE ALGORITHM
     protected String name;
@@ -20,7 +20,7 @@ public abstract class SortingHatAlgorithm
     /**
      * Constructor that sets up both instance variables.
      */
-    public SortingHatAlgorithm(ArrayList<SortingHatTile> initDataToSort, String initName)
+    public PathXAlgorithm(ArrayList<PathXTile> initDataToSort, String initName)
     {
         dataToSort = initDataToSort;
         name = initName;

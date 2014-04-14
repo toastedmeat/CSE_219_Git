@@ -1,4 +1,4 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 /**
  * This enum IS FOR KEEPING TRACK OF EACH TILE STATE. A TILE MAY
@@ -20,7 +20,7 @@ package sorting_hat.ui;
  * 
  * @author Richard McKenna & __________________
  */
-public enum SortingHatTileState
+public enum PathXTileState
 {
     INVISIBLE_STATE,
     VISIBLE_STATE,

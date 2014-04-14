@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 /**
  * This class represents a swap that takes place during 

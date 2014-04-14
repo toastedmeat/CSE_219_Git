@@ -153,13 +153,13 @@ public abstract class MiniGame
         // AND NOW SETUP THE FULL APP. NOTE THAT SOME
         // OF THESE METHODS MUST BE CUSTOMLY PROVIDED FOR
         // EACH GAME IMPLEMENTATION
-        initAudio();
         initWindow(initWindowWidth, initWindowHeight);
         initData();
         initViewport();
         initGUI();
         initHandlers();
         initTimer();
+        initAudio();
 
         // LET THE USER START THE GAME ON DEMAND
         data.setGameState(MiniGameState.NOT_STARTED);

@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 import java.awt.image.ImageObserver;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import sorting_hat.ui.SortingHatMiniGame;
+import PathX.ui.PathXMiniGame;
 
 /**
  * This class represents the complete playing history for the player since
@@ -15,15 +15,15 @@ import sorting_hat.ui.SortingHatMiniGame;
  *
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatRecord {
+public class PathXRecord {
     // HERE ARE ALL THE RECORDS
-    private HashMap<String, SortingHatLevelRecord> levelRecords;
+    private HashMap<String, PathXLevelRecord> levelRecords;
     
     /**
      * Default constructor, it simply creates the hash table for storing all the
      * records stored by level.
      */
-    public SortingHatRecord() {
+    public PathXRecord() {
         levelRecords = new HashMap();
     }
 
@@ -42,7 +42,7 @@ public class SortingHatRecord {
      * @return The number of games played for the levelName level.
      */
     public String getAlgorithm(String levelName) {
-        SortingHatLevelRecord rec = levelRecords.get(levelName);
+        PathXLevelRecord rec = levelRecords.get(levelName);
 
         // IF levelName ISN'T IN THE RECORD OBJECT
         // THEN SIMPLY RETURN 0
@@ -62,7 +62,7 @@ public class SortingHatRecord {
      * @return The number of games played for the levelName level.
      */
     public int getGamesPlayed(String levelName) {
-        SortingHatLevelRecord rec = levelRecords.get(levelName);
+        PathXLevelRecord rec = levelRecords.get(levelName);
 
         // IF levelName ISN'T IN THE RECORD OBJECT
         // THEN SIMPLY RETURN 0
@@ -82,7 +82,7 @@ public class SortingHatRecord {
      * @return The wins the player has earned for the levelName level.
      */
     public int getWins(String levelName, boolean isPerfect) {
-        SortingHatLevelRecord rec = levelRecords.get(levelName);
+        PathXLevelRecord rec = levelRecords.get(levelName);
 
         // IF levelName ISN'T IN THE RECORD OBJECT
         // THEN SIMPLY RETURN 0        
@@ -97,7 +97,7 @@ public class SortingHatRecord {
     }
     
     public long getFastestWinTime(String levelName){
-        SortingHatLevelRecord rec = levelRecords.get(levelName);
+        PathXLevelRecord rec = levelRecords.get(levelName);
         return rec.fastestPerfectWinTime;
     }
 
@@ -110,7 +110,7 @@ public class SortingHatRecord {
     }
 
     // MUTATOR METHOD
-    public void setAlgorithm(String levelName, SortingHatAlgorithm initAlgorithm) {
+    public void setAlgorithm(String levelName, PathXAlgorithm initAlgorithm) {
         levelRecords.get(levelName).algorithm = initAlgorithm.name;
     }
 
@@ -128,7 +128,7 @@ public class SortingHatRecord {
     public void addLevel(String levelName, String algorithmName) {
         // MAKE A NEW RECORD FOR THIS LEVEL, SINCE THIS IS
         // THE FIRST TIME WE'VE PLAYED IT
-        SortingHatLevelRecord rec = new SortingHatLevelRecord();
+        PathXLevelRecord rec = new PathXLevelRecord();
         rec.algorithm = algorithmName;
         rec.gamesPlayed = 0;
         rec.wins = 0;
@@ -153,7 +153,7 @@ public class SortingHatRecord {
      *
      * @param rec
      */
-    public void addSortingHatLevelRecord(String levelName, SortingHatLevelRecord rec) {
+    public void addSortingHatLevelRecord(String levelName, PathXLevelRecord rec) {
         levelRecords.put(levelName, rec);
     }
 
@@ -163,16 +163,16 @@ public class SortingHatRecord {
      */
     public void addWin(String levelName) {
         // GET THE RECORD FOR levelName
-        SortingHatLevelRecord rec = levelRecords.get(levelName);
+        PathXLevelRecord rec = levelRecords.get(levelName);
 
         // UPDATE THE STATS
         rec.gamesPlayed++;
-        if (SortingHatMiniGame.getData().getBadSpellsCounter() != 0) {
+        if (PathXMiniGame.getData().getBadSpellsCounter() != 0) {
             rec.wins++;
         } else {
             rec.perfectWins++;
-            if(rec.fastestPerfectWinTime == 0 || rec.fastestPerfectWinTime > SortingHatMiniGame.getData().getTimeInMillis()){
-                rec.fastestPerfectWinTime = SortingHatMiniGame.getData().getTimeInMillis();
+            if(rec.fastestPerfectWinTime == 0 || rec.fastestPerfectWinTime > PathXMiniGame.getData().getTimeInMillis()){
+                rec.fastestPerfectWinTime = PathXMiniGame.getData().getTimeInMillis();
             }
         }
     }
@@ -201,7 +201,7 @@ public class SortingHatRecord {
             // PACK IT WITH ALL THE DATA FOR THE RECORDS
             String key = keysIt.next();
             dos.writeUTF(key);
-            SortingHatLevelRecord rec = levelRecords.get(key);
+            PathXLevelRecord rec = levelRecords.get(key);
             dos.writeUTF(rec.algorithm.toString());
             dos.writeInt(rec.gamesPlayed);
             dos.writeInt(rec.wins);

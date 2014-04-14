@@ -1,10 +1,10 @@
-package sorting_hat;
+package PathX;
 
-import sorting_hat.ui.SortingHatMiniGame;
-import sorting_hat.ui.SortingHatErrorHandler;
+import PathX.ui.PathXMiniGame;
+import PathX.ui.PathXErrorHandler;
 import xml_utilities.InvalidXMLFileFormatException;
 import properties_manager.PropertiesManager;
-import static sorting_hat.SortingHatConstants.*;
+import static PathX.PathXConstants.*;
 
 /**
  * The Sorting Hat is a game application that's ready to be customized
@@ -14,12 +14,12 @@ import static sorting_hat.SortingHatConstants.*;
  * 
  * @author Richard McKenna & ________________________
  */
-public class TheSortingHat
+public class PathX
 {
     // THIS HAS THE FULL USER INTERFACE AND ONCE IN EVENT
     // HANDLING MODE, BASICALLY IT BECOMES THE FOCAL
     // POINT, RUNNING THE UI AND EVERYTHING ELSE
-    static SortingHatMiniGame miniGame = new SortingHatMiniGame();
+    static PathXMiniGame miniGame = new PathXMiniGame();
 
     /**
      * This is where The Sorting Hat game application starts execution. We'll
@@ -50,7 +50,7 @@ public class TheSortingHat
         catch(InvalidXMLFileFormatException ixmlffe)
         {
             // LET THE ERROR HANDLER PROVIDE THE RESPONSE
-            SortingHatErrorHandler errorHandler = miniGame.getErrorHandler();
+            PathXErrorHandler errorHandler = miniGame.getErrorHandler();
             errorHandler.processError(SortingHatPropertyType.TEXT_ERROR_LOADING_XML_FILE);
         }
     }

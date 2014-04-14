@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 /**
  * This enum holds the types of sorting algorithms the game
@@ -6,7 +6,7 @@ package sorting_hat.data;
  *
  * @author Richard McKenna & _____________________
  */
-public enum SortingHatAlgorithmType
+public enum PathXAlgorithmType
 {
     BUBBLE_SORT,
     SELECTION_SORT

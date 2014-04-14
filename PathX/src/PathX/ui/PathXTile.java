@@ -1,17 +1,17 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 import java.util.ArrayList;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
-import static sorting_hat.SortingHatConstants.*;
+import static PathX.PathXConstants.*;
 
 /**
  * This class represents a single tile in the game world.
  *
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatTile extends Sprite {
+public class PathXTile extends Sprite {
     // EACH TILE HAS AN ID, WHICH WE'LL USE FOR SORTING
 
     private int tileId;
@@ -40,7 +40,7 @@ public class SortingHatTile extends Sprite {
      * This constructor initializes this tile for use, including all the
      * sprite-related data from its ancestor class, Sprite.
      */
-    public SortingHatTile(SpriteType initSpriteType,
+    public PathXTile(SpriteType initSpriteType,
             float initX, float initY,
             float initVx, float initVy,
             String initState,

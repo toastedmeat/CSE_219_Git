@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 /**
  * This class represents a single move. It stores the grid locations
@@ -6,7 +6,7 @@ package sorting_hat.data;
  * 
  * @author Richard McKenna & ______________
  */
-public class SortingHatMove
+public class PathXMove
 {
     public int col1;
     public int row1;

@@ -1,8 +1,8 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import sorting_hat.TheSortingHat.SortingHatPropertyType;
+import PathX.PathX.SortingHatPropertyType;
 import properties_manager.PropertiesManager;
 
 /**
@@ -10,7 +10,7 @@ import properties_manager.PropertiesManager;
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatErrorHandler
+public class PathXErrorHandler
 {
     // WE'LL CENTER DIALOG BOXES OVER THE WINDOW, SO WE NEED THIS
     private JFrame window;
@@ -20,7 +20,7 @@ public class SortingHatErrorHandler
      * 
      * @param initWindow 
      */
-    public SortingHatErrorHandler(JFrame initWindow)
+    public PathXErrorHandler(JFrame initWindow)
     {
         // KEEP THE WINDOW FOR LATER
         window = initWindow;

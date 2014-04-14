@@ -1,4 +1,4 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 import java.awt.Cursor;
 import java.awt.Point;
@@ -18,17 +18,17 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
-import sorting_hat.data.SortingHatDataModel;
+import PathX.data.PathXDataModel;
 import mini_game.MiniGame;
 import mini_game.MiniGameState;
-import static sorting_hat.SortingHatConstants.*;
+import static PathX.PathXConstants.*;
 import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
-import sorting_hat.TheSortingHat.SortingHatPropertyType;
-import sorting_hat.file.SortingHatFileManager;
-import sorting_hat.data.SortingHatRecord;
+import PathX.PathX.SortingHatPropertyType;
+import PathX.file.PathXFileManager;
+import PathX.data.PathXRecord;
 
 /**
  * This is the actual mini game, as extended from the mini game framework. It
@@ -36,24 +36,24 @@ import sorting_hat.data.SortingHatRecord;
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatMiniGame extends MiniGame
+public class PathXMiniGame extends MiniGame
 {
     // THE PLAYER RECORD FOR EACH LEVEL, WHICH LIVES BEYOND ONE SESSION
-    private SortingHatRecord record;
+    private PathXRecord record;
 
     // HANDLES GAME UI EVENTS
-    private SortingHatEventHandler eventHandler;
+    private PathXEventHandler eventHandler;
     
     // HANDLES ERROR CONDITIONS
-    private SortingHatErrorHandler errorHandler;
+    private PathXErrorHandler errorHandler;
     
     // MANAGES LOADING OF LEVELS AND THE PLAYER RECORDS FILES
-    private SortingHatFileManager fileManager;
+    private PathXFileManager fileManager;
     
     // THE SCREEN CURRENTLY BEING PLAYED
     private String currentScreenState;
     
-    private static SortingHatDataModel dataCopy;
+    private static PathXDataModel dataCopy;
 
     // ACCESSOR METHODS
         // - getPlayerRecord
@@ -67,7 +67,7 @@ public class SortingHatMiniGame extends MiniGame
      * 
      * @return The player's complete record.
      */
-    public SortingHatRecord getPlayerRecord() 
+    public PathXRecord getPlayerRecord() 
     { 
         return record; 
     }
@@ -77,7 +77,7 @@ public class SortingHatMiniGame extends MiniGame
      * 
      * @return The error handler.
      */
-    public SortingHatErrorHandler getErrorHandler()
+    public PathXErrorHandler getErrorHandler()
     {
         return errorHandler;
     }
@@ -87,7 +87,7 @@ public class SortingHatMiniGame extends MiniGame
      * 
      * @return The file manager.
      */
-    public SortingHatFileManager getFileManager()
+    public PathXFileManager getFileManager()
     {
         return fileManager;
     }
@@ -126,8 +126,8 @@ public class SortingHatMiniGame extends MiniGame
     public void displayStats()
     {
         // MAKE SURE ONLY THE PROPER DIALOG IS VISIBLE
-        guiDialogs.get(WIN_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
-        guiDialogs.get(STATS_DIALOG_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiDialogs.get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
     }
     
     /**
@@ -150,23 +150,23 @@ public class SortingHatMiniGame extends MiniGame
         guiDecor.get(BACKGROUND_TYPE).setState(GAME_SCREEN_STATE);
         
         // ACTIVATE THE TOOLBAR AND ITS CONTROLS
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(BACK_BUTTON_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
-        guiDecor.get(MISCASTS_COUNT_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
-        guiDecor.get(TIME_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiDecor.get(MISCASTS_COUNT_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiDecor.get(TIME_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(STATS_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(STATS_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(UNDO_BUTTON_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiButtons.get(UNDO_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(UNDO_BUTTON_TYPE).setEnabled(true);
-        guiDecor.get(ALGORITHM_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        guiDecor.get(ALGORITHM_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
         for (String level : levels)
         {
-            guiButtons.get(level).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
         }
 
@@ -188,17 +188,17 @@ public class SortingHatMiniGame extends MiniGame
         guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
         
         // DEACTIVATE THE TOOLBAR CONTROLS
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(BACK_BUTTON_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
-        guiDecor.get(MISCASTS_COUNT_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
-        guiDecor.get(TIME_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiDecor.get(MISCASTS_COUNT_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiDecor.get(TIME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(STATS_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(STATS_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(UNDO_BUTTON_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(UNDO_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(UNDO_BUTTON_TYPE).setEnabled(false);
-        guiDecor.get(ALGORITHM_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiDecor.get(ALGORITHM_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -206,16 +206,16 @@ public class SortingHatMiniGame extends MiniGame
         ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
         for (String level : levels)
         {
-            guiButtons.get(level).setState(SortingHatTileState.VISIBLE_STATE.toString());
+            guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(true);
         }        
 
         // DEACTIVATE ALL DIALOGS
-        guiDialogs.get(WIN_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
-        guiDialogs.get(STATS_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        guiDialogs.get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
 
         // HIDE THE TILES
-        ((SortingHatDataModel)data).enableTiles(false);
+        ((PathXDataModel)data).enableTiles(false);
 
         // MAKE THE CURRENT SCREEN THE MENU SCREEN
         currentScreenState = MENU_SCREEN_STATE;
@@ -292,20 +292,20 @@ public class SortingHatMiniGame extends MiniGame
     public void initData()
     {        
         // INIT OUR ERROR HANDLER
-        errorHandler = new SortingHatErrorHandler(window);
+        errorHandler = new PathXErrorHandler(window);
         
         // INIT OUR FILE MANAGER
-        fileManager = new SortingHatFileManager(this);
+        fileManager = new PathXFileManager(this);
 
         // LOAD THE PLAYER'S RECORD FROM A FILE
         record = fileManager.loadRecord();
         
         // INIT OUR DATA MANAGER
-        data = new SortingHatDataModel(this);
-        dataCopy = (SortingHatDataModel) data;
+        data = new PathXDataModel(this);
+        dataCopy = (PathXDataModel) data;
     }
     
-    public static SortingHatDataModel getData(){
+    public static PathXDataModel getData(){
         return dataCopy;
     }
     /**
@@ -330,7 +330,7 @@ public class SortingHatMiniGame extends MiniGame
         window.setIconImage(img);
 
         // CONSTRUCT THE PANEL WHERE WE'LL DRAW EVERYTHING
-        canvas = new SortingHatPanel(this, (SortingHatDataModel)data);
+        canvas = new PathXPanel(this, (PathXDataModel)data);
         
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
         currentScreenState = MENU_SCREEN_STATE;
@@ -360,10 +360,10 @@ public class SortingHatMiniGame extends MiniGame
         {
             sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
             img = loadImageWithColorKey(imgPath + levelImageNames.get(i), COLOR_KEY);
-            sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+            sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
             img = loadImageWithColorKey(imgPath + levelMouseOverImageNames.get(i), COLOR_KEY);
-            sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
-            s = new Sprite(sT, x, LEVEL_BUTTON_Y, 0, 0, SortingHatTileState.VISIBLE_STATE.toString());
+            sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+            s = new Sprite(sT, x, LEVEL_BUTTON_Y, 0, 0, PathXTileState.VISIBLE_STATE.toString());
             guiButtons.put(levels.get(i), s);
             x += LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN;
         }
@@ -374,68 +374,68 @@ public class SortingHatMiniGame extends MiniGame
         String newButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
 	img = loadImage(imgPath + newButton);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         String newMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW_MOUSE_OVER);
         img = loadImage(imgPath + newMouseOverButton);
-        sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(NEW_GAME_BUTTON_TYPE, s);
         
         // THEN THE BACK BUTTON
         String backButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_BACK);
         sT = new SpriteType(BACK_BUTTON_TYPE);
 	img = loadImage(imgPath + backButton);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         String backMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_BACK_MOUSE_OVER);
         img = loadImage(imgPath + backMouseOverButton);
-        sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(BACK_BUTTON_TYPE, s);
         
         // AND THE MISCASTS COUNT
         String miscastCountContainer = props.getProperty(SortingHatPropertyType.IMAGE_DECOR_MISCASTS);
         sT = new SpriteType(MISCASTS_COUNT_TYPE);
         img = loadImage(imgPath + miscastCountContainer);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TILE_COUNT_X, TILE_COUNT_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, TILE_COUNT_X, TILE_COUNT_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiDecor.put(MISCASTS_COUNT_TYPE, s);
         
         // AND THE TIME DISPLAY
         String timeContainer = props.getProperty(SortingHatPropertyType.IMAGE_DECOR_TIME);
         sT = new SpriteType(TIME_TYPE);
         img = loadImage(imgPath + timeContainer);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TIME_X, TIME_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, TIME_X, TIME_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiDecor.put(TIME_TYPE, s);
         
         // AND THE STATS BUTTON
         String statsButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_STATS);
         sT = new SpriteType(STATS_BUTTON_TYPE);
         img = loadImage(imgPath + statsButton);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         String statsMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_STATS_MOUSE_OVER);
         img = loadImage(imgPath + statsMouseOverButton);
-        sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, STATS_X, STATS_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, STATS_X, STATS_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(STATS_BUTTON_TYPE, s);
         
         // AND THE STATS BUTTON
         String undoButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_UNDO);
         sT = new SpriteType(UNDO_BUTTON_TYPE);
         img = loadImage(imgPath + undoButton);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         String undoMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_UNDO_MOUSE_OVER);
         img = loadImage(imgPath + undoMouseOverButton);
-        sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, UNDO_BUTTON_X, UNDO_BUTTON_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, UNDO_BUTTON_X, UNDO_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(UNDO_BUTTON_TYPE, s);
 
         // AND THE TILE STACK
         String tileStack = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_TEMP_TILE);
         sT = new SpriteType(ALGORITHM_TYPE);
         img = loadImageWithColorKey(imgPath + tileStack, COLOR_KEY);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TEMP_TILE_X, TEMP_TILE_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, TEMP_TILE_X, TEMP_TILE_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiDecor.put(ALGORITHM_TYPE, s);
 
         // NOW ADD THE DIALOGS
@@ -444,24 +444,24 @@ public class SortingHatMiniGame extends MiniGame
         String statsDialog = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_STATS);
         sT = new SpriteType(STATS_DIALOG_TYPE);
         img = loadImageWithColorKey(imgPath + statsDialog, COLOR_KEY);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         x = (viewport.getScreenWidth()/2) - (img.getWidth(null)/2);
         y = (viewport.getScreenHeight()/2) - (img.getHeight(null)/2);
-        s = new Sprite(sT, x, y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        s = new Sprite(sT, x, y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiDialogs.put(STATS_DIALOG_TYPE, s);
         
         // AND THE WIN CONDITION DISPLAY
         String winDisplay = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_WIN);
         sT = new SpriteType(WIN_DIALOG_TYPE);
         img = loadImageWithColorKey(imgPath + winDisplay, COLOR_KEY);
-        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         x = (viewport.getScreenWidth()/2) - (img.getWidth(null)/2);
         y = (viewport.getScreenHeight()/2) - (img.getHeight(null)/2);
-        s = new Sprite(sT, x, y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
+        s = new Sprite(sT, x, y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiDialogs.put(WIN_DIALOG_TYPE, s);
 		
         // THEN THE TILES STACKED TO THE TOP LEFT
-        ((SortingHatDataModel)data).initTiles();
+        ((PathXDataModel)data).initTiles();
         
         
     }		
@@ -474,7 +474,7 @@ public class SortingHatMiniGame extends MiniGame
     public void initGUIHandlers()
     {
         // WE'LL RELAY UI EVENTS TO THIS OBJECT FOR HANDLING
-        eventHandler = new SortingHatEventHandler(this);
+        eventHandler = new PathXEventHandler(this);
                 
         // WE'LL HAVE A CUSTOM RESPONSE FOR WHEN THE USER CLOSES THE WINDOW
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -558,19 +558,19 @@ public class SortingHatMiniGame extends MiniGame
             Sprite button = buttonsIt.next();
             
             // ARE WE ENTERING A BUTTON?
-            if (button.getState().equals(SortingHatTileState.VISIBLE_STATE.toString()))
+            if (button.getState().equals(PathXTileState.VISIBLE_STATE.toString()))
             {
                 if (button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
                 {
-                    button.setState(SortingHatTileState.MOUSE_OVER_STATE.toString());
+                    button.setState(PathXTileState.MOUSE_OVER_STATE.toString());
                 }
             }
             // ARE WE EXITING A BUTTON?
-            else if (button.getState().equals(SortingHatTileState.MOUSE_OVER_STATE.toString()))
+            else if (button.getState().equals(PathXTileState.MOUSE_OVER_STATE.toString()))
             {
                  if (!button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
                 {
-                    button.setState(SortingHatTileState.VISIBLE_STATE.toString());
+                    button.setState(PathXTileState.VISIBLE_STATE.toString());
                 }
             }
         }

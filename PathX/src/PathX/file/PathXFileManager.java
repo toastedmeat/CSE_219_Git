@@ -1,4 +1,4 @@
-package sorting_hat.file;
+package PathX.file;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,17 +12,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import mini_game.Viewport;
-import sorting_hat.TheSortingHat.SortingHatPropertyType;
-import sorting_hat.data.SortingHatLevelRecord;
-import sorting_hat.data.SortingHatDataModel;
-import sorting_hat.data.SortingHatRecord;
-import sorting_hat.ui.SortingHatMiniGame;
+import PathX.PathX.SortingHatPropertyType;
+import PathX.data.PathXLevelRecord;
+import PathX.data.PathXDataModel;
+import PathX.data.PathXRecord;
+import PathX.ui.PathXMiniGame;
 import properties_manager.PropertiesManager;
-import static sorting_hat.SortingHatConstants.*;
-import sorting_hat.data.SnakeCell;
-import sorting_hat.data.SortingHatAlgorithm;
-import sorting_hat.data.SortingHatAlgorithmFactory;
-import sorting_hat.data.SortingHatAlgorithmType;
+import static PathX.PathXConstants.*;
+import PathX.data.SnakeCell;
+import PathX.data.PathXAlgorithm;
+import PathX.data.PathXAlgorithmFactory;
+import PathX.data.PathXAlgorithmType;
 
 /**
  * This class provides services for efficiently loading and saving
@@ -30,10 +30,10 @@ import sorting_hat.data.SortingHatAlgorithmType;
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatFileManager
+public class PathXFileManager
 {
     // WE'LL LET THE GAME KNOW WHEN DATA LOADING IS COMPLETE
-    private SortingHatMiniGame miniGame;
+    private PathXMiniGame miniGame;
     
     /**
      * Constructor for initializing this file manager, it simply keeps
@@ -41,7 +41,7 @@ public class SortingHatFileManager
      * 
      * @param initMiniGame The game for which this class loads data.
      */
-    public SortingHatFileManager(SortingHatMiniGame initMiniGame)
+    public PathXFileManager(PathXMiniGame initMiniGame)
     {
         // KEEP IT FOR LATER
         miniGame = initMiniGame;
@@ -82,10 +82,10 @@ public class SortingHatFileManager
             
             // FIRST READ THE ALGORITHM NAME TO USE FOR THE LEVEL
             String algorithmName = dis.readUTF();
-            SortingHatAlgorithmType algorithmTypeToUse = SortingHatAlgorithmType.valueOf(algorithmName);
-            SortingHatAlgorithm algorithmToUse = SortingHatAlgorithmFactory.
+            PathXAlgorithmType algorithmTypeToUse = PathXAlgorithmType.valueOf(algorithmName);
+            PathXAlgorithm algorithmToUse = PathXAlgorithmFactory.
                     buildSortingHatAlgorithm(algorithmTypeToUse,
-                    ((SortingHatDataModel)miniGame.getDataModel()).getTilesToSort());
+                    ((PathXDataModel)miniGame.getDataModel()).getTilesToSort());
             
             // THEN READ THE GRID DIMENSIONS
             // WE DON'T ACTUALLY USE THESE
@@ -122,7 +122,7 @@ public class SortingHatFileManager
             }
             
             // EVERYTHING WENT AS PLANNED SO LET'S MAKE IT PERMANENT
-            SortingHatDataModel dataModel = (SortingHatDataModel)miniGame.getDataModel();
+            PathXDataModel dataModel = (PathXDataModel)miniGame.getDataModel();
             Viewport viewport = dataModel.getViewport();
             viewport.setGameWorldSize(numColumns * TILE_WIDTH, numRows * TILE_HEIGHT);
             viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
@@ -143,7 +143,7 @@ public class SortingHatFileManager
      * @param record The complete player record, which has the records
      * on all levels.
      */
-    public void saveRecord(SortingHatRecord record)
+    public void saveRecord(PathXRecord record)
     {
         try
         {
@@ -172,9 +172,9 @@ public class SortingHatFileManager
      * 
      * @return The fully loaded record from the player record file.
      */
-    public SortingHatRecord loadRecord()
+    public PathXRecord loadRecord()
     {
-        SortingHatRecord recordToLoad = new SortingHatRecord();
+        PathXRecord recordToLoad = new PathXRecord();
         
         // LOAD THE RAW DATA SO WE CAN USE IT
         // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
@@ -208,7 +208,7 @@ public class SortingHatFileManager
             for (int i = 0; i < numLevels; i++)
             {
                 String levelName = dis.readUTF();
-                SortingHatLevelRecord rec = new SortingHatLevelRecord();
+                PathXLevelRecord rec = new PathXLevelRecord();
                 rec.algorithm = dis.readUTF();
                 rec.gamesPlayed = dis.readInt();
                 rec.wins = dis.readInt();

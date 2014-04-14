@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 /**
  * Thix class represents a grid cell where a tile can be placed in a sortable

@@ -1,4 +1,4 @@
-package sorting_hat;
+package PathX;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,7 +11,7 @@ import java.awt.Font;
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatConstants
+public class PathXConstants
 {
     // WE NEED THESE CONSTANTS JUST TO GET STARTED
     // LOADING SETTINGS FROM OUR XML FILES

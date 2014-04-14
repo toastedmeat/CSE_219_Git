@@ -1,4 +1,4 @@
-package sorting_hat.data;
+package PathX.data;
 
 /**
  * This class stores game results for a given level. Note that this is
@@ -8,7 +8,7 @@ package sorting_hat.data;
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatLevelRecord
+public class PathXLevelRecord
 {
     public String algorithm;
     public int gamesPlayed;

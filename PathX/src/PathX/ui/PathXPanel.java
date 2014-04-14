@@ -1,4 +1,4 @@
-package sorting_hat.ui;
+package PathX.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,25 +14,25 @@ import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
-import sorting_hat.data.SortingHatDataModel;
-import static sorting_hat.SortingHatConstants.*;
-import sorting_hat.TheSortingHat.SortingHatPropertyType;
-import sorting_hat.data.SnakeCell;
-import sorting_hat.data.SortingHatRecord;
+import PathX.data.PathXDataModel;
+import static PathX.PathXConstants.*;
+import PathX.PathX.SortingHatPropertyType;
+import PathX.data.SnakeCell;
+import PathX.data.PathXRecord;
 
 /**
  * This class performs all of the rendering for The Sorting Hat game application.
  * 
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatPanel extends JPanel
+public class PathXPanel extends JPanel
 {
     // THIS IS ACTUALLY OUR Sorting Hat APP, WE NEED THIS
     // BECAUSE IT HAS THE GUI STUFF THAT WE NEED TO RENDER
     private MiniGame game;
     
     // AND HERE IS ALL THE GAME DATA THAT WE NEED TO RENDER
-    private SortingHatDataModel data;
+    private PathXDataModel data;
     
     // WE'LL USE THIS TO FORMAT SOME TEXT FOR DISPLAY PURPOSES
     private NumberFormat numberFormatter;
@@ -55,7 +55,7 @@ public class SortingHatPanel extends JPanel
      * 
      * @param initData The Sorting Hat game data.
      */
-    public SortingHatPanel(MiniGame initGame, SortingHatDataModel initData)
+    public PathXPanel(MiniGame initGame, PathXDataModel initData)
     {
         game = initGame;
         data = initData;
@@ -233,11 +233,11 @@ public class SortingHatPanel extends JPanel
     {
         
         // RENDER THE GAME TIME AND THE TILES LEFT FOR IN-GAME
-        if (((SortingHatMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
+        if (((PathXMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
                 && data.inProgress() || data.isPaused())
         {
             String currentLevel = data.getCurrentLevel();
-            SortingHatRecord record = ((SortingHatMiniGame)game).getPlayerRecord();
+            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
             // RENDER THE TILES LEFT
             g.setFont(FONT_TEXT_DISPLAY);
             g.setColor(Color.BLACK);
@@ -263,14 +263,14 @@ public class SortingHatPanel extends JPanel
         }        
         
         // IF THE STATS DIALOG IS VISIBLE, ADD THE TEXTUAL STATS
-        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(SortingHatTileState.VISIBLE_STATE.toString()))
+        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(PathXTileState.VISIBLE_STATE.toString()))
         {
             g.setFont(FONT_STATS);
             g.setColor(COLOR_STATS);
             String currentLevel = data.getCurrentLevel();
             int lastSlash = currentLevel.lastIndexOf("/");
             String levelName = currentLevel.substring(lastSlash+1);
-            SortingHatRecord record = ((SortingHatMiniGame)game).getPlayerRecord();
+            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
 
             // GET ALL THE STATS
             String algorithm = record.getAlgorithm(currentLevel);
@@ -310,24 +310,24 @@ public class SortingHatPanel extends JPanel
     public void renderTiles(Graphics g)
     {
         // DRAW THE GRID
-        ArrayList<SortingHatTile> tilesToSort = data.getTilesToSort();
+        ArrayList<PathXTile> tilesToSort = data.getTilesToSort();
         for (int i = 0; i < tilesToSort.size(); i++)
         {
-            SortingHatTile tile = tilesToSort.get(i);
+            PathXTile tile = tilesToSort.get(i);
             if (tile != null)
                 renderTile(g, tile);
         }
         
         // THEN DRAW ALL THE MOVING TILES
-        Iterator<SortingHatTile> movingTiles = data.getMovingTiles();
+        Iterator<PathXTile> movingTiles = data.getMovingTiles();
         while (movingTiles.hasNext())
         {
-            SortingHatTile tile = movingTiles.next();
+            PathXTile tile = movingTiles.next();
             renderTile(g, tile);
         }
         
         // AND THE SELECTED TILE, IF THERE IS ONE
-        SortingHatTile selectedTile = data.getSelectedTile();
+        PathXTile selectedTile = data.getSelectedTile();
         if (selectedTile != null)
             renderTile(g, selectedTile);
     }
@@ -339,10 +339,10 @@ public class SortingHatPanel extends JPanel
      * 
      * @param tileToRender Tile to render to this panel.
      */
-    public void renderTile(Graphics g, SortingHatTile tileToRender)
+    public void renderTile(Graphics g, PathXTile tileToRender)
     {
         // ONLY RENDER VISIBLE TILES
-        if (!tileToRender.getState().equals(SortingHatTileState.INVISIBLE_STATE.toString()))
+        if (!tileToRender.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
         {
             Viewport viewport = data.getViewport();
             int correctedTileX = (int)(tileToRender.getX());
@@ -384,7 +384,7 @@ public class SortingHatPanel extends JPanel
     public void renderSprite(Graphics g, Sprite s)
     {
         // ONLY RENDER THE VISIBLE ONES
-        if (!s.getState().equals(SortingHatTileState.INVISIBLE_STATE.toString()))
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
         {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());

@@ -1,35 +1,35 @@
-package sorting_hat.data;
+package PathX.data;
 
 import java.awt.Graphics;
-import sorting_hat.ui.SortingHatTile;
+import PathX.ui.PathXTile;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import sorting_hat.TheSortingHat.SortingHatPropertyType;
+import PathX.PathX.SortingHatPropertyType;
 import mini_game.MiniGame;
 import mini_game.MiniGameDataModel;
 import mini_game.SpriteType;
 import properties_manager.PropertiesManager;
-import static sorting_hat.SortingHatConstants.*;
-import sorting_hat.ui.SortingHatMiniGame;
-import sorting_hat.ui.SortingHatPanel;
-import sorting_hat.ui.SortingHatTileState;
+import static PathX.PathXConstants.*;
+import PathX.ui.PathXMiniGame;
+import PathX.ui.PathXPanel;
+import PathX.ui.PathXTileState;
 
 /**
  * This class manages the game data for The Sorting Hat.
  *
  * @author Richard McKenna & Eric Loo
  */
-public class SortingHatDataModel extends MiniGameDataModel {
+public class PathXDataModel extends MiniGameDataModel {
 
     // THIS CLASS HAS A REFERERENCE TO THE MINI GAME SO THAT IT
     // CAN NOTIFY IT TO UPDATE THE DISPLAY WHEN THE DATA MODEL CHANGES
     private MiniGame miniGame;
 
     // THIS STORES THE TILES ON THE GRID DURING THE GAME
-    private ArrayList<SortingHatTile> tilesToSort;
+    private ArrayList<PathXTile> tilesToSort;
 
     // THE LEGAL TILES IN ORDER FROM LOW SORT INDEX TO HIGH
     private ArrayList<SnakeCell> snake;
@@ -41,19 +41,19 @@ public class SortingHatDataModel extends MiniGameDataModel {
     private int numGameGridRows;
 
     // THESE ARE THE TILES STACKED AT THE START OF THE GAME
-    private ArrayList<SortingHatTile> stackTiles;
+    private ArrayList<PathXTile> stackTiles;
     private int stackTilesX;
     private int stackTilesY;
 
     // THESE ARE THE TILES THAT ARE MOVING AROUND, AND SO WE HAVE TO UPDATE
-    private ArrayList<SortingHatTile> movingTiles;
+    private ArrayList<PathXTile> movingTiles;
 
     // THIS IS THE TILE THE USER IS DRAGGING
-    private SortingHatTile selectedTile;
+    private PathXTile selectedTile;
     private int selectedTileIndex;
 
     // THIS IS THE TEMP TILE
-    private SortingHatTile tempTile;
+    private PathXTile tempTile;
 
     // KEEPS TRACK OF HOW MANY BAD SPELLS WERE CAST
     private int badSpellsCounter;
@@ -66,7 +66,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
     private String currentLevel;
 
     // THE SORTING ALGORITHM WHICH GENERATES THE PROPER TRANSACTIONS
-    private SortingHatAlgorithm sortingAlgorithm;
+    private PathXAlgorithm sortingAlgorithm;
 
     // THE PROPER TRANSACTIONS TO USE FOR COMPARISION AGAINST PLAYER MOVES
     private ArrayList<SortTransaction> properTransactionOrder;
@@ -80,7 +80,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
      *
      * @param initMiniGame The Sorting Hat game UI.
      */
-    public SortingHatDataModel(MiniGame initMiniGame) {
+    public PathXDataModel(MiniGame initMiniGame) {
         // KEEP THE GAME FOR LATER
         miniGame = initMiniGame;
 
@@ -120,7 +120,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         return numGameGridRows;
     }
 
-    public SortingHatTile getSelectedTile() {
+    public PathXTile getSelectedTile() {
         return selectedTile;
     }
 
@@ -128,15 +128,15 @@ public class SortingHatDataModel extends MiniGameDataModel {
         return currentLevel;
     }
 
-    public ArrayList<SortingHatTile> getTilesToSort() {
+    public ArrayList<PathXTile> getTilesToSort() {
         return tilesToSort;
     }
 
-    public ArrayList<SortingHatTile> getStackTiles() {
+    public ArrayList<PathXTile> getStackTiles() {
         return stackTiles;
     }
 
-    public Iterator<SortingHatTile> getMovingTiles() {
+    public Iterator<PathXTile> getMovingTiles() {
         return movingTiles.iterator();
     }
     
@@ -157,7 +157,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
      * Called after a level has been selected, it initializes the grid so that
      * it is the proper dimensions.
      */
-    public void initLevel(String levelName, ArrayList<SnakeCell> initSnake, SortingHatAlgorithm initSortingAlgorithm) {
+    public void initLevel(String levelName, ArrayList<SnakeCell> initSnake, PathXAlgorithm initSortingAlgorithm) {
         // KEEP THE TILE ORDER AND SORTING ALGORITHM FOR LATER
         snake = initSnake;
         sortingAlgorithm = initSortingAlgorithm;
@@ -166,7 +166,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         viewport.updateViewportBoundaries();
 
         // INITIALIZE THE PLAYER RECORD IF NECESSARY
-        SortingHatRecord playerRecord = ((SortingHatMiniGame) miniGame).getPlayerRecord();
+        PathXRecord playerRecord = ((PathXMiniGame) miniGame).getPlayerRecord();
         if (!playerRecord.hasLevel(levelName)) {
             playerRecord.addLevel(levelName, initSortingAlgorithm.name);
         }
@@ -185,17 +185,17 @@ public class SortingHatDataModel extends MiniGameDataModel {
         // WE'LL RENDER ALL THE TILES ON TOP OF THE BLANK TILE
         String blankTileFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND);
         BufferedImage blankTileImage = miniGame.loadImageWithColorKey(imgPath + blankTileFileName, COLOR_KEY);
-        ((SortingHatPanel) (miniGame.getCanvas())).setBlankTileImage(blankTileImage);
+        ((PathXPanel) (miniGame.getCanvas())).setBlankTileImage(blankTileImage);
 
         // THIS IS A HIGHLIGHTED BLANK TILE FOR WHEN THE PLAYER SELECTS ONE
         String blankTileSelectedFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND_SELECTED);
         BufferedImage blankTileSelectedImage = miniGame.loadImageWithColorKey(imgPath + blankTileSelectedFileName, COLOR_KEY);
-        ((SortingHatPanel) (miniGame.getCanvas())).setBlankTileSelectedImage(blankTileSelectedImage);
+        ((PathXPanel) (miniGame.getCanvas())).setBlankTileSelectedImage(blankTileSelectedImage);
 
         // THIS IS A MOUSE-OVER BLANK TILE
         String blankTileMouseOverFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND_MOUSE_OVER);
         BufferedImage blankTileMouseOverImage = miniGame.loadImageWithColorKey(imgPath + blankTileMouseOverFileName, COLOR_KEY);
-        ((SortingHatPanel) (miniGame.getCanvas())).setBlankTileMouseOverImage(blankTileMouseOverImage);
+        ((PathXPanel) (miniGame.getCanvas())).setBlankTileMouseOverImage(blankTileMouseOverImage);
 
         // NOW LOAD ALL THE TILES FROM A SPRITE SHEET
         String tilesSpriteSheetFile = props.getProperty(SortingHatPropertyType.IMAGE_SPRITE_SHEET_CHARACTER_TILES);
@@ -210,11 +210,11 @@ public class SortingHatDataModel extends MiniGameDataModel {
             addSpriteType(sT);
 
             // LET'S GENERATE AN IMAGE FOR EACH STATE FOR EACH SPRITE
-            sT.addState(SortingHatTileState.INVISIBLE_STATE.toString(), buildTileImage(img, img)); // DOESN'T MATTER
-            sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), buildTileImage(blankTileImage, img));
-            sT.addState(SortingHatTileState.SELECTED_STATE.toString(), buildTileImage(blankTileSelectedImage, img));
-            sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), buildTileImage(blankTileMouseOverImage, img));
-            SortingHatTile newTile = new SortingHatTile(sT, stackTilesX, stackTilesY, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString(), i + 1);
+            sT.addState(PathXTileState.INVISIBLE_STATE.toString(), buildTileImage(img, img)); // DOESN'T MATTER
+            sT.addState(PathXTileState.VISIBLE_STATE.toString(), buildTileImage(blankTileImage, img));
+            sT.addState(PathXTileState.SELECTED_STATE.toString(), buildTileImage(blankTileSelectedImage, img));
+            sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), buildTileImage(blankTileMouseOverImage, img));
+            PathXTile newTile = new PathXTile(sT, stackTilesX, stackTilesY, 0, 0, PathXTileState.INVISIBLE_STATE.toString(), i + 1);
 
             // AND ADD IT TO THE STACK
             stackTiles.add(newTile);
@@ -367,12 +367,12 @@ public class SortingHatDataModel extends MiniGameDataModel {
         moveAllTilesToStack();
 
         // GO THROUGH ALL OF THEM 
-        for (SortingHatTile tile : stackTiles) {
+        for (PathXTile tile : stackTiles) {
             // AND SET THEM PROPERLY
             if (enable) {
-                tile.setState(SortingHatTileState.VISIBLE_STATE.toString());
+                tile.setState(PathXTileState.VISIBLE_STATE.toString());
             } else {
-                tile.setState(SortingHatTileState.INVISIBLE_STATE.toString());
+                tile.setState(PathXTileState.INVISIBLE_STATE.toString());
             }
         }
     }
@@ -393,10 +393,10 @@ public class SortingHatDataModel extends MiniGameDataModel {
      *
      * @param to The destination data structure of tiles.
      */
-    private void moveTiles(ArrayList<SortingHatTile> from, ArrayList<SortingHatTile> to) {
+    private void moveTiles(ArrayList<PathXTile> from, ArrayList<PathXTile> to) {
         // GO THROUGH ALL THE TILES, TOP TO BOTTOM
         for (int i = from.size() - 1; i >= 0; i--) {
-            SortingHatTile tile = from.remove(i);
+            PathXTile tile = from.remove(i);
 
             // ONLY ADD IT IF IT'S NOT THERE ALREADY
             if (!to.contains(tile)) {
@@ -430,7 +430,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         // START THE ANIMATION FOR ALL THE TILES
         for (int i = 0; i < stackTiles.size(); i++) {
             // GET EACH TILE
-            SortingHatTile tile = stackTiles.get(i);
+            PathXTile tile = stackTiles.get(i);
 
             // MAKE SURE IT'S MOVED EACH FRAME
             movingTiles.add(tile);
@@ -458,8 +458,8 @@ public class SortingHatDataModel extends MiniGameDataModel {
      */
     public void swapTiles(int index1, int index2) {
         // GET THE TILES
-        SortingHatTile tile1 = tilesToSort.get(index1);
-        SortingHatTile tile2 = tilesToSort.get(index2);
+        PathXTile tile1 = tilesToSort.get(index1);
+        PathXTile tile2 = tilesToSort.get(index2);
 
         // GET THE TILE TWO LOCATION
         int tile2Col = tile2.getGridColumn();
@@ -489,7 +489,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         if (transactionCounter == this.properTransactionOrder.size()) {
             // YUP UPDATE EVERYTHING ACCORDINGLY
             for (int i = 0; i < tilesToSort.size(); i++) {
-                tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+                tilesToSort.get(i).setState(PathXTileState.VISIBLE_STATE.toString());
             }
             endGameAsWin();
         }
@@ -522,7 +522,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
             swapTiles(index1, index2);
 
             // DESELECT THE SELECTED TILE
-            selectedTile.setState(SortingHatTileState.VISIBLE_STATE.toString());
+            selectedTile.setState(PathXTileState.VISIBLE_STATE.toString());
             selectedTile = null;
             selectedTileIndex = -1;
 
@@ -541,7 +541,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
     // THE GRID LOCATION OF col, row, AND RETURNS IT'S INDEX
     private int getSnakeIndex(int col, int row) {
         for (int i = 0; i < tilesToSort.size(); i++) {
-            SortingHatTile tile = tilesToSort.get(i);
+            PathXTile tile = tilesToSort.get(i);
             if ((tile.getGridColumn() == col) && tile.getGridRow() == row) {
                 return i;
             }
@@ -573,8 +573,8 @@ public class SortingHatDataModel extends MiniGameDataModel {
         int row = calculateGridCellRow(y);
 
         // DISABLE THE STATS DIALOG IF IT IS OPEN
-        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(SortingHatTileState.VISIBLE_STATE.toString())) {
-            game.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(PathXTileState.VISIBLE_STATE.toString())) {
+            game.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
             return;
         }
 
@@ -585,7 +585,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
         if (index < 0) {
             // DESELECT A TILE IF ONE IS SELECTED
             if (selectedTile != null) {
-                selectedTile.setState(SortingHatTileState.VISIBLE_STATE.toString());
+                selectedTile.setState(PathXTileState.VISIBLE_STATE.toString());
                 selectedTile = null;
                 selectedTileIndex = -1;
                 miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_DESELECT_TILE.toString(), false);
@@ -595,7 +595,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
             // SELECT THE TILE IF NONE IS SELECTED
             if (selectedTile == null) {
                 selectedTile = tilesToSort.get(index);
-                selectedTile.setState(SortingHatTileState.SELECTED_STATE.toString());
+                selectedTile.setState(PathXTileState.SELECTED_STATE.toString());
                 selectedTileIndex = index;
                 miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
             } // A TILE WAS ALREADY SELECTED, SO THIS MUST HAVE BEEN THE SECOND TILE
@@ -620,13 +620,13 @@ public class SortingHatDataModel extends MiniGameDataModel {
         long gameTime = endTime.getTimeInMillis() - startTime.getTimeInMillis();
 
         // RECORD IT AS A WIN
-        ((SortingHatMiniGame) miniGame).getPlayerRecord().addWin(currentLevel);
+        ((PathXMiniGame) miniGame).getPlayerRecord().addWin(currentLevel);
 
         // SAVE PLAYER DATA
-        ((SortingHatMiniGame) miniGame).savePlayerRecord();
+        ((PathXMiniGame) miniGame).savePlayerRecord();
 
         // DISPLAY THE WIN DIALOG
-        miniGame.getGUIDialogs().get(WIN_DIALOG_TYPE).setState(SortingHatTileState.VISIBLE_STATE.toString());
+        miniGame.getGUIDialogs().get(WIN_DIALOG_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
 
         // AND PLAY THE WIN ANIMATION
         playWinAnimation();
@@ -642,10 +642,10 @@ public class SortingHatDataModel extends MiniGameDataModel {
      */
     public void endGameAsLoss() {
         // ADD A LOSS
-        ((SortingHatMiniGame) miniGame).getPlayerRecord().addLoss(currentLevel);
+        ((PathXMiniGame) miniGame).getPlayerRecord().addLoss(currentLevel);
 
         // SAVE PLAYER DATA
-        ((SortingHatMiniGame) miniGame).savePlayerRecord();
+        ((PathXMiniGame) miniGame).savePlayerRecord();
     }
 
     /**
@@ -664,15 +664,15 @@ public class SortingHatDataModel extends MiniGameDataModel {
         // RANDOMLY ORDER THEM
         moveAllTilesToStack();
         Collections.shuffle(stackTiles);
-        for (SortingHatTile tile : stackTiles) {
+        for (PathXTile tile : stackTiles) {
             tile.setX(TEMP_TILE_X);
             tile.setY(TEMP_TILE_Y);
-            tile.setState(SortingHatTileState.VISIBLE_STATE.toString());
+            tile.setState(PathXTileState.VISIBLE_STATE.toString());
         }
 
         // SEND THE TILES OFF TO THE GRID TO BE SORTED
         for (int i = 0; i < snake.size(); i++) {
-            SortingHatTile tileToPlace = stackTiles.remove(stackTiles.size() - 1);
+            PathXTile tileToPlace = stackTiles.remove(stackTiles.size() - 1);
             tilesToSort.add(tileToPlace);
             SnakeCell sC = snake.get(i);
             int targetX = this.calculateGridTileX(sC.col);
@@ -680,7 +680,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
             tileToPlace.setTarget(targetX, targetY);
             tileToPlace.setGridCell(sC.col, sC.row);
             tileToPlace.startMovingToTarget(MAX_TILE_VELOCITY);
-            tileToPlace.setState(SortingHatTileState.VISIBLE_STATE.toString());
+            tileToPlace.setState(PathXTileState.VISIBLE_STATE.toString());
             movingTiles.add(tileToPlace);
         }
 
@@ -695,8 +695,8 @@ public class SortingHatDataModel extends MiniGameDataModel {
         beginGame();
 
         // CLEAR ANY WIN OR LOSS DISPLAY
-        miniGame.getGUIDialogs().get(WIN_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
-        miniGame.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(SortingHatTileState.INVISIBLE_STATE.toString());
+        miniGame.getGUIDialogs().get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        miniGame.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
     }
 
     /**
@@ -713,7 +713,7 @@ public class SortingHatDataModel extends MiniGameDataModel {
             // WE ONLY NEED TO UPDATE AND MOVE THE MOVING TILES
             for (int i = 0; i < movingTiles.size(); i++) {
                 // GET THE NEXT TILE
-                SortingHatTile tile = movingTiles.get(i);
+                PathXTile tile = movingTiles.get(i);
 
                 // THIS WILL UPDATE IT'S POSITION USING ITS VELOCITY
                 tile.update(game);
@@ -739,17 +739,17 @@ public class SortingHatDataModel extends MiniGameDataModel {
                 if (index >= 0) {
                     for (int i = 0; i < tilesToSort.size(); i++) {
                         if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != tilesToSort.get(i)) {
-                            tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+                            tilesToSort.get(i).setState(PathXTileState.VISIBLE_STATE.toString());
                         }
                     }
-                    SortingHatTile mousedOver = tilesToSort.get(index);
+                    PathXTile mousedOver = tilesToSort.get(index);
                     if (mousedOver.containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != mousedOver) {
-                        mousedOver.setState(SortingHatTileState.MOUSE_OVER_STATE.toString());
+                        mousedOver.setState(PathXTileState.MOUSE_OVER_STATE.toString());
                     }
                 } else {
                     for (int i = 0; i < tilesToSort.size(); i++) {
                         if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != tilesToSort.get(i)) {
-                            tilesToSort.get(i).setState(SortingHatTileState.VISIBLE_STATE.toString());
+                            tilesToSort.get(i).setState(PathXTileState.VISIBLE_STATE.toString());
                         }
                     }
                 }
