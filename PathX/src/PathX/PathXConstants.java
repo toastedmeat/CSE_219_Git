@@ -78,10 +78,10 @@ public class PathXConstants
     // UI CONTROLS POSITIONS IN THE GAME SCREEN
     public static final int NORTH_PANEL_HEIGHT = 130;
     public static final int CONTROLS_MARGIN = 0;
-    public static final int NEW_BUTTON_X = 0;
-    public static final int NEW_BUTTON_Y = 0;
-    public static final int BACK_BUTTON_X = 130;
-    public static final int BACK_BUTTON_Y = 0;
+    public static final int NEW_BUTTON_X = 1180;
+    public static final int NEW_BUTTON_Y = 60;
+    public static final int BACK_BUTTON_X = 1100;
+    public static final int BACK_BUTTON_Y = 60;
     public static final int TILE_COUNT_X = NEW_BUTTON_X + 260 + CONTROLS_MARGIN;
     public static final int TILE_COUNT_Y = 0;
     public static final int TILE_COUNT_OFFSET = 145;

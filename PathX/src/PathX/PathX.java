@@ -36,11 +36,11 @@ public class PathX
             props.loadProperties(PROPERTIES_FILE_NAME, PROPERTIES_SCHEMA_FILE_NAME);
             
             // THEN WE'LL LOAD THE GAME FLAVOR AS SPECIFIED BY THE PROPERTIES FILE
-            String gameFlavorFile = props.getProperty(SortingHatPropertyType.FILE_GAME_PROPERTIES);
+            String gameFlavorFile = props.getProperty(pathXPropertyType.FILE_GAME_PROPERTIES);
             props.loadProperties(gameFlavorFile, PROPERTIES_SCHEMA_FILE_NAME);
 
             // NOW WE CAN LOAD THE UI, WHICH WILL USE ALL THE FLAVORED CONTENT
-            String appTitle = props.getProperty(SortingHatPropertyType.TEXT_TITLE_BAR_GAME);
+            String appTitle = props.getProperty(pathXPropertyType.TEXT_TITLE_BAR_GAME);
             miniGame.initMiniGame(appTitle, FPS, WINDOW_WIDTH, WINDOW_HEIGHT);
             
             // GET THE PROPER WINDOW DIMENSIONS
@@ -51,15 +51,15 @@ public class PathX
         {
             // LET THE ERROR HANDLER PROVIDE THE RESPONSE
             PathXErrorHandler errorHandler = miniGame.getErrorHandler();
-            errorHandler.processError(SortingHatPropertyType.TEXT_ERROR_LOADING_XML_FILE);
+            errorHandler.processError(pathXPropertyType.TEXT_ERROR_LOADING_XML_FILE);
         }
     }
     
     /**
-     * SortingHatPropertyType represents the types of data that will need
+     * pathXPropertyType represents the types of data that will need
      * to be extracted from XML files.
      */
-    public enum SortingHatPropertyType
+    public enum pathXPropertyType
     {
         // LOADED FROM properties.xml
         
@@ -77,6 +77,8 @@ public class PathX
         /* IMAGE FILE NAMES */
         IMAGE_BACKGROUND_GAME,
         IMAGE_BACKGROUND_MENU,
+        IMAGE_BACKGROUND_HELP,
+        IMAGE_BACKGROUND_SETTINGS,
         IMAGE_BUTTON_NEW,
         IMAGE_BUTTON_NEW_MOUSE_OVER,
         IMAGE_BUTTON_BACK,

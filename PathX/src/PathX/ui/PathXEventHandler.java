@@ -38,15 +38,10 @@ public class PathXEventHandler {
     }
 
     /**
-     * Called when the user clicks the New button.
+     * Called when the user clicks the X button.
      */
-    public void respondToNewGameRequest() {
-        // IF THERE IS A GAME UNDERWAY, COUNT IT AS A LOSS
-        if (game.getDataModel().inProgress()) {
-            game.getDataModel().endGameAsLoss();
-        }
-        // RESET THE GAME AND ITS DATA
-        game.reset();
+    public void respondToExitGameRequest() {
+        System.exit(0);
     }
 
     public void respondToBackRequest() {
@@ -103,7 +98,7 @@ public class PathXEventHandler {
                     SortTransaction move = data.getPreviousSwapTransaction();
                     if (move != null) {
                         data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
+                        game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_UNDO.toString(), false);
                     }
                 }
             }
@@ -123,7 +118,7 @@ public class PathXEventHandler {
                 SortTransaction move = data.getNextSwapTransaction();
                 if (move != null) {
                     data.swapTiles(move.getFromIndex(), move.getToIndex());
-                    game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_CHEAT.toString(), false);
+                    game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CHEAT.toString(), false);
                 }
             }
         }
@@ -136,7 +131,7 @@ public class PathXEventHandler {
                     SortTransaction move = data.getPreviousSwapTransaction();
                     if (move != null) {
                         data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(PathX.SortingHatPropertyType.AUDIO_CUE_UNDO.toString(), false);
+                        game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_UNDO.toString(), false);
                     }
                 }
             }

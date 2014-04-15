@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import mini_game.Viewport;
-import PathX.PathX.SortingHatPropertyType;
+import PathX.PathX.pathXPropertyType;
 import PathX.data.PathXLevelRecord;
 import PathX.data.PathXDataModel;
 import PathX.data.PathXRecord;
@@ -133,7 +133,7 @@ public class PathXFileManager
         catch(Exception e)
         {
             // LEVEL LOADING ERROR
-            miniGame.getErrorHandler().processError(SortingHatPropertyType.TEXT_ERROR_LOADING_LEVEL);
+            miniGame.getErrorHandler().processError(pathXPropertyType.TEXT_ERROR_LOADING_LEVEL);
         }
     }    
     
@@ -148,7 +148,7 @@ public class PathXFileManager
         try
         {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String recordPath = PATH_DATA + props.getProperty(SortingHatPropertyType.FILE_PLAYER_RECORD);
+            String recordPath = PATH_DATA + props.getProperty(pathXPropertyType.FILE_PLAYER_RECORD);
             File fileToSave = new File(recordPath);
 
             byte[] bytes = record.toByteArray();
@@ -182,7 +182,7 @@ public class PathXFileManager
         try
         {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String recordPath = PATH_DATA + props.getProperty(SortingHatPropertyType.FILE_PLAYER_RECORD);
+            String recordPath = PATH_DATA + props.getProperty(pathXPropertyType.FILE_PLAYER_RECORD);
             File fileToOpen = new File(recordPath);
 
             // LET'S USE A FAST LOADING TECHNIQUE. WE'LL LOAD ALL OF THE

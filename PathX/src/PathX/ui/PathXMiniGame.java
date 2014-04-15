@@ -26,7 +26,7 @@ import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
-import PathX.PathX.SortingHatPropertyType;
+import PathX.PathX.pathXPropertyType;
 import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 
@@ -150,7 +150,7 @@ public class PathXMiniGame extends MiniGame {
         guiDecor.get(ALGORITHM_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
 
         // DEACTIVATE THE LEVEL SELECT BUTTONS
-        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String level : levels) {
             guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
@@ -160,15 +160,45 @@ public class PathXMiniGame extends MiniGame {
         currentScreenState = GAME_SCREEN_STATE;
 
         // PLAY THE GAMEPLAY SCREEN SONG
-        //audio.stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
-        //audio.play(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString(), true); 
+        //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
+        //audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true); 
     }
     public void switchToSettingScreen(){
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
+        
+         // ACTIVATE THE TOOLBAR AND ITS CONTROLS
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
+
+        // DEACTIVATE THE LEVEL SELECT BUTTONS
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        for (String level : levels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
+        }
+        
         currentScreenState = SETTINGS_SCREEN_STATE;
     }
     public void switchToHelpScreen(){
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         guiDecor.get(BACKGROUND_TYPE).setState(HELP_SCREEN_STATE);
+        
+         // ACTIVATE THE TOOLBAR AND ITS CONTROLS
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
+
+        // DEACTIVATE THE LEVEL SELECT BUTTONS
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        for (String level : levels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
+        }
+        
         currentScreenState = HELP_SCREEN_STATE;
     }
     /**
@@ -195,7 +225,7 @@ public class PathXMiniGame extends MiniGame {
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String level : levels) {
             guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(true);
@@ -215,9 +245,9 @@ public class PathXMiniGame extends MiniGame {
         data.setGameState(MiniGameState.NOT_STARTED);
 
         // PLAY THE WELCOME SCREEN SONG
-        //audio.stop(SortingHatPropertyType.AUDIO_CUE_WIN.toString());
-        //audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
-        ///audio.stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
+        //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
+        //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
+        ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
     }
 
     // METHODS OVERRIDDEN FROM MiniGame
@@ -234,23 +264,23 @@ public class PathXMiniGame extends MiniGame {
     public void initAudioContent() {
         try {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String audioPath = props.getProperty(SortingHatPropertyType.PATH_AUDIO);
+            String audioPath = props.getProperty(pathXPropertyType.PATH_AUDIO);
 
             //LOAD ALL THE AUDIO
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_SELECT_TILE);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_DESELECT_TILE);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_GOOD_MOVE);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_BAD_MOVE);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_CHEAT);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_UNDO);
-            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_WIN);
-            loadAudioCue(SortingHatPropertyType.SONG_CUE_MENU_SCREEN);
-            loadAudioCue(SortingHatPropertyType.SONG_CUE_GAME_SCREEN);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_SELECT_TILE);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_DESELECT_TILE);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_GOOD_MOVE);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_BAD_MOVE);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_CHEAT);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_UNDO);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_WIN);
+            loadAudioCue(pathXPropertyType.SONG_CUE_MENU_SCREEN);
+            loadAudioCue(pathXPropertyType.SONG_CUE_GAME_SCREEN);
 
             // PLAY THE WELCOME SCREEN SONG
-            //audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+            //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InvalidMidiDataException | MidiUnavailableException e) {
-            errorHandler.processError(SortingHatPropertyType.TEXT_ERROR_LOADING_AUDIO);
+            errorHandler.processError(pathXPropertyType.TEXT_ERROR_LOADING_AUDIO);
         }
     }
 
@@ -258,11 +288,11 @@ public class PathXMiniGame extends MiniGame {
      * This helper method loads the audio file associated with audioCueType,
      * which should have been specified via an XML properties file.
      */
-    private void loadAudioCue(SortingHatPropertyType audioCueType)
+    private void loadAudioCue(pathXPropertyType audioCueType)
             throws UnsupportedAudioFileException, IOException, LineUnavailableException,
             InvalidMidiDataException, MidiUnavailableException {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        String audioPath = props.getProperty(SortingHatPropertyType.PATH_AUDIO);
+        String audioPath = props.getProperty(pathXPropertyType.PATH_AUDIO);
         String cue = props.getProperty(audioCueType.toString());
         audio.loadAudio(audioCueType.toString(), audioPath + cue);
     }
@@ -307,8 +337,8 @@ public class PathXMiniGame extends MiniGame {
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        String imgPath = props.getProperty(SortingHatPropertyType.PATH_IMG);
-        String windowIconFile = props.getProperty(SortingHatPropertyType.IMAGE_WINDOW_ICON);
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        String windowIconFile = props.getProperty(pathXPropertyType.IMAGE_WINDOW_ICON);
         img = loadImage(imgPath + windowIconFile);
         window.setIconImage(img);
 
@@ -317,25 +347,29 @@ public class PathXMiniGame extends MiniGame {
 
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
         currentScreenState = MENU_SCREEN_STATE;
-        img = loadImage(imgPath + props.getProperty(SortingHatPropertyType.IMAGE_BACKGROUND_MENU));
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_MENU));
         sT = new SpriteType(BACKGROUND_TYPE);
         sT.addState(MENU_SCREEN_STATE, img);
-        img = loadImage(imgPath + props.getProperty(SortingHatPropertyType.IMAGE_BACKGROUND_GAME)); // Level BaCKGROUND
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_GAME)); // Level BaCKGROUND
         sT.addState(GAME_SCREEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_HELP));
+        sT.addState(HELP_SCREEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_SETTINGS));
+        sT.addState(SETTINGS_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, MENU_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
 
         // LOAD THE WAND CURSOR
-        String cursorName = props.getProperty(SortingHatPropertyType.IMAGE_CURSOR_WAND);
+        String cursorName = props.getProperty(pathXPropertyType.IMAGE_CURSOR_WAND);
         img = loadImageWithColorKey(imgPath + cursorName, COLOR_KEY);
         Point cursorHotSpot = new Point(0, 0);
-        Cursor wandCursor = Toolkit.getDefaultToolkit().createCustomCursor(img, cursorHotSpot, cursorName);
-        window.setCursor(wandCursor);
+        Cursor arrowCursor = Toolkit.getDefaultToolkit().createCustomCursor(img, cursorHotSpot, cursorName);
+        window.setCursor(arrowCursor);
 
         // ADD A BUTTON FOR EACH LEVEL AVAILABLE
-        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
-        ArrayList<String> levelImageNames = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_IMAGE_OPTIONS);
-        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        ArrayList<String> levelImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_IMAGE_OPTIONS);
+        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
         float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
         Viewport viewport = data.getViewport();
         x = (viewport.getScreenWidth() - totalWidth) / 2.0f;
@@ -352,29 +386,29 @@ public class PathXMiniGame extends MiniGame {
 
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
         // THEN THE NEW BUTTON
-        String newButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW);
+        String newButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
         img = loadImage(imgPath + newButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String newMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW_MOUSE_OVER);
+        String newMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW_MOUSE_OVER);
         img = loadImage(imgPath + newMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(NEW_GAME_BUTTON_TYPE, s);
 
         // THEN THE BACK BUTTON
-        String backButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_BACK);
+        String backButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_BACK);
         sT = new SpriteType(BACK_BUTTON_TYPE);
         img = loadImage(imgPath + backButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String backMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_BACK_MOUSE_OVER);
+        String backMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_BACK_MOUSE_OVER);
         img = loadImage(imgPath + backMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(BACK_BUTTON_TYPE, s);
 
         // AND THE MISCASTS COUNT
-        String miscastCountContainer = props.getProperty(SortingHatPropertyType.IMAGE_DECOR_MISCASTS);
+        String miscastCountContainer = props.getProperty(pathXPropertyType.IMAGE_DECOR_MISCASTS);
         sT = new SpriteType(MISCASTS_COUNT_TYPE);
         img = loadImage(imgPath + miscastCountContainer);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
@@ -382,7 +416,7 @@ public class PathXMiniGame extends MiniGame {
         guiDecor.put(MISCASTS_COUNT_TYPE, s);
 
         // AND THE TIME DISPLAY
-        String timeContainer = props.getProperty(SortingHatPropertyType.IMAGE_DECOR_TIME);
+        String timeContainer = props.getProperty(pathXPropertyType.IMAGE_DECOR_TIME);
         sT = new SpriteType(TIME_TYPE);
         img = loadImage(imgPath + timeContainer);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
@@ -390,29 +424,29 @@ public class PathXMiniGame extends MiniGame {
         guiDecor.put(TIME_TYPE, s);
 
         // AND THE STATS BUTTON
-        String statsButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_STATS);
+        String statsButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_STATS);
         sT = new SpriteType(STATS_BUTTON_TYPE);
         img = loadImage(imgPath + statsButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String statsMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_STATS_MOUSE_OVER);
+        String statsMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_STATS_MOUSE_OVER);
         img = loadImage(imgPath + statsMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, STATS_X, STATS_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(STATS_BUTTON_TYPE, s);
 
         // AND THE STATS BUTTON
-        String undoButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_UNDO);
+        String undoButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UNDO);
         sT = new SpriteType(UNDO_BUTTON_TYPE);
         img = loadImage(imgPath + undoButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String undoMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_UNDO_MOUSE_OVER);
+        String undoMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UNDO_MOUSE_OVER);
         img = loadImage(imgPath + undoMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, UNDO_BUTTON_X, UNDO_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(UNDO_BUTTON_TYPE, s);
 
         // AND THE TILE STACK
-        String tileStack = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_TEMP_TILE);
+        String tileStack = props.getProperty(pathXPropertyType.IMAGE_BUTTON_TEMP_TILE);
         sT = new SpriteType(ALGORITHM_TYPE);
         img = loadImageWithColorKey(imgPath + tileStack, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
@@ -421,7 +455,7 @@ public class PathXMiniGame extends MiniGame {
 
         // NOW ADD THE DIALOGS
         // AND THE STATS DISPLAY
-        String statsDialog = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_STATS);
+        String statsDialog = props.getProperty(pathXPropertyType.IMAGE_DIALOG_STATS);
         sT = new SpriteType(STATS_DIALOG_TYPE);
         img = loadImageWithColorKey(imgPath + statsDialog, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
@@ -431,7 +465,7 @@ public class PathXMiniGame extends MiniGame {
         guiDialogs.put(STATS_DIALOG_TYPE, s);
 
         // AND THE WIN CONDITION DISPLAY
-        String winDisplay = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_WIN);
+        String winDisplay = props.getProperty(pathXPropertyType.IMAGE_DIALOG_WIN);
         sT = new SpriteType(WIN_DIALOG_TYPE);
         img = loadImageWithColorKey(imgPath + winDisplay, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
@@ -463,7 +497,7 @@ public class PathXMiniGame extends MiniGame {
 
         // SEND ALL LEVEL SELECTION HANDLING OFF TO THE EVENT HANDLER
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String levelFile : levels) {
             if (levelFile.equalsIgnoreCase("./pathX/SelectionSnake.sort")) {
                 Sprite levelButton = guiButtons.get(levelFile);
@@ -480,17 +514,59 @@ public class PathXMiniGame extends MiniGame {
                         eventHandler.respondToSelectLevelRequest();
                     }
                 }.init(levelButton));
-            } else if (levelFile.equalsIgnoreCase("./pathX/BubbleSortCoil.sort")) {
-            } else if (levelFile.equalsIgnoreCase("./pathX/SelectionL.sort")) {
-            } else if (levelFile.equalsIgnoreCase("./pathX/BubbleSortO.sort")) {
+            } else if (levelFile.equalsIgnoreCase("./pathX/BubbleSortCoil.sort")) { // Reset
+                Sprite levelButton = guiButtons.get(levelFile);
+                levelButton.setActionCommand(PATH_DATA + levelFile);
+                levelButton.setActionListener(new ActionListener() {
+                    Sprite s;
+
+                    public ActionListener init(Sprite initS) {
+                        s = initS;
+                        return this;
+                    }
+
+                    public void actionPerformed(ActionEvent ae) {
+                        eventHandler.respondToResetRequest();
+                    }
+                }.init(levelButton));
+            } else if (levelFile.equalsIgnoreCase("./pathX/SelectionL.sort")) { // Settings
+                Sprite levelButton = guiButtons.get(levelFile);
+                levelButton.setActionCommand(PATH_DATA + levelFile);
+                levelButton.setActionListener(new ActionListener() {
+                    Sprite s;
+
+                    public ActionListener init(Sprite initS) {
+                        s = initS;
+                        return this;
+                    }
+
+                    public void actionPerformed(ActionEvent ae) {
+                        eventHandler.respondToSettingsRequest();
+                    }
+                }.init(levelButton));
+            } else if (levelFile.equalsIgnoreCase("./pathX/BubbleSortO.sort")) { // Help
+                Sprite levelButton = guiButtons.get(levelFile);
+                levelButton.setActionCommand(PATH_DATA + levelFile);
+                levelButton.setActionListener(new ActionListener() {
+                    Sprite s;
+
+                    public ActionListener init(Sprite initS) {
+                        s = initS;
+                        return this;
+                    }
+
+                    public void actionPerformed(ActionEvent ae) {
+                        eventHandler.respondToHelpRequest();
+                    }
+                }.init(levelButton));
             }
         }
 
         // NEW GAME EVENT HANDLER
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                //audio.play(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);    
-                eventHandler.respondToNewGameRequest();
+                //audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);    
+                eventHandler.respondToExitGameRequest();
             }
         });
 
@@ -527,7 +603,7 @@ public class PathXMiniGame extends MiniGame {
      */
     @Override
     public void reset() {
-        //audio.stop(SortingHatPropertyType.AUDIO_CUE_WIN.toString());
+        //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         data.reset(this);
     }
 

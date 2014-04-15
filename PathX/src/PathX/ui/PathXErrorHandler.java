@@ -2,7 +2,7 @@ package PathX.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import PathX.PathX.SortingHatPropertyType;
+import PathX.PathX.pathXPropertyType;
 import properties_manager.PropertiesManager;
 
 /**
@@ -34,14 +34,14 @@ public class PathXErrorHandler
      * @param errorType Identifies the type of error that happened, which
      * allows us to get and display different text for different errors.
      */
-    public void processError(SortingHatPropertyType errorType)
+    public void processError(pathXPropertyType errorType)
     {
         // GET THE FEEDBACK TEXT
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String errorFeedbackText = props.getProperty(errorType);
         
         // NOTE THAT WE'LL USE THE SAME DIALOG TITLE FOR ALL ERROR TYPES
-        String errorTitle = props.getProperty(SortingHatPropertyType.TEXT_TITLE_BAR_ERROR);
+        String errorTitle = props.getProperty(pathXPropertyType.TEXT_TITLE_BAR_ERROR);
         
         // POP OPEN A DIALOG TO DISPLAY TO THE USER
         JOptionPane.showMessageDialog(window, errorFeedbackText, errorTitle, JOptionPane.ERROR_MESSAGE);

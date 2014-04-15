@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import PathX.PathX.SortingHatPropertyType;
+import PathX.PathX.pathXPropertyType;
 import mini_game.MiniGame;
 import mini_game.MiniGameDataModel;
 import mini_game.SpriteType;
@@ -179,26 +179,26 @@ public class PathXDataModel extends MiniGameDataModel {
      */
     public void initTiles() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        String imgPath = props.getProperty(SortingHatPropertyType.PATH_IMG);
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         SpriteType sT;
 
         // WE'LL RENDER ALL THE TILES ON TOP OF THE BLANK TILE
-        String blankTileFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND);
+        String blankTileFileName = props.getProperty(pathXPropertyType.IMAGE_TILE_BACKGROUND);
         BufferedImage blankTileImage = miniGame.loadImageWithColorKey(imgPath + blankTileFileName, COLOR_KEY);
         ((PathXPanel) (miniGame.getCanvas())).setBlankTileImage(blankTileImage);
 
         // THIS IS A HIGHLIGHTED BLANK TILE FOR WHEN THE PLAYER SELECTS ONE
-        String blankTileSelectedFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND_SELECTED);
+        String blankTileSelectedFileName = props.getProperty(pathXPropertyType.IMAGE_TILE_BACKGROUND_SELECTED);
         BufferedImage blankTileSelectedImage = miniGame.loadImageWithColorKey(imgPath + blankTileSelectedFileName, COLOR_KEY);
         ((PathXPanel) (miniGame.getCanvas())).setBlankTileSelectedImage(blankTileSelectedImage);
 
         // THIS IS A MOUSE-OVER BLANK TILE
-        String blankTileMouseOverFileName = props.getProperty(SortingHatPropertyType.IMAGE_TILE_BACKGROUND_MOUSE_OVER);
+        String blankTileMouseOverFileName = props.getProperty(pathXPropertyType.IMAGE_TILE_BACKGROUND_MOUSE_OVER);
         BufferedImage blankTileMouseOverImage = miniGame.loadImageWithColorKey(imgPath + blankTileMouseOverFileName, COLOR_KEY);
         ((PathXPanel) (miniGame.getCanvas())).setBlankTileMouseOverImage(blankTileMouseOverImage);
 
         // NOW LOAD ALL THE TILES FROM A SPRITE SHEET
-        String tilesSpriteSheetFile = props.getProperty(SortingHatPropertyType.IMAGE_SPRITE_SHEET_CHARACTER_TILES);
+        String tilesSpriteSheetFile = props.getProperty(pathXPropertyType.IMAGE_SPRITE_SHEET_CHARACTER_TILES);
         ArrayList<BufferedImage> tileImages = miniGame.loadSpriteSheetImagesWithColorKey(imgPath + tilesSpriteSheetFile,
                 68, 14, 5, 18, 5, COLOR_KEY);
 
@@ -527,13 +527,13 @@ public class PathXDataModel extends MiniGameDataModel {
             selectedTileIndex = -1;
 
             // PLAY THE GOOD MOVE SOUND EFFECT
-            miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            miniGame.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
         } else {
             // BAD MOVE
             badSpellsCounter++;
 
             // PLAY THE BAD MOVE SOUND EFFECT
-            miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+            miniGame.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
         }
     }
 
@@ -588,7 +588,7 @@ public class PathXDataModel extends MiniGameDataModel {
                 selectedTile.setState(PathXTileState.VISIBLE_STATE.toString());
                 selectedTile = null;
                 selectedTileIndex = -1;
-                miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_DESELECT_TILE.toString(), false);
+                miniGame.getAudio().play(pathXPropertyType.AUDIO_CUE_DESELECT_TILE.toString(), false);
             }
         } // IT'S IN THE GRID
         else {
@@ -597,7 +597,7 @@ public class PathXDataModel extends MiniGameDataModel {
                 selectedTile = tilesToSort.get(index);
                 selectedTile.setState(PathXTileState.SELECTED_STATE.toString());
                 selectedTileIndex = index;
-                miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
+                miniGame.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
             } // A TILE WAS ALREADY SELECTED, SO THIS MUST HAVE BEEN THE SECOND TILE
             // SELECTED, SO SWAP THEM
             else {
@@ -632,9 +632,9 @@ public class PathXDataModel extends MiniGameDataModel {
         playWinAnimation();
 
         // AND PLAY THE WIN AUDIO
-        miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString());
-        miniGame.getAudio().stop(SortingHatPropertyType.SONG_CUE_GAME_SCREEN.toString());
-        miniGame.getAudio().play(SortingHatPropertyType.AUDIO_CUE_WIN.toString(), false);
+        miniGame.getAudio().stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
+        miniGame.getAudio().stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+        miniGame.getAudio().play(pathXPropertyType.AUDIO_CUE_WIN.toString(), false);
     }
 
     /**

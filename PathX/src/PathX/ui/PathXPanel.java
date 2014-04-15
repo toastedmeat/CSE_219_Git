@@ -16,7 +16,7 @@ import mini_game.Viewport;
 import properties_manager.PropertiesManager;
 import PathX.data.PathXDataModel;
 import static PathX.PathXConstants.*;
-import PathX.PathX.SortingHatPropertyType;
+import PathX.PathX.pathXPropertyType;
 import PathX.data.SnakeCell;
 import PathX.data.PathXRecord;
 
@@ -282,11 +282,11 @@ public class PathXPanel extends JPanel
 
             // GET ALL THE STATS PROMPTS
             PropertiesManager props = PropertiesManager.getPropertiesManager();            
-            String algorithmPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_ALGORITHM);
-            String gamesPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_GAMES);
-            String winsPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_WINS);
-            String perfectWinsPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_PERFECT_WINS);
-            String fastestPerfectWinPrompt = props.getProperty(SortingHatPropertyType.TEXT_LABEL_STATS_FASTEST_PERFECT_WIN);
+            String algorithmPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_ALGORITHM);
+            String gamesPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_GAMES);
+            String winsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_WINS);
+            String perfectWinsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_PERFECT_WINS);
+            String fastestPerfectWinPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_FASTEST_PERFECT_WIN);
 
             // NOW DRAW ALL THE STATS WITH THEIR LABELS
             int dot = levelName.indexOf(".");
