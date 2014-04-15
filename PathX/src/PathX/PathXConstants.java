@@ -45,6 +45,8 @@ public class PathXConstants
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
+    public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
+    public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
 
     // ANIMATION SPEED
     public static final int FPS = 30;

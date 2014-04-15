@@ -9,6 +9,7 @@
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
         <property name="IMAGE_BACKGROUND_GAME"              value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"              value="./pathX/BackgroundMenu.png"></property>
+        <property name="IMAGE_BACKGROUND_HELP"              value="./pathX/HelpMenu.png"></property>
         <property name="IMAGE_BUTTON_NEW"                   value="./pathX/ButtonNewGame.png"></property>
         <property name="IMAGE_BUTTON_NEW_MOUSE_OVER"        value="./pathX/ButtonNewGameMouseOver.png"></property>
         <property name="IMAGE_BUTTON_BACK"                  value="./pathX/ButtonBack.png"></property>

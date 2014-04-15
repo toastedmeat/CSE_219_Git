@@ -55,14 +55,14 @@ public class PathXEventHandler {
             game.getDataModel().endGameAsLoss();
         }
         // RESET THE GAME AND ITS DATA
-        game.reset();
+        //game.reset();
         game.switchToSplashScreen();
     }
 
     /**
      * Called when the user clicks a button to select a level.
      */
-    public void respondToSelectLevelRequest(String levelFile) {
+    public void respondToSelectLevelRequest() {
         // WE ONLY LET THIS HAPPEN IF THE MENU SCREEN IS VISIBLE
         if (game.isCurrentScreenState(MENU_SCREEN_STATE)) {
             // GET THE GAME'S DATA MODEL, WHICH IS ALREADY LOCKED FOR US
@@ -70,14 +70,23 @@ public class PathXEventHandler {
 
             // UPDATE THE DATA
             PathXFileManager fileManager = game.getFileManager();
-            fileManager.loadLevel(levelFile);
-            data.reset(game);
+            //fileManager.loadLevel(levelFile);
+            //data.reset(game);
 
             // GO TO THE GAME
             game.switchToGameScreen();
         }
     }
-
+    public void respondToResetRequest(){
+        
+    }
+    public void respondToHelpRequest(){
+        game.switchToHelpScreen();
+    }
+    public void respondToSettingsRequest(){
+        game.switchToSettingScreen();
+    }
+    
     /**
      * Called when the user clicks the Stats button.
      */
