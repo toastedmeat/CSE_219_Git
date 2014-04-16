@@ -8,6 +8,7 @@
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
         <property name="IMAGE_BACKGROUND_GAME"              value="./pathX/BackgroundGame.png"></property>
+        <property name="IMAGE_BACKGROUND_GAME_MENU"              value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"           value="./pathX/BackgroundGameMap.png"></property>
         <property name="IMAGE_LEVEL_UNROBBED"               value="./pathX/unRobbedLocations.png"></property>
         <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"      value="./pathX/unRobbedLocationsMouseOver.png"></property>

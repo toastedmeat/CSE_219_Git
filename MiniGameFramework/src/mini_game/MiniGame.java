@@ -318,6 +318,7 @@ public abstract class MiniGame
         guiButtons = new TreeMap();
         guiDecor = new TreeMap();
         guiDialogs = new TreeMap();
+        guiLevels = new TreeMap();
 
         // GUI CONTROLS ARE SETUP BY THE GAME DEVELOPER
         // USING THIS FRAMEWORK

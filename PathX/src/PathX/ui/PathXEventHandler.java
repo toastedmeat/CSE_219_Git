@@ -90,6 +90,12 @@ public class PathXEventHandler {
             game.switchToGameScreen();
         }
     }
+    
+    public void respondToGameRequest(){
+        game.switchToGameLevel();
+    
+    }
+    
     public void respondToResetRequest(){
         
     }

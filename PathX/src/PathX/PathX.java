@@ -76,6 +76,7 @@ public class PathX
                 
         /* IMAGE FILE NAMES */
         IMAGE_BACKGROUND_GAME,
+        IMAGE_BACKGROUND_GAME_MENU,
         IMAGE_BACKGROUND_GAMEMAP,
         IMAGE_LEVEL_UNROBBED,
         IMAGE_BUTTON_LEVEL_MOUSE_OVER,

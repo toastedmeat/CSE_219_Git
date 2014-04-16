@@ -55,6 +55,7 @@ public class PathXConstants
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
     public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";
+    public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
 
