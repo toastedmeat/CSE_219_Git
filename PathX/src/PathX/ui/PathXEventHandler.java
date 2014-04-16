@@ -3,7 +3,6 @@ package PathX.ui;
 import java.awt.event.KeyEvent;
 import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
-import static PathX.PathXConstants.VIEWPORT_INC;
 import PathX.PathX;
 import PathX.data.SortTransaction;
 import PathX.data.PathXDataModel;

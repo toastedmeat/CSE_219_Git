@@ -74,6 +74,7 @@ public abstract class MiniGame
     // ONE HAS TO UNIQUELY NAME EACH CONTROL THAT GOES
     // IN THESE DATA STRUCTURES
     protected TreeMap<String, Sprite> guiButtons;
+    protected TreeMap<String, Sprite> guiLevels;
     protected TreeMap<String, Sprite> guiDecor;
     protected TreeMap<String, Sprite> guiDialogs;
     
@@ -217,7 +218,11 @@ public abstract class MiniGame
     {
         return guiButtons;
     }
-
+    
+    public TreeMap<String, Sprite> getGUILevels()
+    {
+        return guiLevels;
+    }
     /**
      * For accessing the game GUI decor.
      *

@@ -153,6 +153,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
+        
+        guiLevels.get(LEVEL_GAME_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiLevels.get(LEVEL_GAME_TYPE).setEnabled(true);
 
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
@@ -225,7 +228,17 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
         
+        guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(DOWN_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(LEFT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
         
+        guiLevels.get(LEVEL_GAME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiLevels.get(LEVEL_GAME_TYPE).setEnabled(false);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -467,6 +480,16 @@ public class PathXMiniGame extends MiniGame {
         s = new Sprite(sT, RIGHT_BUTTON_X, RIGHT_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(RIGHT_BUTTON_TYPE, s);
 
+        String levelButton = props.getProperty(pathXPropertyType.IMAGE_LEVEL_UNROBBED);
+        sT = new SpriteType(LEVEL_GAME_TYPE);
+        img = loadImage(imgPath + levelButton);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String levelMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_LEVEL_MOUSE_OVER);
+        img = loadImage(imgPath + levelMouseOverButton);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, RIGHT_BUTTON_X - 400, RIGHT_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiLevels.put(LEVEL_GAME_TYPE, s);
+        
         // NOW ADD THE DIALOGS
         // AND THE STATS DISPLAY
         String statsDialog = props.getProperty(pathXPropertyType.IMAGE_DIALOG_STATS);

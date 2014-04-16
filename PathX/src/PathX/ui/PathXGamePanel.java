@@ -89,6 +89,8 @@ public class PathXGamePanel extends JPanel
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
             
+           // renderGUIControls(g);
+            
              // AND THE BUTTONS AND DECOR
 
         }
@@ -99,6 +101,23 @@ public class PathXGamePanel extends JPanel
         }
     }
     
+    public void renderGUIControls(Graphics g)
+    {
+        // GET EACH DECOR IMAGE ONE AT A TIME
+        Collection<Sprite> decorSprites = game.getGUIDecor().values();
+        for (Sprite s : decorSprites)
+        {
+            if (s.getSpriteType().getSpriteTypeID() != BACKGROUND_GAME_TYPE)
+                renderSprite(g, s);
+        }
+        
+        // AND NOW RENDER THE BUTTONS
+        Collection<Sprite> buttonSprites = game.getGUIButtons().values();
+        for (Sprite s : buttonSprites)
+        {
+            renderSprite(g, s);
+        }
+    }
     
     // RENDERING HELPER METHODS
         // - renderBackground
@@ -119,8 +138,11 @@ public class PathXGamePanel extends JPanel
         // THERE IS ONLY ONE CURRENTLY SET
         Sprite bg = game.getGUIDecor().get(BACKGROUND_GAME_TYPE);
         renderSprite(g, bg);
+        
+        bg = game.getGUILevels().get(LEVEL_GAME_TYPE);
+        renderSprite(g, bg);
     }
-    
+   
     /**
      * Renders the s Sprite into the Graphics context g. Note
      * that each Sprite knows its own x,y coordinate location.
