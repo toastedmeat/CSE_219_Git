@@ -29,6 +29,9 @@ import properties_manager.PropertiesManager;
 import PathX.PathX.pathXPropertyType;
 import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 /**
  * This is the actual mini game, as extended from the mini game framework. It
@@ -141,13 +144,15 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
-        guiDecor.get(MISCASTS_COUNT_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiDecor.get(TIME_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(UNDO_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(UNDO_BUTTON_TYPE).setEnabled(true);
-        guiDecor.get(ALGORITHM_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        
+        guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(DOWN_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(LEFT_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
 
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
@@ -158,7 +163,12 @@ public class PathXMiniGame extends MiniGame {
 
         // AND CHANGE THE SCREEN STATE
         currentScreenState = GAME_SCREEN_STATE;
-
+        
+        insideCanvas.setVisible(true);
+        canvas.setLayout(null);
+        insideCanvas.setBounds(17, 129, 1247, 551);
+        
+        
         // PLAY THE GAMEPLAY SCREEN SONG
         //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
         //audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true); 
@@ -214,13 +224,8 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
         guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
-        guiDecor.get(MISCASTS_COUNT_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiDecor.get(TIME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(STATS_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(UNDO_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(UNDO_BUTTON_TYPE).setEnabled(false);
-        guiDecor.get(ALGORITHM_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        
+        
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -344,7 +349,12 @@ public class PathXMiniGame extends MiniGame {
 
         // CONSTRUCT THE PANEL WHERE WE'LL DRAW EVERYTHING
         canvas = new PathXPanel(this, (PathXDataModel) data);
-
+        
+        insideCanvas = new PathXGamePanel(this);
+        canvas.add(insideCanvas);
+        insideCanvas.setVisible(false);
+        
+        
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
         currentScreenState = MENU_SCREEN_STATE;
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_MENU));
@@ -352,14 +362,20 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(MENU_SCREEN_STATE, img);
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_GAME)); // Level BaCKGROUND
         sT.addState(GAME_SCREEN_STATE, img);
+        
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_HELP));
         sT.addState(HELP_SCREEN_STATE, img);
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_SETTINGS));
         sT.addState(SETTINGS_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, MENU_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
+        
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_GAMEMAP)); // Level BaCKGROUND
+        sT.addState(GAMES_SCREEN_STATE, img);
+        s = new Sprite(sT, 0, 0, 0, 0, GAMES_SCREEN_STATE);
+        guiDecor.put(BACKGROUND_GAME_TYPE, s);
 
-        // LOAD THE WAND CURSOR
+        // LOAD THE Arrow CURSOR
         String cursorName = props.getProperty(pathXPropertyType.IMAGE_CURSOR_WAND);
         img = loadImageWithColorKey(imgPath + cursorName, COLOR_KEY);
         Point cursorHotSpot = new Point(0, 0);
@@ -384,7 +400,7 @@ public class PathXMiniGame extends MiniGame {
             x += LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN;
         }
 
-        // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
+        // ADD THE CONTROLS ALONG THE GAME SCREEN
         // THEN THE NEW BUTTON
         String newButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
@@ -406,52 +422,50 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(BACK_BUTTON_TYPE, s);
-
-        // AND THE MISCASTS COUNT
-        String miscastCountContainer = props.getProperty(pathXPropertyType.IMAGE_DECOR_MISCASTS);
-        sT = new SpriteType(MISCASTS_COUNT_TYPE);
-        img = loadImage(imgPath + miscastCountContainer);
+        
+        //up key
+        String upButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UP);
+        sT = new SpriteType(UP_BUTTON_TYPE);
+        img = loadImage(imgPath + upButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TILE_COUNT_X, TILE_COUNT_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiDecor.put(MISCASTS_COUNT_TYPE, s);
-
-        // AND THE TIME DISPLAY
-        String timeContainer = props.getProperty(pathXPropertyType.IMAGE_DECOR_TIME);
-        sT = new SpriteType(TIME_TYPE);
-        img = loadImage(imgPath + timeContainer);
-        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TIME_X, TIME_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiDecor.put(TIME_TYPE, s);
-
-        // AND THE STATS BUTTON
-        String statsButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_STATS);
-        sT = new SpriteType(STATS_BUTTON_TYPE);
-        img = loadImage(imgPath + statsButton);
-        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String statsMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_STATS_MOUSE_OVER);
-        img = loadImage(imgPath + statsMouseOverButton);
+        String upMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UP_MOUSE_OVER);
+        img = loadImage(imgPath + upMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, STATS_X, STATS_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.put(STATS_BUTTON_TYPE, s);
-
-        // AND THE STATS BUTTON
-        String undoButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UNDO);
-        sT = new SpriteType(UNDO_BUTTON_TYPE);
-        img = loadImage(imgPath + undoButton);
+        s = new Sprite(sT, UP_BUTTON_X, UP_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(UP_BUTTON_TYPE, s);
+        
+        //down key
+        String downButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_DOWN);
+        sT = new SpriteType(DOWN_BUTTON_TYPE);
+        img = loadImage(imgPath + downButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String undoMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_UNDO_MOUSE_OVER);
-        img = loadImage(imgPath + undoMouseOverButton);
+        String downMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_DOWN_MOUSE_OVER);
+        img = loadImage(imgPath + downMouseOverButton);
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, UNDO_BUTTON_X, UNDO_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.put(UNDO_BUTTON_TYPE, s);
-
-        // AND THE TILE STACK
-        String tileStack = props.getProperty(pathXPropertyType.IMAGE_BUTTON_TEMP_TILE);
-        sT = new SpriteType(ALGORITHM_TYPE);
-        img = loadImageWithColorKey(imgPath + tileStack, COLOR_KEY);
+        s = new Sprite(sT, DOWN_BUTTON_X, DOWN_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(DOWN_BUTTON_TYPE, s);
+        
+        //left key
+        String leftButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_LEFT);
+        sT = new SpriteType(LEFT_BUTTON_TYPE);
+        img = loadImage(imgPath + leftButton);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, TEMP_TILE_X, TEMP_TILE_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiDecor.put(ALGORITHM_TYPE, s);
+        String leftMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_LEFT_MOUSE_OVER);
+        img = loadImage(imgPath + leftMouseOverButton);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, LEFT_BUTTON_X, LEFT_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(LEFT_BUTTON_TYPE, s);
+        
+        //right key
+        String rightButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_RIGHT);
+        sT = new SpriteType(RIGHT_BUTTON_TYPE);
+        img = loadImage(imgPath + rightButton);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String rightMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_RIGHT_MOUSE_OVER);
+        img = loadImage(imgPath + rightMouseOverButton);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, RIGHT_BUTTON_X, RIGHT_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(RIGHT_BUTTON_TYPE, s);
 
         // NOW ADD THE DIALOGS
         // AND THE STATS DISPLAY
@@ -576,18 +590,30 @@ public class PathXMiniGame extends MiniGame {
             }
         });
 
-        // STATS BUTTON EVENT HANDLER
-        guiButtons.get(STATS_BUTTON_TYPE).setActionListener(new ActionListener() {
+        guiButtons.get(UP_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                eventHandler.respondToDisplayStatsRequest();
+                eventHandler.respondToUpRequest();
+            }
+        });
+        
+        guiButtons.get(DOWN_BUTTON_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToDownRequest();
+            }
+        });
+        
+        guiButtons.get(LEFT_BUTTON_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToLeftRequest();
+            }
+        });
+        
+        guiButtons.get(RIGHT_BUTTON_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToRightRequest();
             }
         });
 
-        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                eventHandler.respondToUndoRequest();
-            }
-        });
 
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
         this.setKeyListener(new KeyAdapter() {

@@ -8,6 +8,7 @@
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
         <property name="IMAGE_BACKGROUND_GAME"              value="./pathX/BackgroundGame.png"></property>
+        <property name="IMAGE_BACKGROUND_GAMEMAP"              value="./pathX/BackgroundGameMap.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"              value="./pathX/BackgroundMenu.png"></property>
         <property name="IMAGE_BACKGROUND_HELP"              value="./pathX/HelpMenu.png"></property>
         <property name="IMAGE_BACKGROUND_SETTINGS"          value="./pathX/SettingsMenu.png"></property>
@@ -15,6 +16,14 @@
         <property name="IMAGE_BUTTON_NEW_MOUSE_OVER"        value="./pathX/ButtonNewGameMouseOver.png"></property>
         <property name="IMAGE_BUTTON_BACK"                  value="./pathX/ButtonBack.png"></property>
         <property name="IMAGE_BUTTON_BACK_MOUSE_OVER"       value="./pathX/ButtonBackMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_UP"                    value="./pathX/ButtonUP.png"></property>
+        <property name="IMAGE_BUTTON_UP_MOUSE_OVER"         value="./pathX/ButtonUPMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_DOWN"                  value="./pathX/ButtonDOWN.png"></property>
+        <property name="IMAGE_BUTTON_DOWN_MOUSE_OVER"       value="./pathX/ButtonDOWNMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_LEFT"                  value="./pathX/ButtonLEFT.png"></property>
+        <property name="IMAGE_BUTTON_LEFT_MOUSE_OVER"       value="./pathX/ButtonLEFTMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_RIGHT"                 value="./pathX/ButtonRIGHT.png"></property>
+        <property name="IMAGE_BUTTON_RIGHT_MOUSE_OVER"      value="./pathX/ButtonRIGHTMouseOver.png"></property>
         <property name="IMAGE_BUTTON_STATS"                 value="./pathX/ButtonStats.png"></property>
         <property name="IMAGE_BUTTON_STATS_MOUSE_OVER"      value="./pathX/ButtonStatsMouseOver.png"></property>
         <property name="IMAGE_BUTTON_UNDO"                  value="./pathX/ButtonUndo.png"></property>

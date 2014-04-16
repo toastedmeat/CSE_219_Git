@@ -32,11 +32,17 @@ public class PathXConstants
     // IN-GAME UI CONTROL TYPES
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
+    public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
+    public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
+    public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
+    public static final String RIGHT_BUTTON_TYPE = "RIGHT_BUTTON_TYPE";
     public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
     public static final String TIME_TYPE = "TIME_TYPE"; 
     public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
+    public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
+    
 
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
@@ -45,6 +51,7 @@ public class PathXConstants
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
+    public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
 
@@ -82,6 +89,16 @@ public class PathXConstants
     public static final int NEW_BUTTON_Y = 60;
     public static final int BACK_BUTTON_X = 1100;
     public static final int BACK_BUTTON_Y = 60;
+    
+    public static final int UP_BUTTON_X = 960;
+    public static final int UP_BUTTON_Y = 15;
+    public static final int DOWN_BUTTON_X = 960;
+    public static final int DOWN_BUTTON_Y = 60;
+    public static final int LEFT_BUTTON_X = 910;
+    public static final int LEFT_BUTTON_Y = 40;
+    public static final int RIGHT_BUTTON_X = 1010;
+    public static final int RIGHT_BUTTON_Y = 40;
+    
     public static final int TILE_COUNT_X = NEW_BUTTON_X + 260 + CONTROLS_MARGIN;
     public static final int TILE_COUNT_Y = 0;
     public static final int TILE_COUNT_OFFSET = 145;

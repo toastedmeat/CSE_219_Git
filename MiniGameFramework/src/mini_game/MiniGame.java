@@ -63,6 +63,7 @@ public abstract class MiniGame
     protected int windowWidth;
     protected int windowHeight;
     protected JPanel canvas;
+    protected JPanel insideCanvas;
     
     // HERE ARE OUR GUI COMPONENTS. NOTE WE ARE NOT
     // USING SWING COMPONENTS (except JFrame and JPanel),
@@ -246,6 +247,10 @@ public abstract class MiniGame
         return canvas;
     }
 
+    public JPanel getInsideCanvas()
+    {
+        return insideCanvas;
+    }
     // INITIALIZATION METHODS - NOTE THAT METHODS ARE MADE private
     // IN PART TO REMOVE THE TEMPTATION TO OVERRIDE THEM
         // initAudio

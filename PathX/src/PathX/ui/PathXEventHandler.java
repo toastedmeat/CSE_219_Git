@@ -1,7 +1,7 @@
 package PathX.ui;
 
 import java.awt.event.KeyEvent;
-import static PathX.PathXConstants.GAME_SCREEN_STATE;
+import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import static PathX.PathXConstants.VIEWPORT_INC;
 import PathX.PathX;
@@ -29,10 +29,7 @@ public class PathXEventHandler {
      * Called when the user clicks the close window button.
      */
     public void respondToExitRequest() {
-        // IF THE GAME IS STILL GOING ON, END IT AS A LOSS
-        if (game.getDataModel().inProgress()) {
-            game.getDataModel().endGameAsLoss();
-        }
+        
         // AND CLOSE THE ALL
         System.exit(0);
     }
@@ -45,13 +42,35 @@ public class PathXEventHandler {
     }
 
     public void respondToBackRequest() {
-        // IF THERE IS A GAME UNDERWAY, COUNT IT AS A LOSS
-        if (game.getDataModel().inProgress()) {
-            game.getDataModel().endGameAsLoss();
-        }
         // RESET THE GAME AND ITS DATA
         //game.reset();
         game.switchToSplashScreen();
+        game.getInsideCanvas().setVisible(false);
+    }
+    
+    public void respondToUpRequest(){
+        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
+           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+        }
+    }
+    
+    public void respondToDownRequest(){
+        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
+           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+        }
+    }
+    
+    public void respondToLeftRequest(){
+        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+        }
+    }
+    
+    public void respondToRightRequest(){
+        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+        }
+        
     }
 
     /**
@@ -106,35 +125,33 @@ public class PathXEventHandler {
     /**
      * Called when the user presses a key on the keyboard.
      */
+    
     public void respondToKeyPress(int keyCode) {
         PathXDataModel data = (PathXDataModel) game.getDataModel();
 
         // CHEAT BY ONE MOVE. NOTE THAT IF WE HOLD THE C
         // KEY DOWN IT WILL CONTINUALLY CHEAT
-        if (keyCode == KeyEvent.VK_C) {
-            // ONLY DO THIS IF THE GAME IS NO OVER
-            if (data.inProgress()) {
-                // FIND A MOVE IF THERE IS ONE
-                SortTransaction move = data.getNextSwapTransaction();
-                if (move != null) {
-                    data.swapTiles(move.getFromIndex(), move.getToIndex());
-                    game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CHEAT.toString(), false);
-                }
-            }
+        if (keyCode == KeyEvent.VK_UP) {
+            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
+           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+        }
         }
 
-        if (keyCode == KeyEvent.VK_U) {
-            // ONLY DO THIS IF THE GAME IS NO OVER
-            if (data.inProgress()) {
-                if (data.processUndo()) {
-                    // FIND A MOVE IF THERE IS ONE
-                    SortTransaction move = data.getPreviousSwapTransaction();
-                    if (move != null) {
-                        data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_UNDO.toString(), false);
-                    }
-                }
-            }
+        if (keyCode == KeyEvent.VK_DOWN) {
+            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
+           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+        }
+        }
+        if (keyCode == KeyEvent.VK_LEFT) {
+            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+        }
+        }
+        if (keyCode == KeyEvent.VK_RIGHT) {
+            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+        }
         }
     }
 }
+
