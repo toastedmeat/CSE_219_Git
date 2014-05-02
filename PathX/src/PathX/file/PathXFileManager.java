@@ -52,7 +52,7 @@ public class PathXFileManager
      */
     public void loadLevel(String levelFile)
     {
-         // LOAD THE RAW DATA SO WE CAN USE IT
+        // LOAD THE RAW DATA SO WE CAN USE IT
         // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
         // FOLLOWED BY THE GRID VALUES
         try
@@ -140,7 +140,7 @@ public class PathXFileManager
     public PathXRecord loadRecord()
     {
         PathXRecord recordToLoad = new PathXRecord();
-             
+        
         // LOAD THE RAW DATA SO WE CAN USE IT
         // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
         // FOLLOWED BY THE GRID VALUES

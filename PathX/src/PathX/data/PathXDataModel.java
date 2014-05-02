@@ -31,6 +31,8 @@ public class PathXDataModel extends MiniGameDataModel {
     // THIS STORES THE TILES ON THE GRID DURING THE GAME
     private ArrayList<PathXTile> tilesToSort;
 
+    // THE LEGAL TILES IN ORDER FROM LOW SORT INDEX TO HIGH
+    //private ArrayList<SnakeCell> snake;
 
     // GAME GRID AND TILE DATA
     private int gameTileWidth;
@@ -63,6 +65,9 @@ public class PathXDataModel extends MiniGameDataModel {
     // LEVEL
     private String currentLevel;
 
+    // THE SORTING ALGORITHM WHICH GENERATES THE PROPER TRANSACTIONS
+
+    // THE PROPER TRANSACTIONS TO USE FOR COMPARISION AGAINST PLAYER MOVES
     private int transactionCounter;
     boolean previous = true;
 
@@ -88,6 +93,8 @@ public class PathXDataModel extends MiniGameDataModel {
         tempTile = null;
     }
 
+    // ACCESSOR METHODS
+    
 
     public int getBadSpellsCounter() {
         return badSpellsCounter;
@@ -146,12 +153,7 @@ public class PathXDataModel extends MiniGameDataModel {
      * Called after a level has been selected, it initializes the grid so that
      * it is the proper dimensions.
      */
-    public void initLevel(String levelName) {
-        
-        // UPDATE THE VIEWPORT IF WE ARE SCROLLING (WHICH WE'RE NOT)
-        viewport.updateViewportBoundaries();
-
-    }
+    
 
     /**
      * This method loads the tiles, creating an individual sprite for each. Note
@@ -421,77 +423,6 @@ public class PathXDataModel extends MiniGameDataModel {
         }
     }
 
-
-    /**
-     * Swaps the tiles at the two indices.
-     */
-    public void swapTiles(int index1, int index2) {
-        // GET THE TILES
-        PathXTile tile1 = tilesToSort.get(index1);
-        PathXTile tile2 = tilesToSort.get(index2);
-
-        // GET THE TILE TWO LOCATION
-        int tile2Col = tile2.getGridColumn();
-        int tile2Row = tile2.getGridRow();
-
-        // LET'S MOVE TILE 2 FIRST
-        tilesToSort.set(index1, tile2);
-        tile2.setGridCell(tile1.getGridColumn(), tile1.getGridRow());
-        tile2.setTarget(calculateGridTileX(tile1.getGridColumn()), calculateGridTileY(tile1.getGridRow()));
-
-        // THEN MOVE TILE 1
-        tilesToSort.set(index2, tile1);
-        tile1.setGridCell(tile2Col, tile2Row);
-        tile1.setTarget(calculateGridTileX(tile2Col), calculateGridTileY(tile2Row));
-        movingTiles.add(tile1);
-        movingTiles.add(tile2);
-
-        // SEND THEM TO THEIR DESTINATION
-        tile1.startMovingToTarget(MAX_TILE_VELOCITY);
-        tile2.startMovingToTarget(MAX_TILE_VELOCITY);
-
-        // AND ON TO THE NEXT TRANSACTION
-        if (previous) {
-            transactionCounter++;
-        }
-        // HAS THE PLAYER WON?
-        
-    }
-
-    public boolean processUndo() {
-        if (transactionCounter < 1) {
-            previous = false;
-            return false;
-        } else {
-            this.transactionCounter = transactionCounter - 1;
-            previous = false;
-            return true;
-        }
-    }
-
-    /**
-     * This method updates all the necessary state information to process the
-     * swap transaction.
-     */
-    public void processSwap(int index1, int index2) {
-        
-        // IT'S A GOOD SWAP, MEANING IT'S WHAT THE SORTING ALGORITHM
-        // IS SUPPOSED TO DO
-        
-    }
-
-    // THIS HELPER METHOD FINDS THE TILE IN THE DATA STRUCTURE WITH
-    // THE GRID LOCATION OF col, row, AND RETURNS IT'S INDEX
-    private int getSnakeIndex(int col, int row) {
-        for (int i = 0; i < tilesToSort.size(); i++) {
-            PathXTile tile = tilesToSort.get(i);
-            if ((tile.getGridColumn() == col) && tile.getGridRow() == row) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     // OVERRIDDEN METHODS
     // - checkMousePressOnSprites
     // - endGameAsWin
@@ -510,6 +441,7 @@ public class PathXDataModel extends MiniGameDataModel {
      * @param y The y-axis pixel location of the mouse click.
      */
     @Override
+    
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {
         // FIGURE OUT THE CELL IN THE GRID
         int col = calculateGridCellColumn(x);
@@ -522,7 +454,7 @@ public class PathXDataModel extends MiniGameDataModel {
         }
 
         // CHECK THE CELL AT col, row
-        int index = getSnakeIndex(col, row);
+        int index = 0;//getSnakeIndex(col, row);
 
         // IT'S OUTSIDE THE GRID
         if (index < 0) {
@@ -544,7 +476,7 @@ public class PathXDataModel extends MiniGameDataModel {
             } // A TILE WAS ALREADY SELECTED, SO THIS MUST HAVE BEEN THE SECOND TILE
             // SELECTED, SO SWAP THEM
             else {
-                processSwap(index, selectedTileIndex);
+                //processSwap(index, selectedTileIndex);
             }
         }
     }
@@ -561,6 +493,9 @@ public class PathXDataModel extends MiniGameDataModel {
 
         // RECORD THE TIME IT TOOK TO COMPLETE THE GAME
         long gameTime = endTime.getTimeInMillis() - startTime.getTimeInMillis();
+
+        // RECORD IT AS A WIN
+        ((PathXMiniGame) miniGame).getPlayerRecord().addWin(currentLevel);
 
         // SAVE PLAYER DATA
         ((PathXMiniGame) miniGame).savePlayerRecord();
@@ -595,34 +530,7 @@ public class PathXDataModel extends MiniGameDataModel {
      */
     @Override
     public void reset(MiniGame game) {
-        // PUT ALL THE TILES IN ONE PLACE AND MAKE THEM VISIBLE
-        moveAllTilesToStack();
-
-        // RESET THE BAD SPELLS COUNTER
-        badSpellsCounter = 0;
-
-        // RANDOMLY ORDER THEM
-        moveAllTilesToStack();
-        Collections.shuffle(stackTiles);
-        for (PathXTile tile : stackTiles) {
-            tile.setX(TEMP_TILE_X);
-            tile.setY(TEMP_TILE_Y);
-            tile.setState(PathXTileState.VISIBLE_STATE.toString());
-        }
-
-        // SEND THE TILES OFF TO THE GRID TO BE SORTED
         
-        this.transactionCounter = 0;
-
-        // START THE CLOCK
-        startTime = new GregorianCalendar();
-
-        // AND START ALL UPDATES
-        beginGame();
-
-        // CLEAR ANY WIN OR LOSS DISPLAY
-        miniGame.getGUIDialogs().get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        miniGame.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
     }
 
     /**
@@ -660,25 +568,6 @@ public class PathXDataModel extends MiniGameDataModel {
                 int col = calculateGridCellColumn(getLastMouseX());
                 int row = calculateGridCellRow(getLastMouseY());
 
-                // CHECK THE CELL AT col, row
-                int index = getSnakeIndex(col, row);
-                if (index >= 0) {
-                    for (int i = 0; i < tilesToSort.size(); i++) {
-                        if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != tilesToSort.get(i)) {
-                            tilesToSort.get(i).setState(PathXTileState.VISIBLE_STATE.toString());
-                        }
-                    }
-                    PathXTile mousedOver = tilesToSort.get(index);
-                    if (mousedOver.containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != mousedOver) {
-                        mousedOver.setState(PathXTileState.MOUSE_OVER_STATE.toString());
-                    }
-                } else {
-                    for (int i = 0; i < tilesToSort.size(); i++) {
-                        if (!tilesToSort.get(i).containsPoint(getLastMouseX(), getLastMouseY()) && selectedTile != tilesToSort.get(i)) {
-                            tilesToSort.get(i).setState(PathXTileState.VISIBLE_STATE.toString());
-                        }
-                    }
-                }
             }
         } finally {
             // MAKE SURE WE RELEASE THE LOCK WHETHER THERE IS

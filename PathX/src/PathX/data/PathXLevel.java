@@ -11,8 +11,9 @@ import java.util.ArrayList;
  *
  * @author Eric
  */
-public class PathXLevel {
-     // EVERY LEVEL HAS A NAME
+public class PathXLevel
+{
+    // EVERY LEVEL HAS A NAME
     String levelName;
 
     // THE LEVEL BACKGROUND

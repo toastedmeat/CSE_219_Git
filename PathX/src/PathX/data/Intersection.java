@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package PathX.data;
-
 /**
- *
- * @author Eric
+ * This class represents an intersection in a level. Note that an intersection
+ * connects roads and can be thought of as a node on a graph.
+ * 
+ * @author Richard McKenna
  */
-public class Intersection {
+public class Intersection
+{
     // INTERSECTION LOCATION
     public int x;
     public int y;

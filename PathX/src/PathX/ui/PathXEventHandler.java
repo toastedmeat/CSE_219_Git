@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
+import PathX.data.PathXDataModel;
 import PathX.file.PathXFileManager;
 import java.util.ArrayList;
 import properties_manager.PropertiesManager;
@@ -60,14 +61,6 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
             }
-        } else if (game.getInsideCanvas().getRenderedBackground().equals(SBU_GAME_TYPE)) {
-            game.getGUIDecor().get(SBU_GAME_TYPE).setY(game.getGUIDecor().get(SBU_GAME_TYPE).getY() + 20);
-        } else {
-            for (int i = 2; i <= 20; i++) {
-                if (game.getInsideCanvas().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() + 20);
-                }
-            }
         }
     }
 
@@ -77,14 +70,6 @@ public class PathXEventHandler {
             ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
-            }
-        }else if (game.getInsideCanvas().getRenderedBackground().equals(SBU_GAME_TYPE)) {
-            game.getGUIDecor().get(SBU_GAME_TYPE).setY(game.getGUIDecor().get(SBU_GAME_TYPE).getY() - 20);
-        } else {
-            for (int i = 2; i <= 20; i++) {
-                if (game.getInsideCanvas().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() - 20);
-                }
             }
         }
     }
@@ -96,14 +81,6 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
             }
-        }else if (game.getInsideCanvas().getRenderedBackground().equals(SBU_GAME_TYPE)) {
-            game.getGUIDecor().get(SBU_GAME_TYPE).setX(game.getGUIDecor().get(SBU_GAME_TYPE).getX() + 20);
-        } else {
-            for (int i = 2; i <= 20; i++) {
-                if (game.getInsideCanvas().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() + 20);
-                }
-            }
         }
     }
 
@@ -113,14 +90,6 @@ public class PathXEventHandler {
             ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
-            }
-        }else if (game.getInsideCanvas().getRenderedBackground().equals(SBU_GAME_TYPE)) {
-            game.getGUIDecor().get(SBU_GAME_TYPE).setX(game.getGUIDecor().get(SBU_GAME_TYPE).getX() - 20);
-        } else {
-            for (int i = 2; i <= 20; i++) {
-                if (game.getInsideCanvas().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() - 20);
-                }
             }
         }
 
@@ -133,7 +102,7 @@ public class PathXEventHandler {
         // WE ONLY LET THIS HAPPEN IF THE MENU SCREEN IS VISIBLE
         if (game.isCurrentScreenState(MENU_SCREEN_STATE)) {
             // GET THE GAME'S DATA MODEL, WHICH IS ALREADY LOCKED FOR US
-            
+            PathXDataModel data = (PathXDataModel) game.getDataModel();
 
             // UPDATE THE DATA
             PathXFileManager fileManager = game.getFileManager();
@@ -148,79 +117,60 @@ public class PathXEventHandler {
     public void respondToLevel1() {
         game.switchToLevel1();
     }
-
     public void respondToLevel2() {
         game.switchToLevel2();
     }
-
     public void respondToLevel3() {
         game.switchToLevel3();
     }
-
     public void respondToLevel4() {
         game.switchToLevel4();
     }
-
     public void respondToLevel5() {
         game.switchToLevel5();
     }
-
     public void respondToLevel6() {
         game.switchToLevel6();
     }
-
     public void respondToLevel7() {
         game.switchToLevel7();
     }
-
     public void respondToLevel8() {
         game.switchToLevel8();
     }
-
     public void respondToLevel9() {
         game.switchToLevel9();
     }
-
     public void respondToLevel10() {
         game.switchToLevel10();
     }
-
     public void respondToLevel11() {
         game.switchToLevel11();
     }
-
     public void respondToLevel12() {
         game.switchToLevel12();
     }
-
     public void respondToLevel13() {
         game.switchToLevel13();
     }
-
     public void respondToLevel14() {
         game.switchToLevel14();
     }
-
     public void respondToLevel15() {
         game.switchToLevel15();
     }
-
     public void respondToLevel16() {
         game.switchToLevel16();
     }
-
     public void respondToLevel17() {
         game.switchToLevel17();
     }
-
     public void respondToLevel18() {
         game.switchToLevel18();
     }
-
     public void respondToLevel19() {
         game.switchToLevel19();
     }
-
     public void respondToLevel20() {
         game.switchToLevel20();
     }
@@ -244,11 +194,16 @@ public class PathXEventHandler {
         game.displayStats();
     }
 
+    public void respondToUndoRequest() {
+        PathXDataModel data = (PathXDataModel) game.getDataModel();
+
+    }
+
     /**
      * Called when the user presses a key on the keyboard.
      */
     public void respondToKeyPress(int keyCode) {
-        
+        PathXDataModel data = (PathXDataModel) game.getDataModel();
 
         // CHEAT BY ONE MOVE. NOTE THAT IF WE HOLD THE C
         // KEY DOWN IT WILL CONTINUALLY CHEAT
@@ -274,6 +229,7 @@ public class PathXEventHandler {
         if (keyCode == KeyEvent.VK_LEFT) {
             if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
                 game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+            } else{
                 ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);

@@ -153,6 +153,26 @@ public class PathXRecord {
         levelRecords.put(levelName, rec);
     }
 
+    /**
+     * This method adds a win to the current player's record according to the
+     * level being played.
+     */
+    public void addWin(String levelName) {
+        // GET THE RECORD FOR levelName
+        PathXLevelRecord rec = levelRecords.get(levelName);
+
+        // UPDATE THE STATS
+        rec.gamesPlayed++;
+        if (PathXMiniGame.getData().getBadSpellsCounter() != 0) {
+            rec.wins++;
+        } else {
+            rec.perfectWins++;
+            if(rec.fastestPerfectWinTime == 0 || rec.fastestPerfectWinTime > PathXMiniGame.getData().getTimeInMillis()){
+                rec.fastestPerfectWinTime = PathXMiniGame.getData().getTimeInMillis();
+            }
+        }
+    }
+
     // ADDITIONAL SERVICE METHODS
     // -toByteArray
     /**

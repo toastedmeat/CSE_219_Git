@@ -6,11 +6,14 @@
 package PathX.data;
 
 /**
- *
- * @author Eric
+ * This class represents a road in level graph, which means it's 
+ * basically a graph edge.
+ * 
+ * @author Richard McKenna
  */
-public class Road {
-     // THESE ARE THE EDGE'S NODES
+public class Road
+{
+    // THESE ARE THE EDGE'S NODES
     Intersection node1;
     Intersection node2;
     

@@ -14,9 +14,9 @@ import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
+import PathX.data.PathXDataModel;
 import static PathX.PathXConstants.*;
 import PathX.PathX.pathXPropertyType;
-import PathX.data.PathXDataModel;
 import PathX.data.PathXRecord;
 
 /**
@@ -114,9 +114,31 @@ public class PathXPanel extends JPanel
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
 
+            // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
+            if (!data.notStarted())
+            {
+                // AND THE TILES
+                renderTiles(g);
+                
+                // AND THE DIALOGS, IF THERE ARE ANY
+                renderDialogs(g);
+                                
+                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
+                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
+                renderGrid(g);
+                
+                // RENDER THE ALGORITHM NAME
+                renderHeader(g);
+            }
+
             // AND THE BUTTONS AND DECOR
             renderGUIControls(g);
             
+            if (!data.notStarted())
+            {
+                // AND THE TIME AND TILES STATS
+                renderStats(g);
+            }
         
             // AND FINALLY, TEXT FOR DEBUGGING
             renderDebuggingText(g);
@@ -182,6 +204,141 @@ public class PathXPanel extends JPanel
     
 
     /**
+     * This method renders the on-screen stats that change as
+     * the game progresses. This means things like the game time
+     * and the number of tiles remaining.
+     * 
+     * @param g the Graphics context for this panel
+     */
+    public void renderStats(Graphics g)
+    {
+        
+        // RENDER THE GAME TIME AND THE TILES LEFT FOR IN-GAME
+        if (((PathXMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
+                && data.inProgress() || data.isPaused())
+        {
+            String currentLevel = data.getCurrentLevel();
+            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
+            // RENDER THE TILES LEFT
+            g.setFont(FONT_TEXT_DISPLAY);
+            g.setColor(Color.BLACK);
+
+            // RENDER THE TIME
+            String time = data.gameTimeToText();
+            int x = TIME_X + TIME_OFFSET;
+            int y = TIME_Y + TIME_TEXT_OFFSET;
+            g.drawString(time, x, y);
+            
+            // Render the Miscasts
+            x = TILE_COUNT_X + TILE_COUNT_OFFSET;
+            y = TILE_COUNT_Y + TILE_TEXT_OFFSET;
+            g.drawString(Integer.toString(data.getBadSpellsCounter()), x, y);
+            
+            // Render the Sorting Type
+            g.setFont(FONT_STATS);
+            g.setColor(COLOR_ALGORITHM_HEADER);
+            x = TEMP_TILE_X + TEMP_TILE_OFFSET_X;
+            String algorithm = record.getAlgorithm(currentLevel);
+            algorithm = algorithm.replace('_', ' ');
+            g.drawString(algorithm, x - 18, 45);
+        }        
+        
+        // IF THE STATS DIALOG IS VISIBLE, ADD THE TEXTUAL STATS
+        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(PathXTileState.VISIBLE_STATE.toString()))
+        {
+            g.setFont(FONT_STATS);
+            g.setColor(COLOR_STATS);
+            String currentLevel = data.getCurrentLevel();
+            int lastSlash = currentLevel.lastIndexOf("/");
+            String levelName = currentLevel.substring(lastSlash+1);
+            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
+
+            // GET ALL THE STATS
+            String algorithm = record.getAlgorithm(currentLevel);
+            int games = record.getGamesPlayed(currentLevel);
+            int wins = record.getWins(currentLevel, false);
+            int perfectWins = record.getWins(currentLevel, true);
+            long fastestPerfectWinTime = record.getFastestWinTime(currentLevel);
+            
+
+            // GET ALL THE STATS PROMPTS
+            PropertiesManager props = PropertiesManager.getPropertiesManager();            
+            String algorithmPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_ALGORITHM);
+            String gamesPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_GAMES);
+            String winsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_WINS);
+            String perfectWinsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_PERFECT_WINS);
+            String fastestPerfectWinPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_FASTEST_PERFECT_WIN);
+
+            // NOW DRAW ALL THE STATS WITH THEIR LABELS
+            int dot = levelName.indexOf(".");
+            levelName = levelName.substring(0, dot);
+            g.drawString(levelName,                                     STATS_LEVEL_X, STATS_LEVEL_Y);
+            g.drawString(algorithmPrompt + algorithm,                   STATS_LEVEL_X, STATS_ALGORITHM_Y);
+            g.drawString(gamesPrompt + games,                           STATS_LEVEL_X, STATS_GAMES_Y);
+            g.drawString(winsPrompt + wins,                             STATS_LEVEL_X, STATS_WINS_Y);
+            g.drawString(perfectWinsPrompt + perfectWins,               STATS_LEVEL_X, STATS_PERFECT_WINS_Y);
+            g.drawString(fastestPerfectWinPrompt 
+                    + data.timeToText(fastestPerfectWinTime),           STATS_LEVEL_X, STATS_FASTEST_PERFECT_WIN_Y);
+        }
+    }
+        
+    /**
+     * Renders all the game tiles, doing so carefully such
+     * that they are rendered in the proper order.
+     * 
+     * @param g the Graphics context of this panel.
+     */
+    public void renderTiles(Graphics g)
+    {
+        // DRAW THE GRID
+        ArrayList<PathXTile> tilesToSort = data.getTilesToSort();
+        for (int i = 0; i < tilesToSort.size(); i++)
+        {
+            PathXTile tile = tilesToSort.get(i);
+            if (tile != null)
+                renderTile(g, tile);
+        }
+        
+        // THEN DRAW ALL THE MOVING TILES
+        Iterator<PathXTile> movingTiles = data.getMovingTiles();
+        while (movingTiles.hasNext())
+        {
+            PathXTile tile = movingTiles.next();
+            renderTile(g, tile);
+        }
+        
+        // AND THE SELECTED TILE, IF THERE IS ONE
+        PathXTile selectedTile = data.getSelectedTile();
+        if (selectedTile != null)
+            renderTile(g, selectedTile);
+    }
+
+    /**
+     * Helper method for rendering the tiles that are currently moving.
+     * 
+     * @param g Rendering context for this panel.
+     * 
+     * @param tileToRender Tile to render to this panel.
+     */
+    public void renderTile(Graphics g, PathXTile tileToRender)
+    {
+        // ONLY RENDER VISIBLE TILES
+        if (!tileToRender.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
+        {
+            Viewport viewport = data.getViewport();
+            int correctedTileX = (int)(tileToRender.getX());
+            int correctedTileY = (int)(tileToRender.getY());
+
+            // THEN THE TILE IMAGE
+            SpriteType bgST = tileToRender.getSpriteType();
+            Image img = bgST.getStateImage(tileToRender.getState());
+            g.drawImage(img,    correctedTileX, 
+                                correctedTileY, 
+                                bgST.getWidth(), bgST.getHeight(), null); 
+        }
+    }
+    
+    /**
      * Renders the game dialog boxes.
      * 
      * @param g This panel's graphics context.
@@ -224,6 +381,19 @@ public class PathXPanel extends JPanel
      */
     public void renderGrid(Graphics g)
     {
+        // ONLY RENDER THE GRID IF WE'RE DEBUGGING
+        if (data.isDebugTextRenderingActive())
+        {
+            for (int i = 0; i < data.getNumGameGridColumns(); i++)
+            {
+                for (int j = 0; j < data.getNumGameGridRows(); j++)
+                {
+                    int x = data.calculateGridTileX(i);
+                    int y = data.calculateGridTileY(j);
+                    g.drawRect(x, y, TILE_WIDTH, TILE_HEIGHT);
+                }
+            }
+        }
     }
     
     /**
@@ -235,5 +405,24 @@ public class PathXPanel extends JPanel
      */
     public void renderDebuggingText(Graphics g)
     {
+        // IF IT'S ACTIVATED
+        if (data.isDebugTextRenderingActive())
+        {
+            // ENABLE PROPER RENDER SETTINGS
+            g.setFont(FONT_DEBUG_TEXT);
+            g.setColor(COLOR_DEBUG_TEXT);
+            
+            // GO THROUGH ALL THE DEBUG TEXT
+            Iterator<String> it = data.getDebugText().iterator();
+            int x = data.getDebugTextX();
+            int y = data.getDebugTextY();
+            while (it.hasNext())
+            {
+                // RENDER THE TEXT
+                String text = it.next();
+                g.drawString(text, x, y);
+                y += 20;
+            }   
+        } 
     }
 }
