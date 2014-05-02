@@ -290,7 +290,7 @@ public abstract class MiniGame
     public void initViewport()
     {
         Viewport viewport = new Viewport();
-        data.setViewport(viewport);
+        //data.setViewport(viewport);
         Insets frameInsets = window.getInsets();
         int screenWidth = window.getWidth() - frameInsets.left - frameInsets.right;
         int screenHeight = window.getHeight() - frameInsets.top - frameInsets.bottom;

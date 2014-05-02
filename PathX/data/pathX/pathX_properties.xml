@@ -7,6 +7,7 @@
 <properties>
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
+        <property name="PATHXLEVELSCHEMA"                       value="./pathX/PathXLevelSchema.xsd"></property>
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
