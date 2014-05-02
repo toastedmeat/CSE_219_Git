@@ -149,6 +149,25 @@ public class Viewport
         viewportX = 0;
         viewportY = 0;
     }
+
+    public boolean isRectInsideViewport(int x1, int y1, int x2, int y2)
+    {
+        if (x2 < viewportX) return false;
+        if (x1 > (viewportX + width)) return false;
+        if (y2 < viewportY) return false;
+        if (y1 > (viewportY + height)) return false;
+        return true;
+    }
+    
+     /**
+     * Returns true if the circle argument's bounding box is inside the
+     * viewport, false otherwise.
+     */
+    public boolean isCircleBoundingBoxInsideViewport(int centerX, int centerY, int radius)
+    {
+        return isRectInsideViewport(centerX-radius, centerY-radius, centerX+radius, centerY+radius);
+    }
+    
     public void move(int incX, int incY)
     {
         viewportX += incX;

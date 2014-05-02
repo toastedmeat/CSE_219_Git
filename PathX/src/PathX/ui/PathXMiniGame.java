@@ -703,7 +703,7 @@ public class PathXMiniGame extends MiniGame {
         // CONSTRUCT THE PANEL WHERE WE'LL DRAW EVERYTHING
         canvas = new PathXPanel(this, (PathXDataModel) data);
 
-        insideCanvas = new PathXGamePanel(this);
+        insideCanvas = new PathXGamePanel(this, (PathXDataModel) data);
         canvas.add(insideCanvas);
         insideCanvas.setVisible(false);
 

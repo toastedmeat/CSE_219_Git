@@ -147,6 +147,11 @@ public class PathXConstants
     public static final int LEVEL_BUTTON_Y = 570;
     public static final int VIEWPORT_INC = 5;
         
+     // RENDERING SETTINGS
+    public static final int INTERSECTION_RADIUS = 20;
+    public static final int INT_STROKE = 3;
+    public static final int ONE_WAY_TRIANGLE_HEIGHT = 40;
+    public static final int ONE_WAY_TRIANGLE_WIDTH = 60;
     
     // INITIAL START/DEST LOCATIONS
     public static final int DEFAULT_START_X = 32;
@@ -243,6 +248,12 @@ public class PathXConstants
     public static final Color COLOR_TEXT_DISPLAY = new Color (10, 160, 10);
     public static final Color COLOR_STATS = new Color(0, 60, 0);
     public static final Color COLOR_ALGORITHM_HEADER = Color.WHITE;
+    
+    // DEFAULT COLORS
+    public static final Color   INT_OUTLINE_COLOR   = Color.BLACK;
+    public static final Color   HIGHLIGHTED_COLOR = Color.YELLOW;
+    public static final Color   OPEN_INT_COLOR      = Color.GREEN;
+    public static final Color   CLOSED_INT_COLOR    = Color.RED;
 
     // FONTS USED DURING FOR TEXTUAL GAME DISPLAYS
     public static final Font FONT_TEXT_DISPLAY = new Font(Font.SANS_SERIF, Font.BOLD, 48);
