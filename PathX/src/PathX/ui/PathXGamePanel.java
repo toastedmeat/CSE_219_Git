@@ -25,174 +25,166 @@ import PathX.PathX.pathXPropertyType;
 import PathX.data.PathXRecord;
 
 /**
- * This class performs all of the rendering for The Sorting Hat game application.
- * 
+ * This class performs all of the rendering for PATHX game application.
+ *
  * @author Richard McKenna & Eric Loo
  */
-public class PathXGamePanel extends JPanel
-{
+public class PathXGamePanel extends JPanel {
     // THIS IS ACTUALLY OUR Sorting Hat APP, WE NEED THIS
     // BECAUSE IT HAS THE GUI STUFF THAT WE NEED TO RENDER
+
     private MiniGame game;
-    
+
     // AND HERE IS ALL THE GAME DATA THAT WE NEED TO RENDER
     private PathXDataModel data;
-    
+
     // WE'LL USE THIS TO FORMAT SOME TEXT FOR DISPLAY PURPOSES
     private NumberFormat numberFormatter;
- 
+
     // WE'LL USE THIS AS THE BASE IMAGE FOR RENDERING UNSELECTED TILES
     private BufferedImage blankTileImage;
-    
+
     // WE'LL USE THIS AS THE BASE IMAGE FOR RENDERING SELECTED TILES
     private BufferedImage blankTileSelectedImage;
-    
+
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
     
+    private String renderedBackground;
+
     /**
-     * This constructor stores the game and data references,
-     * which we'll need for rendering.
-     * 
-     * @param initGame The Sorting Hat game that is using
-     * this panel for rendering.
-     * 
+     * This constructor stores the game and data references, which we'll need
+     * for rendering.
+     *
+     * @param initGame The Sorting Hat game that is using this panel for
+     * rendering.
+     *
      */
-    public PathXGamePanel(MiniGame initGame)
-    {
+    public PathXGamePanel(MiniGame initGame) {
         game = initGame;
         numberFormatter = NumberFormat.getNumberInstance();
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
+        renderedBackground = BACKGROUND_GAME_TYPE;
     }
-
 
     /**
      * This is where rendering starts. This method is called each frame, and the
      * entire game application is rendered here with the help of a number of
      * helper methods.
-     * 
+     *
      * @param g The Graphics context for this panel.
      */
     @Override
-    public void paintComponent(Graphics g)
-    {
-        try
-        {
+    public void paintComponent(Graphics g) {
+        try {
             // MAKE SURE WE HAVE EXCLUSIVE ACCESS TO THE GAME DATA
             game.beginUsingData();
-        
+
             // CLEAR THE PANEL
             super.paintComponent(g);
-        
+
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
-            renderBackground(g);
+            renderBackground(g, renderedBackground);
             
             renderGUIControls(g);
-            
-             // AND THE BUTTONS AND DECOR
 
-        }
-        finally
-        {
+            // AND THE BUTTONS AND DECOR
+        } finally {
             // RELEASE THE LOCK
-            game.endUsingData();    
+            game.endUsingData();            
         }
     }
     
-    
-    
-    // RENDERING HELPER METHODS
-        // - renderBackground
-        // - renderGUIControls
-        // - renderSnake
-        // - renderTiles
-        // - renderDialogs
-        // - renderGrid
-        // - renderDebuggingText
-    
-    /**`
-     * Renders the background image, which is different depending on the screen. 
-     * 
-     * @param g the Graphics context of this panel.
-     */
-    public void renderBackground(Graphics g)
-    {
-        // THERE IS ONLY ONE CURRENTLY SET
-        Sprite bg = game.getGUIDecor().get(BACKGROUND_GAME_TYPE);
-        renderSprite(g, bg);
+    public void setRenderedBackground(String toRender) {
+        renderedBackground = toRender;
     }
-   
-    public void renderGUIControls(Graphics g)
-    {
+
+    // RENDERING HELPER METHODS
+    // - renderBackground
+    // - renderGUIControls
+    // - renderSnake
+    // - renderTiles
+    // - renderDialogs
+    // - renderGrid
+    // - renderDebuggingText
+    /**
+     * `
+     * Renders the background image, which is different depending on the screen.
+     *
+     * @param g the Graphics context of this panel.
+     * @param toRender the background to render
+     */
+    public void renderBackground(Graphics g, String toRender) {
+        // THERE IS ONLY ONE CURRENTLY SET
+        Sprite bg = game.getGUIDecor().get(toRender);
+        if (toRender.equals(BACKGROUND_GAME_TYPE)) {
+            renderSprite(g, bg);
+        } else {
+            renderSprite2(g, bg);
+        }
+    }
+    
+    public void renderGUIControls(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
-        for (Sprite s : buttonSprites)
-        {
-            if(s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)){
-            renderSprite2(g, s);
+        for (Sprite s : buttonSprites) {
+            if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
+                renderSprite2(g, s);
             }
         }
         
     }
-    
+
     /**
-     * Renders the s Sprite into the Graphics context g. Note
-     * that each Sprite knows its own x,y coordinate location.
-     * 
+     * Renders the s Sprite into the Graphics context g. Note that each Sprite
+     * knows its own x,y coordinate location.
+     *
      * @param g the Graphics context of this panel
-     * 
+     *
      * @param s the Sprite to be rendered
      */
-    public void renderSprite(Graphics g, Sprite s)
-    {
+    public void renderSprite(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
-        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
-        {
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int)s.getX() - 1800, (int)s.getY() - 400, null);
+            g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
         }
     }
     
-    public void renderSprite2(Graphics g, Sprite s)
-    {
+    public void renderSprite2(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
-        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
-        {
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int)s.getX() - 17, (int)s.getY() - 129, null);
+            g.drawImage(img, (int) s.getX() - 17, (int) s.getY() - 129, null);
         }
     }
 
     /**
-     * Renders the debugging text to the panel. Note
-     * that the rendering will only actually be done
-     * if data has activated debug text rendering.
-     * 
+     * Renders the debugging text to the panel. Note that the rendering will
+     * only actually be done if data has activated debug text rendering.
+     *
      * @param g the Graphics context for this panel
      */
-    public void renderDebuggingText(Graphics g)
-    {
+    public void renderDebuggingText(Graphics g) {
         // IF IT'S ACTIVATED
-        if (data.isDebugTextRenderingActive())
-        {
+        if (data.isDebugTextRenderingActive()) {
             // ENABLE PROPER RENDER SETTINGS
             g.setFont(FONT_DEBUG_TEXT);
             g.setColor(COLOR_DEBUG_TEXT);
-            
+
             // GO THROUGH ALL THE DEBUG TEXT
             Iterator<String> it = data.getDebugText().iterator();
             int x = data.getDebugTextX();
             int y = data.getDebugTextY();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 // RENDER THE TEXT
                 String text = it.next();
                 g.drawString(text, x, y);
                 y += 20;
-            }   
-        } 
+            }            
+        }        
     }
 }

@@ -137,22 +137,26 @@ public class PathXEventHandler {
         if (keyCode == KeyEvent.VK_UP) {
             if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() + 20);
         }
         }
 
         if (keyCode == KeyEvent.VK_DOWN) {
             if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() - 20);
         }
         }
         if (keyCode == KeyEvent.VK_LEFT) {
             if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() + 20);
         }
         }
         if (keyCode == KeyEvent.VK_RIGHT) {
             if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
             game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() - 20);
         }
         }
     }

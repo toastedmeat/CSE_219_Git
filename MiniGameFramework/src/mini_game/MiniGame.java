@@ -63,7 +63,6 @@ public abstract class MiniGame
     protected int windowWidth;
     protected int windowHeight;
     protected JPanel canvas;
-    protected JPanel insideCanvas;
     
     // HERE ARE OUR GUI COMPONENTS. NOTE WE ARE NOT
     // USING SWING COMPONENTS (except JFrame and JPanel),
@@ -74,7 +73,6 @@ public abstract class MiniGame
     // ONE HAS TO UNIQUELY NAME EACH CONTROL THAT GOES
     // IN THESE DATA STRUCTURES
     protected TreeMap<String, Sprite> guiButtons;
-    protected TreeMap<String, Sprite> guiLevels;
     protected TreeMap<String, Sprite> guiDecor;
     protected TreeMap<String, Sprite> guiDialogs;
     
@@ -219,10 +217,6 @@ public abstract class MiniGame
         return guiButtons;
     }
     
-    public TreeMap<String, Sprite> getGUILevels()
-    {
-        return guiLevels;
-    }
     /**
      * For accessing the game GUI decor.
      *
@@ -252,10 +246,6 @@ public abstract class MiniGame
         return canvas;
     }
 
-    public JPanel getInsideCanvas()
-    {
-        return insideCanvas;
-    }
     // INITIALIZATION METHODS - NOTE THAT METHODS ARE MADE private
     // IN PART TO REMOVE THE TEMPTATION TO OVERRIDE THEM
         // initAudio
@@ -318,7 +308,6 @@ public abstract class MiniGame
         guiButtons = new TreeMap();
         guiDecor = new TreeMap();
         guiDialogs = new TreeMap();
-        guiLevels = new TreeMap();
 
         // GUI CONTROLS ARE SETUP BY THE GAME DEVELOPER
         // USING THIS FRAMEWORK

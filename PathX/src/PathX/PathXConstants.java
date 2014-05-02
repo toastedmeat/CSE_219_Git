@@ -35,6 +35,7 @@ public class PathXConstants
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
+    public static final String PAUSE_BUTTON_TYPE = "PAUSE_BUTTON_TYPE";
     public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
     public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
     public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
@@ -45,6 +46,7 @@ public class PathXConstants
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
     public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
+    public static final String SBU_GAME_TYPE = "SBU_GAME_TYPE";
     public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
     
 
@@ -56,6 +58,7 @@ public class PathXConstants
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
     public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";
+    public static final String SBU_SCREEN_STATE = "SBU_SCREEN_STATE";
     public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
@@ -94,17 +97,28 @@ public class PathXConstants
     public static final int NEW_BUTTON_Y = 60;
     public static final int BACK_BUTTON_X = 1100;
     public static final int BACK_BUTTON_Y = 60;
-    public static final int SELECT_LEVEL_X = 25;
-    public static final int SELECT_LEVEL_Y = 175;
+    public static final int SELECT_LEVEL_X = 80;
+    public static final int SELECT_LEVEL_Y = 155;
+    public static final int PAUSE_X = 20;
+    public static final int PAUSE_Y = 155;
     
     public static final int UP_BUTTON_X = 960;
     public static final int UP_BUTTON_Y = 15;
-    public static final int DOWN_BUTTON_X = 960;
-    public static final int DOWN_BUTTON_Y = 60;
-    public static final int LEFT_BUTTON_X = 910;
-    public static final int LEFT_BUTTON_Y = 40;
-    public static final int RIGHT_BUTTON_X = 1010;
-    public static final int RIGHT_BUTTON_Y = 40;
+    public static final int DOWN_BUTTON_X = UP_BUTTON_X;
+    public static final int DOWN_BUTTON_Y = UP_BUTTON_Y + 45;
+    public static final int LEFT_BUTTON_X = UP_BUTTON_X - 50;
+    public static final int LEFT_BUTTON_Y = UP_BUTTON_Y + 25;
+    public static final int RIGHT_BUTTON_X = UP_BUTTON_X + 50;
+    public static final int RIGHT_BUTTON_Y = UP_BUTTON_Y + 25;
+    
+    public static final int UP_BUTTON_GAME_X = 132;
+    public static final int UP_BUTTON_GAME_Y = 525;
+    public static final int DOWN_BUTTON_GAME_X = UP_BUTTON_GAME_X;
+    public static final int DOWN_BUTTON_GAME_Y = UP_BUTTON_GAME_Y + 45;
+    public static final int LEFT_BUTTON_GAME_X = UP_BUTTON_GAME_X - 50;
+    public static final int LEFT_BUTTON_GAME_Y = UP_BUTTON_GAME_Y + 25;
+    public static final int RIGHT_BUTTON_GAME_X = UP_BUTTON_GAME_X + 50;
+    public static final int RIGHT_BUTTON_GAME_Y = UP_BUTTON_GAME_Y + 25;
     
     public static final int TILE_COUNT_X = NEW_BUTTON_X + 260 + CONTROLS_MARGIN;
     public static final int TILE_COUNT_Y = 0;

@@ -10,6 +10,7 @@
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
+        <property name="IMAGE_BACKGROUND_SBU"                   value="./pathX/STONYBROOK.png"></property>
         <property name="IMAGE_LEVEL_UNROBBED"                   value="./pathX/unRobbedLocations.png"></property>
         <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"          value="./pathX/unRobbedLocationsMouseOver.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"                  value="./pathX/BackgroundMenu.png"></property>
@@ -19,6 +20,8 @@
         <property name="IMAGE_BUTTON_NEW_MOUSE_OVER"            value="./pathX/ButtonNewGameMouseOver.png"></property>
         <property name="IMAGE_BUTTON_BACK"                      value="./pathX/ButtonBack.png"></property>
         <property name="IMAGE_BUTTON_BACK_MOUSE_OVER"           value="./pathX/ButtonBackMouseOver.png"></property>
+        <property name="IMAGE_PAUSE"                            value="./pathX/Pause.png"></property>
+        <property name="IMAGE_PAUSE_MOUSE_OVER"                 value="./pathX/PauseMouseOver.png"></property>
         <property name="IMAGE_BACK_TO_LEVEL_SELECT"             value="./pathX/BackToLevelSelect.png"></property>
         <property name="IMAGE_BACK_TO_LEVEL_SELECT_MOUSE_OVER"  value="./pathX/BackToLevelSelectMouseOver.png"></property>
         <property name="IMAGE_BUTTON_UP"                        value="./pathX/ButtonUP.png"></property>
