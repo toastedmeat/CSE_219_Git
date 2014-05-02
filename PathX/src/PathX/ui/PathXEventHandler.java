@@ -4,19 +4,21 @@ import java.awt.event.KeyEvent;
 import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
+import PathX.data.PathXDataModel;
 import PathX.file.PathXFileManager;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 import properties_manager.PropertiesManager;
 
 /**
  *
  * @author Richard McKenna & Eric Loo
  */
-public class PathXEventHandler {
-    // THE SORTING HAT GAME, IT PROVIDES ACCESS TO EVERYTHING
+public class PathXEventHandler{
+    
 
     private PathXMiniGame game;
-
+    
     private PropertiesManager props = PropertiesManager.getPropertiesManager();
 
     /**
@@ -339,4 +341,6 @@ public class PathXEventHandler {
         }
         }
     }
+
+    
 }

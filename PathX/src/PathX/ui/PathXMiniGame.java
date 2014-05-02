@@ -27,6 +27,7 @@ import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
 import PathX.PathX.pathXPropertyType;
+import PathX.data.PathXEditMode;
 import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 import java.awt.BorderLayout;
@@ -36,6 +37,7 @@ import java.util.Random;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import mini_game.MiniGameEventRelayer;
 
 /**
  * This is the actual mini game, as extended from the mini game framework. It
@@ -216,6 +218,7 @@ public class PathXMiniGame extends MiniGame {
      * appropriate UI controls visible & invisible.
      */
     public void switchToGameScreen() {
+        
         dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         // CHANGE THE BACKGROUND
@@ -272,6 +275,7 @@ public class PathXMiniGame extends MiniGame {
         canvas.setLayout(null);
         insideCanvas.setBounds(17, 129, 1247, 551);
         insideCanvas.setRenderedBackground(BACKGROUND_GAME_TYPE);
+        
 
         // PLAY THE GAMEPLAY SCREEN SONG
         //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
@@ -624,6 +628,8 @@ public class PathXMiniGame extends MiniGame {
         // AND UPDATE THE DATA GAME STATE
         data.setGameState(MiniGameState.NOT_STARTED);
         insideCanvas.setBounds(274, 19, 978, 667);
+        
+        insideCanvas.addMouseListener(new PathXMouseController((PathXDataModel) data));
 
         // PLAY THE WELCOME SCREEN SONG
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
@@ -697,6 +703,7 @@ public class PathXMiniGame extends MiniGame {
         // INIT OUR DATA MANAGER
         data = new PathXDataModel(this);
         dataCopy = (PathXDataModel) data;
+        
     }
 
     public static PathXDataModel getData() {
@@ -1029,7 +1036,9 @@ public class PathXMiniGame extends MiniGame {
     public void initGUIHandlers() {
         // WE'LL RELAY UI EVENTS TO THIS OBJECT FOR HANDLING
         eventHandler = new PathXEventHandler(this);
-
+        
+        //insideCanvas.addMouseListener(eventHandler);
+        //insideCanvas.addMouseMotionListener(eventHandler);
         // WE'LL HAVE A CUSTOM RESPONSE FOR WHEN THE USER CLOSES THE WINDOW
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new WindowAdapter() {
@@ -1339,4 +1348,5 @@ public class PathXMiniGame extends MiniGame {
             }
         }
     }
+    
 }

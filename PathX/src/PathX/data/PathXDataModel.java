@@ -17,6 +17,7 @@ import PathX.ui.PathXMiniGame;
 import PathX.ui.PathXPanel;
 import PathX.ui.PathXTileState;
 import java.awt.Image;
+import java.awt.geom.Line2D;
 import mini_game.Viewport;
 
 /**
@@ -66,6 +67,8 @@ public class PathXDataModel extends MiniGameDataModel {
     boolean dataUpdatedSinceLastSave;
     boolean loadedLevel;
     
+    PathXEditMode editMode;
+    
     /**
      * Constructor for initializing this data model, it will create the data
      * structures for storing tiles, but not the tile grid itself, that is
@@ -79,7 +82,9 @@ public class PathXDataModel extends MiniGameDataModel {
         level = new PathXLevel();
         viewport = new Viewport();
         levelBeingEdited = false;
+        editMode = PathXEditMode.NOTHING_SELECTED;
         //startRoadIntersection = null;
+        
 
     }
     
@@ -89,6 +94,7 @@ public class PathXDataModel extends MiniGameDataModel {
     public void setLevel(PathXLevel l) { level = l; }
     public boolean getLoadedLevel() {        return loadedLevel;    }
     public void setLoadedLevel(boolean loadedLevel) {        this.loadedLevel = loadedLevel;    }
+    public PathXEditMode    getEditMode()               {   return editMode;                }
     //public Viewport         getViewport()               {   return viewport;                }
     public boolean isLevelBeingEdited() {        return levelBeingEdited;    }
     public Image getBackgroundImage() {        return backgroundImage;    }
@@ -107,20 +113,18 @@ public class PathXDataModel extends MiniGameDataModel {
     public boolean isSelectedIntersection(Intersection testIntersection) {return testIntersection == selectedIntersection;}
     public boolean isSelectedRoad(Road testRoad) {return testRoad == selectedRoad;}
 
-
-    public String getCurrentLevel() {
-        return currentLevel;
-    }
-
-    public long getTimeInMillis() {
-        return endTime.getTimeInMillis() - startTime.getTimeInMillis();
-    }
-
+    // THESE ARE FOR TESTING WHAT EDIT MODE THE APP CURRENTLY IS IN
+    public boolean isNothingSelected()      { return editMode == PathXEditMode.NOTHING_SELECTED; }
+    public boolean isIntersectionSelected() { return editMode == PathXEditMode.INTERSECTION_SELECTED; }
+    public boolean isIntersectionDragged()  { return editMode == PathXEditMode.INTERSECTION_DRAGGED; }
+    public boolean isRoadSelected()         { return editMode == PathXEditMode.ROAD_SELECTED; }
+    public boolean isAddingIntersection()   { return editMode == PathXEditMode.ADDING_INTERSECTION; }
+    public boolean isAddingRoadStart()      { return editMode == PathXEditMode.ADDING_ROAD_START; }
+    public boolean isAddingRoadEnd()        { return editMode == PathXEditMode.ADDING_ROAD_END; }
+    public String getCurrentLevel() { return currentLevel;    }
+    public long getTimeInMillis() { return endTime.getTimeInMillis() - startTime.getTimeInMillis();    }
     // MUTATOR METHODS
-    public void setCurrentLevel(String initCurrentLevel) {
-        currentLevel = initCurrentLevel;
-    }
-
+    public void setCurrentLevel(String initCurrentLevel) { currentLevel = initCurrentLevel;    }
     /**
      * Used to calculate the x-axis pixel location in the game grid for a tile
      * placed at column with stack position z.
@@ -129,9 +133,7 @@ public class PathXDataModel extends MiniGameDataModel {
      *
      * @return The x-axis pixel location of the tile
      */
-    public int calculateGridTileX(int column) {
-        return viewport.getViewportMarginLeft() + (column * TILE_WIDTH) - viewport.getViewportX();
-    }
+    public int calculateGridTileX(int column) {return viewport.getViewportMarginLeft() + (column * TILE_WIDTH) - viewport.getViewportX();    }
 
     /**
      * Used to calculate the y-axis pixel location in the game grid for a tile
@@ -327,8 +329,6 @@ public class PathXDataModel extends MiniGameDataModel {
     public void updateDebugText(MiniGame game) {
     }
     
-    
-
     // ITERATOR METHODS FOR GOING THROUGH THE GRAPH
     public Iterator intersectionsIterator() {
         ArrayList<Intersection> intersections = level.getIntersections();
@@ -347,21 +347,21 @@ public class PathXDataModel extends MiniGameDataModel {
     }
 
     public void setLastMousePosition(int initX, int initY) {
-        //lastMouseX = initX;
-       // lastMouseY = initY;
-        //view.getCanvas().repaint();
+        lastMouseX = initX;
+       lastMouseY = initY;
+        miniGame.getCanvas().repaint();
     }
 
     public void setSelectedIntersection(Intersection i) {
         selectedIntersection = i;
         selectedRoad = null;
-        //view.getCanvas().repaint();
+        miniGame.getCanvas().repaint();
     }
 
     public void setSelectedRoad(Road r) {
         selectedRoad = r;
         selectedIntersection = null;
-        //view.getCanvas().repaint();
+        miniGame.getCanvas().repaint();
     }
 
     // AND THEN ALL THE SERVICE METHODS FOR UPDATING THE LEVEL
@@ -458,6 +458,79 @@ public class PathXDataModel extends MiniGameDataModel {
         // AND NOW FORCE A REDRAW
         miniGame.getCanvas().repaint();
     }
+    
+    public void switchEditMode(PathXEditMode initEditMode)
+    {
+        if (levelBeingEdited)
+        {
+            // SET THE NEW EDIT MODE
+            editMode = initEditMode;
+            
+            // IF WE'RE ADDING A ROAD, THEN NOTHING SHOULD BE SELECTED 
+            if (editMode == PathXEditMode.ADDING_ROAD_START)
+            {
+                selectedIntersection = null;
+                selectedRoad = null;            
+            }
+            
+            // RENDER
+            miniGame.getCanvas().repaint();
+        }
+    }
+    
+    
+    public Road selectRoadAtCanvasLocation(int canvasX, int canvasY)
+    {
+        Iterator<Road> it = level.roads.iterator();
+        Line2D.Double tempLine = new Line2D.Double();
+        while (it.hasNext())
+        {
+            Road r = it.next();
+            tempLine.x1 = r.node1.x;
+            tempLine.y1 = r.node1.y;
+            tempLine.x2 = r.node2.x;
+            tempLine.y2 = r.node2.y;
+            double distance = tempLine.ptSegDist(canvasX+viewport.getViewportX(), canvasY+viewport.getViewportY());
+            
+            // IS IT CLOSE ENOUGH?
+            if (distance <= INT_STROKE)
+            {
+                // SELECT IT
+                this.selectedRoad = r;
+                this.switchEditMode(PathXEditMode.ROAD_SELECTED);
+                return selectedRoad;
+            }
+        }
+        return null;
+    }
+    
+    public Intersection findIntersectionAtCanvasLocation(int canvasX, int canvasY)
+    {
+        // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
+        for (Intersection i : level.intersections)
+        {
+            double distance = calculateDistanceBetweenPoints(i.x, i.y, canvasX + viewport.getViewportX(), canvasY + viewport.getViewportY());
+            if (distance < INTERSECTION_RADIUS)
+            {
+                // MAKE THIS THE SELECTED INTERSECTION
+                return i;
+            }
+        }
+        return null;
+    }
+    
+     public double calculateDistanceBetweenPoints(int x1, int y1, int x2, int y2)
+    {
+        double diffXSquared = Math.pow(x1 - x2, 2);
+        double diffYSquared = Math.pow(y1 - y2, 2);
+        return Math.sqrt(diffXSquared + diffYSquared);
+    }
 
-
+     public void unselectEverything()
+    {
+        selectedIntersection = null;
+        selectedRoad = null;
+        //startRoadIntersection = null;
+        miniGame.getCanvas().repaint();
+    }
 }

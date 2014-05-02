@@ -57,9 +57,9 @@ public class PathXGamePanel extends JPanel {
 
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
-
+    
     private String renderedBackground;
-
+    
     public Viewport viewport;
 
     // WE'LL RECYCLE THESE DURING RENDERING
@@ -117,15 +117,19 @@ public class PathXGamePanel extends JPanel {
         try {
             // MAKE SURE WE HAVE EXCLUSIVE ACCESS TO THE GAME DATA
             game.beginUsingData();
-
+            
             Graphics2D g2 = (Graphics2D) g;
             // CLEAR THE PANEL
             super.paintComponent(g);
 
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g2, renderedBackground);
-
-            renderGUIControls(g2);
+            
+            if (game.getGUIDecor().get(BACKGROUND_TYPE).getState().equals(GAME_SCREEN_STATE)) {
+                renderGUIControls(g2);
+            } else {
+                renderGUIControls2(g2);
+            }
             if (model.getLoadedLevel()) {
                 // RENDER THE ROADS
                 renderRoads(g2);
@@ -139,11 +143,11 @@ public class PathXGamePanel extends JPanel {
             game.endUsingData();
         }
     }
-
+    
     public void setRenderedBackground(String toRender) {
         renderedBackground = toRender;
     }
-
+    
     public String getRenderedBackground() {
         return renderedBackground;
     }
@@ -172,7 +176,7 @@ public class PathXGamePanel extends JPanel {
             renderSprite2(g, bg);
         }
     }
-
+    
     public void renderGUIControls(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
@@ -181,7 +185,17 @@ public class PathXGamePanel extends JPanel {
                 renderSprite2(g, s);
             }
         }
-
+        
+    }
+    public void renderGUIControls2(Graphics g) {
+        // AND NOW RENDER THE BUTTONS
+        Collection<Sprite> buttonSprites = game.getGUIButtons().values();
+        for (Sprite s : buttonSprites) {
+            if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
+                renderSprite3(g, s);
+            }
+        }
+        
     }
 
     /**
@@ -200,13 +214,22 @@ public class PathXGamePanel extends JPanel {
             g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
         }
     }
-
+    
     public void renderSprite2(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int) s.getX() - 17, (int) s.getY() - 129, null);
+        }
+    }
+    
+    public void renderSprite3(Graphics g, Sprite s) {
+        // ONLY RENDER THE VISIBLE ONES
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+            g.drawImage(img, (int) s.getX() - 274, (int) s.getY() - 14, null);
         }
     }
 
@@ -294,8 +317,7 @@ public class PathXGamePanel extends JPanel {
             // ONLY RENDER IT THIS WAY IF IT'S NOT THE START OR DESTINATION
             // AND IT IS IN THE VIEWPORT
             if ((!model.isStartingLocation(intersection))
-                    && (!model.isDestination(intersection))
-                    ) {
+                    && (!model.isDestination(intersection))) {
                 // FIRST FILL
                 if (intersection.isOpen()) {
                     g2.setColor(OPEN_INT_COLOR);
@@ -322,7 +344,7 @@ public class PathXGamePanel extends JPanel {
         Image startImage = model.getStartingLocationImage();
         Intersection startInt = model.getStartingLocation();
         renderIntersectionImage(g2, startImage, startInt);
-
+        
         Image destImage = model.getDesinationImage();
         Intersection destInt = model.getDestination();
         renderIntersectionImage(g2, destImage, destInt);
@@ -341,7 +363,7 @@ public class PathXGamePanel extends JPanel {
         g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
         // ONLY RENDER IF INSIDE THE VIEWPORT
         //if (viewport.isRectInsideViewport(x1, y1, x2, y2)) {
-         //   g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
+        //   g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
         //}
     }
 
@@ -382,5 +404,5 @@ public class PathXGamePanel extends JPanel {
         // RESTORE THE OLD TRANSFORM SO EVERYTHING DOESN'T END UP ROTATED 0
         g2.setTransform(oldAt);
     }
-
+    
 }
