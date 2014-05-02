@@ -101,7 +101,7 @@
         
         
         <property_options name="GAME_LEVELS">
-            <option>./pathX/Level1.png</option>
+            <option>./pathX/Level1.xml</option>
             <option>./pathX/Level2.png</option>
             <option>./pathX/Level3.png</option>
             <option>./pathX/Level4.png</option>

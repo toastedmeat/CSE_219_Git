@@ -114,9 +114,8 @@ public class PathXEventHandler {
         }
     }
 
-    public void respondToGameRequest() {
-        game.switchToGameLevel();
-
+    public void respondToLevel1() {
+        game.switchToLevel1();
     }
 
     public void respondToResetRequest() {

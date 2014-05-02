@@ -63,6 +63,28 @@ public class PathXConstants
     public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
+    
+    //Level Information
+    public static final String LEVEL1_INFO = "Information about\nLevel 1";
+    public static final String LEVEL2_INFO = "Information about\nLevel 2";
+    public static final String LEVEL3_INFO = "Information about\nLevel 3";
+    public static final String LEVEL4_INFO = "Information about\nLevel 4";
+    public static final String LEVEL5_INFO = "Information about\nLevel 5";
+    public static final String LEVEL6_INFO = "Information about\nLevel 6";
+    public static final String LEVEL7_INFO = "Information about\nLevel 7";
+    public static final String LEVEL8_INFO = "Information about\nLevel 8";
+    public static final String LEVEL9_INFO = "Information about\nLevel 9";
+    public static final String LEVEL10_INFO = "Information about\nLevel 10";
+    public static final String LEVEL11_INFO = "Information about\nLevel 11";
+    public static final String LEVEL12_INFO = "Information about\nLevel 12";
+    public static final String LEVEL13_INFO = "Information about\nLevel 13";
+    public static final String LEVEL14_INFO = "Information about\nLevel 14";
+    public static final String LEVEL15_INFO = "Information about\nLevel 15";
+    public static final String LEVEL16_INFO = "Information about\nLevel 16";
+    public static final String LEVEL17_INFO = "Information about\nLevel 17";
+    public static final String LEVEL18_INFO = "Information about\nLevel 18";
+    public static final String LEVEL19_INFO = "Information about\nLevel 19";
+    public static final String LEVEL20_INFO = "Information about\nLevel 20";
 
     // ANIMATION SPEED
     public static final int FPS = 30;
