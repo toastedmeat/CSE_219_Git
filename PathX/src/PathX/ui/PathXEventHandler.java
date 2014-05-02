@@ -229,6 +229,7 @@ public class PathXEventHandler {
         if (keyCode == KeyEvent.VK_LEFT) {
             if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
                 game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+            } else{
                 ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
