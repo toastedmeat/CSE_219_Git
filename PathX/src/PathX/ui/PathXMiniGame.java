@@ -65,6 +65,8 @@ public class PathXMiniGame extends MiniGame {
     private static PathXDataModel dataCopy;
 
     private PathXGamePanel insideCanvas;
+    
+    private PathXGamePanel pxg;
     // ACCESSOR METHODS
     // - getPlayerRecord
     // - getErrorHandler
@@ -218,6 +220,8 @@ public class PathXMiniGame extends MiniGame {
      * appropriate UI controls visible & invisible.
      */
     public void switchToGameScreen() {
+        pxg.setEnabled(false);
+        pxg.setVisible(false);
         
         dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -276,6 +280,7 @@ public class PathXMiniGame extends MiniGame {
         insideCanvas.setBounds(17, 129, 1247, 551);
         insideCanvas.setRenderedBackground(BACKGROUND_GAME_TYPE);
         
+        
 
         // PLAY THE GAMEPLAY SCREEN SONG
         //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
@@ -283,263 +288,283 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel1() {
-        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        //insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         levelSetup();
-        
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        pxg.setRenderedBackground(SBU_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level1.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel2() {
-        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL2_GAME_TYPE);
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level2.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL2_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel3() {
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         levelSetup();
         fileManager.loadLevel(new File("data/pathX/Level3.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL3_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL3_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL3_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel4() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level4.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL4_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL4_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL4_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel5() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level5.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL5_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL5_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL5_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel6() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level6.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL6_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL6_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL6_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel7() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level7.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL7_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL7_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL7_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel8() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level8.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL8_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL8_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL8_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel9() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level9.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL9_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL9_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL9_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel10() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level10.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL10_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL10_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL10_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel11() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level11.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL11_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL11_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL11_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel12() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level12.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL12_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL12_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL12_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel13() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level13.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL13_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL13_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL13_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel14() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level14.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL14_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL14_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL14_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel15() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL15_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL15_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL15_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel16() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level16.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL16_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL16_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL16_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel17() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level17.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL17_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL17_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL17_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel18() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level18.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL18_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL18_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL18_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel19() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level19.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL19_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL19_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL19_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
 
     public void switchToLevel20() {
         levelSetup();
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level20.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        insideCanvas.setRenderedBackground(LEVEL20_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL20_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL20_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
 
     }
@@ -627,9 +652,16 @@ public class PathXMiniGame extends MiniGame {
 
         // AND UPDATE THE DATA GAME STATE
         data.setGameState(MiniGameState.NOT_STARTED);
-        insideCanvas.setBounds(274, 19, 978, 667);
+        //insideCanvas.setBounds(274, 19, 978, 667);
         
-        insideCanvas.addMouseListener(new PathXMouseController((PathXDataModel) data));
+        insideCanvas.setEnabled(false);
+        insideCanvas.setVisible(false);
+        
+        pxg.setBounds(274, 19, 978, 667);
+        
+        pxg.setEnabled(true);
+        pxg.setVisible(true);
+        
 
         // PLAY THE WELCOME SCREEN SONG
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
@@ -713,6 +745,8 @@ public class PathXMiniGame extends MiniGame {
     public PathXGamePanel getInsideCanvas() {
         return insideCanvas;
     }
+    
+    public PathXGamePanel getPXG(){ return pxg; }
 
     /**
      * Initializes the game controls, like buttons, used by the game
@@ -740,6 +774,10 @@ public class PathXMiniGame extends MiniGame {
         insideCanvas = new PathXGamePanel(this, (PathXDataModel) data);
         canvas.add(insideCanvas);
         insideCanvas.setVisible(false);
+        pxg = new PathXGamePanel(this, (PathXDataModel) data);
+        pxg.addMouseListener(new PathXMouseController((PathXDataModel) data));
+        pxg.addKeyListener(keyHandler);
+        canvas.add(pxg);
 
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
         currentScreenState = MENU_SCREEN_STATE;
