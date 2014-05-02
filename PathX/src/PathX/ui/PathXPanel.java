@@ -232,7 +232,7 @@ public class PathXPanel extends JPanel
             // Render the Miscasts
             x = TILE_COUNT_X + TILE_COUNT_OFFSET;
             y = TILE_COUNT_Y + TILE_TEXT_OFFSET;
-            g.drawString(Integer.toString(data.getBadSpellsCounter()), x, y);
+            //g.drawString(Integer.toString(data.getBadSpellsCounter()), x, y);
             
             // Render the Sorting Type
             g.setFont(FONT_STATS);
@@ -290,27 +290,7 @@ public class PathXPanel extends JPanel
      */
     public void renderTiles(Graphics g)
     {
-        // DRAW THE GRID
-        ArrayList<PathXTile> tilesToSort = data.getTilesToSort();
-        for (int i = 0; i < tilesToSort.size(); i++)
-        {
-            PathXTile tile = tilesToSort.get(i);
-            if (tile != null)
-                renderTile(g, tile);
-        }
-        
-        // THEN DRAW ALL THE MOVING TILES
-        Iterator<PathXTile> movingTiles = data.getMovingTiles();
-        while (movingTiles.hasNext())
-        {
-            PathXTile tile = movingTiles.next();
-            renderTile(g, tile);
-        }
-        
-        // AND THE SELECTED TILE, IF THERE IS ONE
-        PathXTile selectedTile = data.getSelectedTile();
-        if (selectedTile != null)
-            renderTile(g, selectedTile);
+       
     }
 
     /**
@@ -381,19 +361,7 @@ public class PathXPanel extends JPanel
      */
     public void renderGrid(Graphics g)
     {
-        // ONLY RENDER THE GRID IF WE'RE DEBUGGING
-        if (data.isDebugTextRenderingActive())
-        {
-            for (int i = 0; i < data.getNumGameGridColumns(); i++)
-            {
-                for (int j = 0; j < data.getNumGameGridRows(); j++)
-                {
-                    int x = data.calculateGridTileX(i);
-                    int y = data.calculateGridTileY(j);
-                    g.drawRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-                }
-            }
-        }
+        
     }
     
     /**

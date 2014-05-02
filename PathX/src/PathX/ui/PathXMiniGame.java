@@ -176,7 +176,7 @@ public class PathXMiniGame extends MiniGame {
         guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
 
         // HIDE THE TILES
-        ((PathXDataModel) data).enableTiles(false);
+        //((PathXDataModel) data).enableTiles(false);
 
         // MAKE THE CURRENT SCREEN THE MENU SCREEN
         currentScreenState = MENU_SCREEN_STATE;
@@ -589,7 +589,7 @@ public class PathXMiniGame extends MiniGame {
         guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
 
         // HIDE THE TILES
-        ((PathXDataModel) data).enableTiles(false);
+        //((PathXDataModel) data).enableTiles(false);
 
         // MAKE THE CURRENT SCREEN THE MENU SCREEN
         currentScreenState = MENU_SCREEN_STATE;
@@ -991,7 +991,7 @@ public class PathXMiniGame extends MiniGame {
         guiDialogs.put(WIN_DIALOG_TYPE, s);
 
         // THEN THE TILES STACKED TO THE TOP LEFT
-        ((PathXDataModel) data).initTiles();
+        //((PathXDataModel) data).initTiles();
 
     }
 
