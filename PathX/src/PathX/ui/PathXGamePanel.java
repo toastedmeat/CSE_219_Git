@@ -40,9 +40,7 @@ import java.util.HashMap;
  * @author Richard McKenna & Eric Loo
  */
 public class PathXGamePanel extends JPanel {
-    // THIS IS ACTUALLY OUR Sorting Hat APP, WE NEED THIS
-    // BECAUSE IT HAS THE GUI STUFF THAT WE NEED TO RENDER
-
+    
     private MiniGame game;
 
     // AND HERE IS ALL THE GAME DATA THAT WE NEED TO RENDER
@@ -62,7 +60,7 @@ public class PathXGamePanel extends JPanel {
 
     private String renderedBackground;
 
-    Viewport viewport;
+    public Viewport viewport;
 
     // WE'LL RECYCLE THESE DURING RENDERING
     Ellipse2D.Double recyclableCircle;
@@ -297,7 +295,7 @@ public class PathXGamePanel extends JPanel {
             // AND IT IS IN THE VIEWPORT
             if ((!model.isStartingLocation(intersection))
                     && (!model.isDestination(intersection))
-                    && viewport.isCircleBoundingBoxInsideViewport(intersection.x, intersection.y, INTERSECTION_RADIUS)) {
+                    ) {
                 // FIRST FILL
                 if (intersection.isOpen()) {
                     g2.setColor(OPEN_INT_COLOR);
@@ -356,8 +354,8 @@ public class PathXGamePanel extends JPanel {
         double slope = diffY / diffX;
 
         // AND THEN FIND THE LINE MIDPOINT
-        double midX = (recyclableLine.x1 + recyclableLine.x2) / 2.0;
-        double midY = (recyclableLine.y1 + recyclableLine.y2) / 2.0;
+        double midX = 280 + ((recyclableLine.x1 + recyclableLine.x2) / 2.0);
+        double midY = 18 + ((recyclableLine.y1 + recyclableLine.y2) / 2.0);
 
         // GET THE RENDERING TRANSFORM, WE'LL RETORE IT BACK
         // AT THE END

@@ -432,7 +432,7 @@ public class PathXDataModel extends MiniGameDataModel {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         level.startingLocationImageFileName = newStartImage;
-        startingLocationImage = miniGame.loadImage(imgPath + "/pathX/" + level.startingLocationImageFileName);
+        startingLocationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/" + level.startingLocationImageFileName, COLOR_KEY);
         miniGame.getCanvas().repaint();
     }
 
@@ -443,7 +443,7 @@ public class PathXDataModel extends MiniGameDataModel {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         level.destinationImageFileName = newDestImage;
-        destinationImage = miniGame.loadImage(imgPath + "/pathX/"+ level.destinationImageFileName);
+        destinationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/"+ level.destinationImageFileName, COLOR_KEY);
         miniGame.getCanvas().repaint();
     }
 

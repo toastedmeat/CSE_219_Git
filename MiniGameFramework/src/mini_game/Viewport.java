@@ -173,7 +173,7 @@ public class Viewport
         viewportX += incX;
         viewportY += incY;
         if (viewportX < 0) viewportX = 0;
-        if (viewportY < 0) viewportY = 0;
+        if (viewportY < -180) viewportY = -180;
         if (viewportX > (screenWidth - width))
             viewportX = screenWidth - width;
         if (viewportY > (screenHeight - height))

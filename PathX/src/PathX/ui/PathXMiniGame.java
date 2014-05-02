@@ -283,7 +283,7 @@ public class PathXMiniGame extends MiniGame {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         levelSetup();
         
-        fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
+        fileManager.loadLevel(new File("data/pathX/Level1.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
@@ -296,7 +296,8 @@ public class PathXMiniGame extends MiniGame {
     public void switchToLevel2() {
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level2.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL2_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -307,7 +308,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel3() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level3.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL3_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL3_INFO);
@@ -319,7 +321,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel4() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level4.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL4_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL4_INFO);
@@ -331,7 +334,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel5() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level5.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL5_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL5_INFO);
@@ -343,7 +347,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel6() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level6.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL6_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL6_INFO);
@@ -355,7 +360,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel7() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level7.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL7_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL7_INFO);
@@ -367,7 +373,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel8() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level8.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL8_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL8_INFO);
@@ -379,7 +386,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel9() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level9.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL9_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL9_INFO);
@@ -391,7 +399,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel10() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level10.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL10_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL10_INFO);
@@ -403,7 +412,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel11() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level11.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL11_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL11_INFO);
@@ -415,7 +425,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel12() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level12.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL12_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL12_INFO);
@@ -427,7 +438,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel13() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level13.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL13_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL13_INFO);
@@ -439,7 +451,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel14() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level14.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL14_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL14_INFO);
@@ -451,7 +464,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel15() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL15_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL15_INFO);
@@ -463,7 +477,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel16() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level16.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL16_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL16_INFO);
@@ -475,7 +490,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel17() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level17.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL17_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL17_INFO);
@@ -487,7 +503,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel18() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level18.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL18_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL18_INFO);
@@ -499,7 +516,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel19() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level19.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL19_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL19_INFO);
@@ -511,7 +529,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel20() {
         levelSetup();
-
+        fileManager.loadLevel(new File("data/pathX/Level20.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         insideCanvas.setRenderedBackground(LEVEL20_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL20_INFO);
