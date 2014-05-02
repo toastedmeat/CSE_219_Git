@@ -19,9 +19,6 @@ import PathX.data.PathXRecord;
 import PathX.ui.PathXMiniGame;
 import properties_manager.PropertiesManager;
 import static PathX.PathXConstants.*;
-import PathX.data.SnakeCell;
-import PathX.data.PathXAlgorithm;
-import PathX.data.PathXAlgorithmFactory;
 import PathX.data.PathXAlgorithmType;
 
 /**
@@ -83,52 +80,20 @@ public class PathXFileManager
             // FIRST READ THE ALGORITHM NAME TO USE FOR THE LEVEL
             String algorithmName = dis.readUTF();
             PathXAlgorithmType algorithmTypeToUse = PathXAlgorithmType.valueOf(algorithmName);
-            PathXAlgorithm algorithmToUse = PathXAlgorithmFactory.
-                    buildSortingHatAlgorithm(algorithmTypeToUse,
-                    ((PathXDataModel)miniGame.getDataModel()).getTilesToSort());
-            
             // THEN READ THE GRID DIMENSIONS
             // WE DON'T ACTUALLY USE THESE
             int initGridColumns = dis.readInt();
             int initGridRows = dis.readInt();
             
-            ArrayList<SnakeCell> newSnake = new ArrayList();
             
-            // READ IN THE SNAKE CELLS, KEEPING TRACK OF THE
-            // GRID BOUNDS AS WE GO
-            int initSnakeLength = dis.readInt();
-            int minCol = initSnakeLength; int maxCol = 0; int minRow = initSnakeLength; int maxRow = 0;
-            for (int i = 0; i < initSnakeLength; i++)
-            {
-                int col = dis.readInt();
-                int row = dis.readInt();
-                if (col < minCol) minCol = col;
-                if (row < minRow) minRow = row;
-                if (col > maxCol) maxCol = col;
-                if (row > maxRow) maxRow = row;
-                SnakeCell newCell = new SnakeCell(col, row);
-                newSnake.add(newCell);
-            }
-            int numColumns = maxCol - minCol + 1;
-            int numRows = maxRow - minRow + 1;
             
-            // WE SHOULD NOW HAVE THE CORRECT MIN AND MAX ROWS AND COLUMNS,
-            // SO LET'S USE THAT INFO TO CORRECT THE SNAKE SO THAT IT'S PACKED
-            for (int i = 0; i < newSnake.size(); i++)
-            {
-                SnakeCell sC = newSnake.get(i);
-                sC.col -= minCol;
-                sC.row -= minRow;
-            }
             
             // EVERYTHING WENT AS PLANNED SO LET'S MAKE IT PERMANENT
             PathXDataModel dataModel = (PathXDataModel)miniGame.getDataModel();
             Viewport viewport = dataModel.getViewport();
-            viewport.setGameWorldSize(numColumns * TILE_WIDTH, numRows * TILE_HEIGHT);
             viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
             viewport.initViewportMargins();
             dataModel.setCurrentLevel(levelFile);
-            dataModel.initLevel(levelFile, newSnake, algorithmToUse);
         }
         catch(Exception e)
         {

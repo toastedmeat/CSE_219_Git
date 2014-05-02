@@ -7,42 +7,44 @@
 <properties>
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
-        <property name="IMAGE_BACKGROUND_GAME"              value="./pathX/BackgroundGame.png"></property>
-        <property name="IMAGE_BACKGROUND_GAME_MENU"              value="./pathX/BackgroundGameMenu.png"></property>
-        <property name="IMAGE_BACKGROUND_GAMEMAP"           value="./pathX/BackgroundGameMap.png"></property>
-        <property name="IMAGE_LEVEL_UNROBBED"               value="./pathX/unRobbedLocations.png"></property>
-        <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"      value="./pathX/unRobbedLocationsMouseOver.png"></property>
-        <property name="IMAGE_BACKGROUND_MENU"              value="./pathX/BackgroundMenu.png"></property>
-        <property name="IMAGE_BACKGROUND_HELP"              value="./pathX/HelpMenu.png"></property>
-        <property name="IMAGE_BACKGROUND_SETTINGS"          value="./pathX/SettingsMenu.png"></property>
-        <property name="IMAGE_BUTTON_NEW"                   value="./pathX/ButtonNewGame.png"></property>
-        <property name="IMAGE_BUTTON_NEW_MOUSE_OVER"        value="./pathX/ButtonNewGameMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_BACK"                  value="./pathX/ButtonBack.png"></property>
-        <property name="IMAGE_BUTTON_BACK_MOUSE_OVER"       value="./pathX/ButtonBackMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_UP"                    value="./pathX/ButtonUP.png"></property>
-        <property name="IMAGE_BUTTON_UP_MOUSE_OVER"         value="./pathX/ButtonUPMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_DOWN"                  value="./pathX/ButtonDOWN.png"></property>
-        <property name="IMAGE_BUTTON_DOWN_MOUSE_OVER"       value="./pathX/ButtonDOWNMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_LEFT"                  value="./pathX/ButtonLEFT.png"></property>
-        <property name="IMAGE_BUTTON_LEFT_MOUSE_OVER"       value="./pathX/ButtonLEFTMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_RIGHT"                 value="./pathX/ButtonRIGHT.png"></property>
-        <property name="IMAGE_BUTTON_RIGHT_MOUSE_OVER"      value="./pathX/ButtonRIGHTMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_STATS"                 value="./pathX/ButtonStats.png"></property>
-        <property name="IMAGE_BUTTON_STATS_MOUSE_OVER"      value="./pathX/ButtonStatsMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_UNDO"                  value="./pathX/ButtonUndo.png"></property>
-        <property name="IMAGE_BUTTON_UNDO_MOUSE_OVER"       value="./pathX/ButtonUndoMouseOver.png"></property>
-        <property name="IMAGE_BUTTON_TEMP_TILE"             value="./pathX/ButtonTempTile.png"></property>
-        <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./pathX/ButtonTempTileMouseOver.png"></property>
-        <property name="IMAGE_CURSOR_WAND"                  value="./pathX/CursorWand.png"></property>
-        <property name="IMAGE_DECOR_TIME"                   value="./pathX/DecorTime.png"></property>
-        <property name="IMAGE_DECOR_MISCASTS"               value="./pathX/DecorMiscasts.png"></property>
-        <property name="IMAGE_DIALOG_STATS"                 value="./pathX/DialogStats.png"></property>
-        <property name="IMAGE_DIALOG_WIN"                   value="./pathX/DialogWin.png"></property>
-        <property name="IMAGE_SPRITE_SHEET_CHARACTER_TILES" value="./pathX/SpriteSheetCharacterTiles.png"></property>
-        <property name="IMAGE_TILE_BACKGROUND"              value="./pathX/TileBackground.png"></property>
-        <property name="IMAGE_TILE_BACKGROUND_SELECTED"     value="./pathX/TileBackgroundSelected.png"></property>
-        <property name="IMAGE_TILE_BACKGROUND_MOUSE_OVER"   value="./pathX/TileBackgroundMouseOver.png"></property>
-        <property name="IMAGE_WINDOW_ICON"                  value="./pathX/WindowIcon.png"></property>
+        <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
+        <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
+        <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
+        <property name="IMAGE_LEVEL_UNROBBED"                   value="./pathX/unRobbedLocations.png"></property>
+        <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"          value="./pathX/unRobbedLocationsMouseOver.png"></property>
+        <property name="IMAGE_BACKGROUND_MENU"                  value="./pathX/BackgroundMenu.png"></property>
+        <property name="IMAGE_BACKGROUND_HELP"                  value="./pathX/HelpMenu.png"></property>
+        <property name="IMAGE_BACKGROUND_SETTINGS"              value="./pathX/SettingsMenu.png"></property>
+        <property name="IMAGE_BUTTON_NEW"                       value="./pathX/ButtonNewGame.png"></property>
+        <property name="IMAGE_BUTTON_NEW_MOUSE_OVER"            value="./pathX/ButtonNewGameMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_BACK"                      value="./pathX/ButtonBack.png"></property>
+        <property name="IMAGE_BUTTON_BACK_MOUSE_OVER"           value="./pathX/ButtonBackMouseOver.png"></property>
+        <property name="IMAGE_BACK_TO_LEVEL_SELECT"             value="./pathX/BackToLevelSelect.png"></property>
+        <property name="IMAGE_BACK_TO_LEVEL_SELECT_MOUSE_OVER"  value="./pathX/BackToLevelSelectMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_UP"                        value="./pathX/ButtonUP.png"></property>
+        <property name="IMAGE_BUTTON_UP_MOUSE_OVER"             value="./pathX/ButtonUPMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_DOWN"                      value="./pathX/ButtonDOWN.png"></property>
+        <property name="IMAGE_BUTTON_DOWN_MOUSE_OVER"           value="./pathX/ButtonDOWNMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_LEFT"                      value="./pathX/ButtonLEFT.png"></property>
+        <property name="IMAGE_BUTTON_LEFT_MOUSE_OVER"           value="./pathX/ButtonLEFTMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_RIGHT"                     value="./pathX/ButtonRIGHT.png"></property>
+        <property name="IMAGE_BUTTON_RIGHT_MOUSE_OVER"          value="./pathX/ButtonRIGHTMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_STATS"                     value="./pathX/ButtonStats.png"></property>
+        <property name="IMAGE_BUTTON_STATS_MOUSE_OVER"          value="./pathX/ButtonStatsMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_UNDO"                      value="./pathX/ButtonUndo.png"></property>
+        <property name="IMAGE_BUTTON_UNDO_MOUSE_OVER"           value="./pathX/ButtonUndoMouseOver.png"></property>
+        <property name="IMAGE_BUTTON_TEMP_TILE"                 value="./pathX/ButtonTempTile.png"></property>
+        <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"      value="./pathX/ButtonTempTileMouseOver.png"></property>
+        <property name="IMAGE_CURSOR_WAND"                      value="./pathX/CursorWand.png"></property>
+        <property name="IMAGE_DECOR_TIME"                       value="./pathX/DecorTime.png"></property>
+        <property name="IMAGE_DECOR_MISCASTS"                   value="./pathX/DecorMiscasts.png"></property>
+        <property name="IMAGE_DIALOG_STATS"                     value="./pathX/DialogStats.png"></property>
+        <property name="IMAGE_DIALOG_WIN"                       value="./pathX/DialogWin.png"></property>
+        <property name="IMAGE_SPRITE_SHEET_CHARACTER_TILES"     value="./pathX/SpriteSheetCharacterTiles.png"></property>
+        <property name="IMAGE_TILE_BACKGROUND"                  value="./pathX/TileBackground.png"></property>
+        <property name="IMAGE_TILE_BACKGROUND_SELECTED"         value="./pathX/TileBackgroundSelected.png"></property>
+        <property name="IMAGE_TILE_BACKGROUND_MOUSE_OVER"       value="./pathX/TileBackgroundMouseOver.png"></property>
+        <property name="IMAGE_WINDOW_ICON"                      value="./pathX/WindowIcon.png"></property>
 
         <!-- ALL THE TEXT TO BE DISPLAYED -->
         <property name="TEXT_ERROR_LOADING_AUDIO"               value="Error Loading an Audio File"></property>
@@ -60,15 +62,15 @@
         <property name="TEXT_TITLE_BAR_ERROR"                   value="An error has occurred"></property>                
         
         <!-- AUDIO FILES -->
-        <property name="AUDIO_CUE_BAD_MOVE"                 value="./pathX/BadMove.wav"></property>
-        <property name="AUDIO_CUE_CHEAT"                    value="./pathX/Cheat.wav"></property>
-        <property name="AUDIO_CUE_DESELECT_TILE"            value="./pathX/DeselectTile.wav"></property>
-        <property name="AUDIO_CUE_GOOD_MOVE"                value="./pathX/GoodMove.wav"></property>
-        <property name="AUDIO_CUE_SELECT_TILE"              value="./pathX/SelectTile.wav"></property>
-        <property name="AUDIO_CUE_UNDO"                     value="./pathX/Undo.wav"></property>
-        <property name="AUDIO_CUE_WIN"                      value="./pathX/Win.mid"></property>
-        <property name="SONG_CUE_GAME_SCREEN"               value="./pathX/GameSong.mid"></property>        
-        <property name="SONG_CUE_MENU_SCREEN"               value="./pathX/MenuSong.mid"></property>
+        <property name="AUDIO_CUE_BAD_MOVE"                     value="./pathX/BadMove.wav"></property>
+        <property name="AUDIO_CUE_CHEAT"                        value="./pathX/Cheat.wav"></property>
+        <property name="AUDIO_CUE_DESELECT_TILE"                value="./pathX/DeselectTile.wav"></property>
+        <property name="AUDIO_CUE_GOOD_MOVE"                    value="./pathX/GoodMove.wav"></property>
+        <property name="AUDIO_CUE_SELECT_TILE"                  value="./pathX/SelectTile.wav"></property>
+        <property name="AUDIO_CUE_UNDO"                         value="./pathX/Undo.wav"></property>
+        <property name="AUDIO_CUE_WIN"                          value="./pathX/Win.mid"></property>
+        <property name="SONG_CUE_GAME_SCREEN"                   value="./pathX/GameSong.mid"></property>        
+        <property name="SONG_CUE_MENU_SCREEN"                   value="./pathX/MenuSong.mid"></property>
     </property_list>
     
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->

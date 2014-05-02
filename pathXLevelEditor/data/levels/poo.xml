@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<level image="DeathValleyBackground.png" name="poo">
+     <intersections>
+          <intersection id="0" open="false" x="140" y="311"/>
+          <intersection id="1" open="true" x="868" y="319"/>
+     </intersections>
+     <roads/>
+     <start_intersection id="0" image="DefaultStartLocation.png"/>
+     <destination_intersection id="1" image="DefaultDestination.png"/>
+     <money amount="200"/>
+     <police num="2"/>
+     <bandits num="2"/>
+     <zombies num="2"/>
+</level>

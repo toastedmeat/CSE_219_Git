@@ -22,7 +22,6 @@ import properties_manager.PropertiesManager;
 import PathX.data.PathXDataModel;
 import static PathX.PathXConstants.*;
 import PathX.PathX.pathXPropertyType;
-import PathX.data.SnakeCell;
 import PathX.data.PathXRecord;
 
 /**
@@ -126,20 +125,15 @@ public class PathXGamePanel extends JPanel
    
     public void renderGUIControls(Graphics g)
     {
-        // GET EACH DECOR IMAGE ONE AT A TIME
-        Collection<Sprite> decorSprites = game.getGUIDecor().values();
-        for (Sprite s : decorSprites)
-        {
-            if (s.getSpriteType().getSpriteTypeID() != BACKGROUND_TYPE)
-                renderSprite(g, s);
-        }
-        
         // AND NOW RENDER THE BUTTONS
-        Collection<Sprite> buttonSprites = game.getGUILevels().values();
+        Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites)
         {
-            renderSprite(g, s);
+            if(s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)){
+            renderSprite2(g, s);
+            }
         }
+        
     }
     
     /**
@@ -158,6 +152,17 @@ public class PathXGamePanel extends JPanel
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int)s.getX() - 1800, (int)s.getY() - 400, null);
+        }
+    }
+    
+    public void renderSprite2(Graphics g, Sprite s)
+    {
+        // ONLY RENDER THE VISIBLE ONES
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString()))
+        {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+            g.drawImage(img, (int)s.getX() - 17, (int)s.getY() - 129, null);
         }
     }
 

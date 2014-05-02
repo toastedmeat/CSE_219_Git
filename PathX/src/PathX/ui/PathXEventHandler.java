@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
-import PathX.data.SortTransaction;
 import PathX.data.PathXDataModel;
 import PathX.file.PathXFileManager;
 
@@ -47,27 +46,35 @@ public class PathXEventHandler {
         game.getInsideCanvas().setVisible(false);
     }
     
+    public void respondToBackToLevelSelectRequest(){
+        game.switchToGameScreen();
+    }
+    
     public void respondToUpRequest(){
         if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() + 20);
         }
     }
     
     public void respondToDownRequest(){
         if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() - 20);
         }
     }
     
     public void respondToLeftRequest(){
         if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
             game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() + 20);
         }
     }
     
     public void respondToRightRequest(){
         if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
             game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() - 20);
         }
         
     }
@@ -116,16 +123,7 @@ public class PathXEventHandler {
 
     public void respondToUndoRequest() {
         PathXDataModel data = (PathXDataModel) game.getDataModel();
-        if (data.inProgress()) {
-                if (data.processUndo()) {
-                    // FIND A MOVE IF THERE IS ONE
-                    SortTransaction move = data.getPreviousSwapTransaction();
-                    if (move != null) {
-                        data.swapTiles(move.getFromIndex(), move.getToIndex());
-                        game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_UNDO.toString(), false);
-                    }
-                }
-            }
+        
     }
     /**
      * Called when the user presses a key on the keyboard.

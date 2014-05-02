@@ -17,7 +17,6 @@ import properties_manager.PropertiesManager;
 import PathX.data.PathXDataModel;
 import static PathX.PathXConstants.*;
 import PathX.PathX.pathXPropertyType;
-import PathX.data.SnakeCell;
 import PathX.data.PathXRecord;
 
 /**
@@ -118,10 +117,6 @@ public class PathXPanel extends JPanel
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
             if (!data.notStarted())
             {
-                // RENDER THE SNAKE
-                if (!data.won())
-                    renderSnake(g);
-                
                 // AND THE TILES
                 renderTiles(g);
                 
@@ -195,7 +190,9 @@ public class PathXPanel extends JPanel
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites)
         {
+            if(!s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)){
             renderSprite(g, s);
+            }
         }
     }
     
@@ -205,22 +202,6 @@ public class PathXPanel extends JPanel
         
     }
     
-    public void renderSnake(Graphics g)
-    {
-        ArrayList<SnakeCell> snake = data.getSnake();
-        int red = 255;
-        Viewport viewport = data.getViewport();
-        for (SnakeCell sC : snake)
-        {
-            int x = data.calculateGridTileX(sC.col);
-            int y = data.calculateGridTileY(sC.row);            
-            g.setColor(new Color(0, 0, red, 200));
-            g.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-            red -= COLOR_INC;
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-        }
-    }
 
     /**
      * This method renders the on-screen stats that change as

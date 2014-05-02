@@ -109,10 +109,6 @@ public class PathXRecord {
         return levelRecords.containsKey(levelName);
     }
 
-    // MUTATOR METHOD
-    public void setAlgorithm(String levelName, PathXAlgorithm initAlgorithm) {
-        levelRecords.get(levelName).algorithm = initAlgorithm.name;
-    }
 
     // ADD METHODS
     // -addLevel

@@ -34,6 +34,7 @@ public class PathXConstants
     // IN-GAME UI CONTROL TYPES
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
+    public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
     public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
     public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
     public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
@@ -93,6 +94,8 @@ public class PathXConstants
     public static final int NEW_BUTTON_Y = 60;
     public static final int BACK_BUTTON_X = 1100;
     public static final int BACK_BUTTON_Y = 60;
+    public static final int SELECT_LEVEL_X = 25;
+    public static final int SELECT_LEVEL_Y = 175;
     
     public static final int UP_BUTTON_X = 960;
     public static final int UP_BUTTON_Y = 15;
