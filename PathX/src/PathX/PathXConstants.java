@@ -47,27 +47,8 @@ public class PathXConstants
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
     public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
-    public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
     public static final String SBU_GAME_TYPE = "SBU_GAME_TYPE";
-    public static final String LEVEL2_GAME_TYPE = "LEVEL2_GAME_TYPE";
-    public static final String LEVEL3_GAME_TYPE = "LEVEL3_GAME_TYPE";
-    public static final String LEVEL4_GAME_TYPE = "LEVEL4_GAME_TYPE";
-    public static final String LEVEL5_GAME_TYPE = "LEVEL5_GAME_TYPE";
-    public static final String LEVEL6_GAME_TYPE = "LEVEL6_GAME_TYPE";
-    public static final String LEVEL7_GAME_TYPE = "LEVEL7_GAME_TYPE";
-    public static final String LEVEL8_GAME_TYPE = "LEVEL8_GAME_TYPE";
-    public static final String LEVEL9_GAME_TYPE = "LEVEL9_GAME_TYPE";
-    public static final String LEVEL10_GAME_TYPE = "LEVEL10_GAME_TYPE";
-    public static final String LEVEL11_GAME_TYPE = "LEVEL11_GAME_TYPE";
-    public static final String LEVEL12_GAME_TYPE = "LEVEL12_GAME_TYPE";
-    public static final String LEVEL13_GAME_TYPE = "LEVEL13_GAME_TYPE";
-    public static final String LEVEL14_GAME_TYPE = "LEVEL14_GAME_TYPE";
-    public static final String LEVEL15_GAME_TYPE = "LEVEL15_GAME_TYPE";
-    public static final String LEVEL16_GAME_TYPE = "LEVEL16_GAME_TYPE";
-    public static final String LEVEL17_GAME_TYPE = "LEVEL17_GAME_TYPE";
-    public static final String LEVEL18_GAME_TYPE = "LEVEL18_GAME_TYPE";
-    public static final String LEVEL19_GAME_TYPE = "LEVEL19_GAME_TYPE";
-    public static final String LEVEL20_GAME_TYPE = "LEVEL20_GAME_TYPE";
+    public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
     
 
     // DIALOG TYPES
@@ -78,52 +59,32 @@ public class PathXConstants
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
     public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";
+    public static final String SBU_SCREEN_STATE = "SBU_SCREEN_STATE";
     public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
     
-    public static final String SBU_SCREEN_STATE = "SBU_SCREEN_STATE";
-    public static final String LEVEL2_SCREEN_STATE = "LEVEL2_SCREEN_STATE";
-    public static final String LEVEL3_SCREEN_STATE = "LEVEL3_SCREEN_STATE";
-    public static final String LEVEL4_SCREEN_STATE = "LEVEL4_SCREEN_STATE";
-    public static final String LEVEL5_SCREEN_STATE = "LEVEL5_SCREEN_STATE";
-    public static final String LEVEL6_SCREEN_STATE = "LEVEL6_SCREEN_STATE";
-    public static final String LEVEL7_SCREEN_STATE = "LEVEL7_SCREEN_STATE";
-    public static final String LEVEL8_SCREEN_STATE = "LEVEL8_SCREEN_STATE";
-    public static final String LEVEL9_SCREEN_STATE = "LEVEL9_SCREEN_STATE";
-    public static final String LEVEL10_SCREEN_STATE = "LEVEL10_SCREEN_STATE";
-    public static final String LEVEL11_SCREEN_STATE = "LEVEL11_SCREEN_STATE";
-    public static final String LEVEL12_SCREEN_STATE = "LEVEL12_SCREEN_STATE";
-    public static final String LEVEL13_SCREEN_STATE = "LEVEL13_SCREEN_STATE";
-    public static final String LEVEL14_SCREEN_STATE = "LEVEL14_SCREEN_STATE";
-    public static final String LEVEL15_SCREEN_STATE = "LEVEL15_SCREEN_STATE";
-    public static final String LEVEL16_SCREEN_STATE = "LEVEL16_SCREEN_STATE";
-    public static final String LEVEL17_SCREEN_STATE = "LEVEL17_SCREEN_STATE";
-    public static final String LEVEL18_SCREEN_STATE = "LEVEL18_SCREEN_STATE";
-    public static final String LEVEL19_SCREEN_STATE = "LEVEL19_SCREEN_STATE";
-    public static final String LEVEL20_SCREEN_STATE = "LEVEL20_SCREEN_STATE";
-    
     //Level Information
-    public static final String LEVEL1_INFO = "Level 1\nStony Brook University, NY\nRob the bank in SBU\nand make a getaway\nto earn $200";
-    public static final String LEVEL2_INFO = "Level 2\nNew York, NY\nRob the bank in Manhatten\nand make a getaway\nto earn $200";
-    public static final String LEVEL3_INFO = "Level 3\nPennsylvania\nRob the bank in Pennsylvania\nand make a getaway\nto earn $300";
-    public static final String LEVEL4_INFO = "Level 4\nPennsylvania\nRob the bank in the City\nand make a getaway\nto earn $400";
-    public static final String LEVEL5_INFO = "Level 5\nHarrisburg, PA\nRob the bank in Harrisburg\nand make a getaway\nto earn $500";
-    public static final String LEVEL6_INFO = "Level 6\nPennsylvania\nRob the outskirts in Pennsylvania\nand make a getaway\nto earn $600";
-    public static final String LEVEL7_INFO = "Level 7\nPennsylvania\nRob the Farm in Pennsylvania\nand make a getaway\nto earn $600";
-    public static final String LEVEL8_INFO = "Level 8\nWest Virginia\nRob the bank in West Virginia\nand make a getaway\nto earn $700";
-    public static final String LEVEL9_INFO = "Level 9\nOhio\nRob the bank in Ohio\nand make a getaway\nto earn $800";
-    public static final String LEVEL10_INFO = "Level 10\nOhio State University\nRob the Money in OSU\nand make a getaway\nto earn $800";
-    public static final String LEVEL11_INFO = "Level 11\nOhio\nRob the Farm House in Ohio\nand make a getaway\nto earn $800";
-    public static final String LEVEL12_INFO = "Level 12\nIndiana\nRob the Campers in Indiana\nand make a getaway\nto earn $1000";
-    public static final String LEVEL13_INFO = "Level 13\nIndiana\nRob the Church in Indiana\nand make a getaway\nto earn $1100";
-    public static final String LEVEL14_INFO = "Level 14\nIndiana\nRob the bank in Indiana\nand make a getaway\nto earn $1100";
-    public static final String LEVEL15_INFO = "Level 15\nIllinois\nRob the People in Illinois\nand make a getaway\nto earn $1300";
-    public static final String LEVEL16_INFO = "Level 16\nUniversity of Illinois\nRob the students in UI\nand make a getaway\nto earn $1500";
-    public static final String LEVEL17_INFO = "Level 17\nSt. Louis, MO\nRob the bank in St. Louis\nand make a getaway\nto earn $1700";
-    public static final String LEVEL18_INFO = "Level 18\nBotanical Garden\nRob the Botanical Gardens in Missouri\nand make a getaway\nto earn $1700";
-    public static final String LEVEL19_INFO = "Level 19\nUniversity of Missouri\nRob the students in UM\nand make a getaway\nto earn $1700";
-    public static final String LEVEL20_INFO = "Level 20\nMissouri\nRob the natives in Missouri\nand make a getaway\nto earn $2500";
+    public static final String LEVEL1_INFO = "Information about\nLevel 1";
+    public static final String LEVEL2_INFO = "Information about\nLevel 2";
+    public static final String LEVEL3_INFO = "Information about\nLevel 3";
+    public static final String LEVEL4_INFO = "Information about\nLevel 4";
+    public static final String LEVEL5_INFO = "Information about\nLevel 5";
+    public static final String LEVEL6_INFO = "Information about\nLevel 6";
+    public static final String LEVEL7_INFO = "Information about\nLevel 7";
+    public static final String LEVEL8_INFO = "Information about\nLevel 8";
+    public static final String LEVEL9_INFO = "Information about\nLevel 9";
+    public static final String LEVEL10_INFO = "Information about\nLevel 10";
+    public static final String LEVEL11_INFO = "Information about\nLevel 11";
+    public static final String LEVEL12_INFO = "Information about\nLevel 12";
+    public static final String LEVEL13_INFO = "Information about\nLevel 13";
+    public static final String LEVEL14_INFO = "Information about\nLevel 14";
+    public static final String LEVEL15_INFO = "Information about\nLevel 15";
+    public static final String LEVEL16_INFO = "Information about\nLevel 16";
+    public static final String LEVEL17_INFO = "Information about\nLevel 17";
+    public static final String LEVEL18_INFO = "Information about\nLevel 18";
+    public static final String LEVEL19_INFO = "Information about\nLevel 19";
+    public static final String LEVEL20_INFO = "Information about\nLevel 20";
 
     // ANIMATION SPEED
     public static final int FPS = 30;
