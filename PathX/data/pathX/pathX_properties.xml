@@ -7,11 +7,29 @@
 <properties>
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
-        <property name="PATHXLEVELSCHEMA"                       value="./pathX/PathXLevelSchema.xsd"></property>
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
         <property name="IMAGE_BACKGROUND_SBU"                   value="./pathX/Level1.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL2"                value="./pathX/Level2.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL3"                value="./pathX/Level3.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL4"                value="./pathX/Level4.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL5"                value="./pathX/Level5.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL6"                value="./pathX/Level6.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL7"                value="./pathX/Level7.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL8"                value="./pathX/Level8.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL9"                value="./pathX/Level9.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL10"                value="./pathX/Level10.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL11"                value="./pathX/Level11.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL12"                value="./pathX/Level12.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL13"                value="./pathX/Level13.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL14"                value="./pathX/Level14.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL15"                value="./pathX/Level15.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL16"                value="./pathX/Level16.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL17"                value="./pathX/Level17.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL18"                value="./pathX/Level18.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL19"                value="./pathX/Level19.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL20"                value="./pathX/Level20.png"></property>
         <property name="IMAGE_LEVEL_UNROBBED"                   value="./pathX/unRobbedLocations.png"></property>
         <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"          value="./pathX/unRobbedLocationsMouseOver.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"                  value="./pathX/BackgroundMenu.png"></property>
@@ -103,25 +121,25 @@
         
         <property_options name="GAME_LEVELS">
             <option>./pathX/Level1.xml</option>
-            <option>./pathX/Level2.png</option>
-            <option>./pathX/Level3.png</option>
-            <option>./pathX/Level4.png</option>
-            <option>./pathX/Level5.png</option>
-            <option>./pathX/Level6.png</option>
-            <option>./pathX/Level7.png</option>
-            <option>./pathX/Level8.png</option>
-            <option>./pathX/Level9.png</option>
-            <option>./pathX/Level10.png</option>
-            <option>./pathX/Level11.png</option>
-            <option>./pathX/Level12.png</option>
-            <option>./pathX/Level13.png</option>
-            <option>./pathX/Level14.png</option>
-            <option>./pathX/Level15.png</option>
-            <option>./pathX/Level16.png</option>
-            <option>./pathX/Level17.png</option>
-            <option>./pathX/Level18.png</option>
-            <option>./pathX/Level19.png</option>
-            <option>./pathX/Level20.png</option>
+            <option>./pathX/Level2.xml</option>
+            <option>./pathX/Level3.xml</option>
+            <option>./pathX/Level4.xml</option>
+            <option>./pathX/Level5.xml</option>
+            <option>./pathX/Level6.xml</option>
+            <option>./pathX/Level7.xml</option>
+            <option>./pathX/Level8.xml</option>
+            <option>./pathX/Level9.xml</option>
+            <option>./pathX/Level10.xml</option>
+            <option>./pathX/Level11.xml</option>
+            <option>./pathX/Level12.xml</option>
+            <option>./pathX/Level13.xml</option>
+            <option>./pathX/Level14.xml</option>
+            <option>./pathX/Level15.xml</option>
+            <option>./pathX/Level16.xml</option>
+            <option>./pathX/Level17.xml</option>
+            <option>./pathX/Level18.xml</option>
+            <option>./pathX/Level19.xml</option>
+            <option>./pathX/Level20.xml</option>
         </property_options>
         <property_options name="GAME_LEVEL_IMAGE_OPTIONS">
             <option>./pathX/unRobbedLocations.png</option>
