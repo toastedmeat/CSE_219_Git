@@ -19,12 +19,16 @@ import PathX.data.PathXRecord;
 import PathX.ui.PathXMiniGame;
 import properties_manager.PropertiesManager;
 import static PathX.PathXConstants.*;
+import PathX.data.Intersection;
 import PathX.data.PathXAlgorithmType;
+import PathX.data.PathXLevel;
+import PathX.data.Road;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import xml_utilities.XMLUtilities;
 
 /**
- * This class provides services for efficiently loading and saving
- * binary files for The Sorting Hat game application.
- * 
  * @author Richard McKenna & Eric Loo
  */
 public class PathXFileManager
@@ -32,16 +36,25 @@ public class PathXFileManager
     // WE'LL LET THE GAME KNOW WHEN DATA LOADING IS COMPLETE
     private PathXMiniGame miniGame;
     
+     // THIS WILL HELP US PARSE THE XML FILES
+    private XMLUtilities xmlUtil;
+    
+    // THIS IS THE SCHEMA WE'LL USE
+    private File levelSchema;
     /**
      * Constructor for initializing this file manager, it simply keeps
      * the game for later.
      * 
      * @param initMiniGame The game for which this class loads data.
      */
-    public PathXFileManager(PathXMiniGame initMiniGame)
+    public PathXFileManager(PathXMiniGame initMiniGame, File initLevelSchema)
     {
         // KEEP IT FOR LATER
         miniGame = initMiniGame;
+        xmlUtil = new XMLUtilities();
+        
+         // WE'LL USE THE SCHEMA FILE TO VALIDATE THE XML FILES
+        levelSchema = initLevelSchema;
     }
 
     /**
@@ -50,57 +63,148 @@ public class PathXFileManager
      * 
      * @param levelFile Level to load.
      */
-    public void loadLevel(String levelFile)
+    public void loadLevel(File levelFile, PathXDataModel model)
     {
         // LOAD THE RAW DATA SO WE CAN USE IT
         // OUR LEVEL FILES WILL HAVE THE DIMENSIONS FIRST,
         // FOLLOWED BY THE GRID VALUES
         try
         {
-            File fileToOpen = new File(levelFile);
+            // WE'LL FILL IN SOME OF THE LEVEL OURSELVES
+            PathXLevel levelToLoad = model.getLevel();
+            levelToLoad.reset();
+            
+            // FIRST LOAD ALL THE XML INTO A TREE
+            Document doc = xmlUtil.loadXMLDocument( levelFile.getAbsolutePath(), 
+                                                    levelSchema.getAbsolutePath());
+            // FIRST LOAD THE LEVEL INFO
+            Node levelNode = doc.getElementsByTagName(LEVEL_NODE).item(0);
+            NamedNodeMap attributes = levelNode.getAttributes();
+            String levelName = attributes.getNamedItem(NAME_ATT).getNodeValue();
+            levelToLoad.setLevelName(levelName);
 
-            // LET'S USE A FAST LOADING TECHNIQUE. WE'LL LOAD ALL OF THE
-            // BYTES AT ONCE INTO A BYTE ARRAY, AND THEN PICK THAT APART.
-            // THIS IS FAST BECAUSE IT ONLY HAS TO DO FILE READING ONCE
-            byte[] bytes = new byte[Long.valueOf(fileToOpen.length()).intValue()];
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            FileInputStream fis = new FileInputStream(fileToOpen);
-            BufferedInputStream bis = new BufferedInputStream(fis);
+            // THEN LET'S LOAD THE LIST OF ALL THE REGIONS
+            loadIntersectionsList(doc, levelToLoad);
+            ArrayList<Intersection> intersections = levelToLoad.getIntersections();
             
-            // HERE IT IS, THE ONLY READY REQUEST WE NEED
-            bis.read(bytes);
-            bis.close();
+            // AND NOW CONNECT ALL THE REGIONS TO EACH OTHER
+            loadRoadsList(doc, levelToLoad);
             
-            // NOW WE NEED TO LOAD THE DATA FROM THE BYTE ARRAY
-            DataInputStream dis = new DataInputStream(bais);
+            // LOAD THE START INTERSECTION
+            Node startIntNode = doc.getElementsByTagName(START_INTERSECTION_NODE).item(0);
+            attributes = startIntNode.getAttributes();
+            String startIdText = attributes.getNamedItem(ID_ATT).getNodeValue();
+            int startId = Integer.parseInt(startIdText);
+            String startImageName = attributes.getNamedItem(IMAGE_ATT).getNodeValue();
+            Intersection startingIntersection = intersections.get(startId);
+            levelToLoad.setStartingLocation(startingIntersection);
+            model.updateStartingLocationImage(startImageName);
             
-            // NOTE THAT WE NEED TO LOAD THE DATA IN THE SAME
-            // ORDER AND FORMAT AS WE SAVED IT
+            // LOAD THE DESTINATION
+            Node destIntNode = doc.getElementsByTagName(DESTINATION_INTERSECTION_NODE).item(0);
+            attributes = destIntNode.getAttributes();
+            String destIdText = attributes.getNamedItem(ID_ATT).getNodeValue();
+            int destId = Integer.parseInt(destIdText);
+            String destImageName = attributes.getNamedItem(IMAGE_ATT).getNodeValue();
+            levelToLoad.setDestination(intersections.get(destId));
+            model.updateDestinationImage(destImageName);
             
-            // FIRST READ THE ALGORITHM NAME TO USE FOR THE LEVEL
-            String algorithmName = dis.readUTF();
-            PathXAlgorithmType algorithmTypeToUse = PathXAlgorithmType.valueOf(algorithmName);
-            // THEN READ THE GRID DIMENSIONS
-            // WE DON'T ACTUALLY USE THESE
-            int initGridColumns = dis.readInt();
-            int initGridRows = dis.readInt();
+            // LOAD THE MONEY
+            Node moneyNode = doc.getElementsByTagName(MONEY_NODE).item(0);
+            attributes = moneyNode.getAttributes();
+            String moneyText = attributes.getNamedItem(AMOUNT_ATT).getNodeValue();
+            int money = Integer.parseInt(moneyText);
+            levelToLoad.setMoney(money);
             
+            // LOAD THE NUMBER OF POLICE
+            Node policeNode = doc.getElementsByTagName(POLICE_NODE).item(0);
+            attributes = policeNode.getAttributes();
+            String policeText = attributes.getNamedItem(NUM_ATT).getNodeValue();
+            int numPolice = Integer.parseInt(policeText);
+            levelToLoad.setNumPolice(numPolice);
             
+            // LOAD THE NUMBER OF BANDITS
+            Node banditsNode = doc.getElementsByTagName(BANDITS_NODE).item(0);
+            attributes = banditsNode.getAttributes();
+            String banditsText = attributes.getNamedItem(NUM_ATT).getNodeValue();
+            int numBandits = Integer.parseInt(banditsText);
+            levelToLoad.setNumBandits(numBandits);
             
-            
-            // EVERYTHING WENT AS PLANNED SO LET'S MAKE IT PERMANENT
-            PathXDataModel dataModel = (PathXDataModel)miniGame.getDataModel();
-            Viewport viewport = dataModel.getViewport();
-            viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
-            viewport.initViewportMargins();
-            dataModel.setCurrentLevel(levelFile);
+            // LOAD THE NUMBER OF ZOMBIES
+            Node zombiesNode = doc.getElementsByTagName(ZOMBIES_NODE).item(0);
+            attributes = zombiesNode.getAttributes();
+            String zombiesText = attributes.getNamedItem(NUM_ATT).getNodeValue();
+            int numZombies = Integer.parseInt(zombiesText);
+            levelToLoad.setNumZombies(numZombies); 
         }
         catch(Exception e)
         {
             // LEVEL LOADING ERROR
-            miniGame.getErrorHandler().processError(pathXPropertyType.TEXT_ERROR_LOADING_LEVEL);
+            e.printStackTrace();
+            //miniGame.getErrorHandler().processError(pathXPropertyType.TEXT_ERROR_LOADING_LEVEL);
         }
     }    
+    // PRIVATE HELPER METHOD FOR LOADING INTERSECTIONS INTO OUR LEVEL
+    private void loadIntersectionsList( Document doc, PathXLevel levelToLoad)
+    {
+        // FIRST GET THE REGIONS LIST
+        Node intersectionsListNode = doc.getElementsByTagName(INTERSECTIONS_NODE).item(0);
+        ArrayList<Intersection> intersections = levelToLoad.getIntersections();
+        
+        // AND THEN GO THROUGH AND ADD ALL THE LISTED REGIONS
+        ArrayList<Node> intersectionsList = xmlUtil.getChildNodesWithName(intersectionsListNode, INTERSECTION_NODE);
+        for (int i = 0; i < intersectionsList.size(); i++)
+        {
+            // GET THEIR DATA FROM THE DOC
+            Node intersectionNode = intersectionsList.get(i);
+            NamedNodeMap intersectionAttributes = intersectionNode.getAttributes();
+            String idText = intersectionAttributes.getNamedItem(ID_ATT).getNodeValue();
+            String openText = intersectionAttributes.getNamedItem(OPEN_ATT).getNodeValue();
+            String xText = intersectionAttributes.getNamedItem(X_ATT).getNodeValue();
+            int x = Integer.parseInt(xText);
+            String yText = intersectionAttributes.getNamedItem(Y_ATT).getNodeValue();
+            int y = Integer.parseInt(yText);
+            
+            // NOW MAKE AND ADD THE INTERSECTION
+            Intersection newIntersection = new Intersection(x, y);
+            newIntersection.open = Boolean.parseBoolean(openText);
+            intersections.add(newIntersection);
+        }
+    }
+
+    // PRIVATE HELPER METHOD FOR LOADING ROADS INTO OUR LEVEL
+    private void loadRoadsList( Document doc, PathXLevel levelToLoad)
+    {
+        // FIRST GET THE REGIONS LIST
+        Node roadsListNode = doc.getElementsByTagName(ROADS_NODE).item(0);
+        ArrayList<Road> roads = levelToLoad.getRoads();
+        ArrayList<Intersection> intersections = levelToLoad.getIntersections();
+        
+        // AND THEN GO THROUGH AND ADD ALL THE LISTED REGIONS
+        ArrayList<Node> roadsList = xmlUtil.getChildNodesWithName(roadsListNode, ROAD_NODE);
+        for (int i = 0; i < roadsList.size(); i++)
+        {
+            // GET THEIR DATA FROM THE DOC
+            Node roadNode = roadsList.get(i);
+            NamedNodeMap roadAttributes = roadNode.getAttributes();
+            String id1Text = roadAttributes.getNamedItem(INT_ID1_ATT).getNodeValue();
+            int int_id1 = Integer.parseInt(id1Text);
+            String id2Text = roadAttributes.getNamedItem(INT_ID2_ATT).getNodeValue();
+            int int_id2 = Integer.parseInt(id2Text);
+            String oneWayText = roadAttributes.getNamedItem(ONE_WAY_ATT).getNodeValue();
+            boolean oneWay = Boolean.parseBoolean(oneWayText);
+            String speedLimitText = roadAttributes.getNamedItem(SPEED_LIMIT_ATT).getNodeValue();
+            int speedLimit = Integer.parseInt(speedLimitText);
+            
+            // NOW MAKE AND ADD THE ROAD
+            Road newRoad = new Road();
+            newRoad.setNode1(intersections.get(int_id1));
+            newRoad.setNode2(intersections.get(int_id2));
+            newRoad.setOneWay(oneWay);
+            newRoad.setSpeedLimit(speedLimit);
+            roads.add(newRoad);
+        }
+    }
     
     /**
      * This method saves the record argument to the player records file.
@@ -112,17 +216,7 @@ public class PathXFileManager
     {
         try
         {
-            PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String recordPath = PATH_DATA + props.getProperty(pathXPropertyType.FILE_PLAYER_RECORD);
-            File fileToSave = new File(recordPath);
-
-            byte[] bytes = record.toByteArray();
-            FileOutputStream fos = new FileOutputStream(fileToSave);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            
-            // HERE IT IS, THE ONLY READY REQUEST WE NEED
-            bos.write(bytes);
-            bos.close();            
+                        
         }
         catch(Exception e)
         {
@@ -146,41 +240,7 @@ public class PathXFileManager
         // FOLLOWED BY THE GRID VALUES
         try
         {
-            PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String recordPath = PATH_DATA + props.getProperty(pathXPropertyType.FILE_PLAYER_RECORD);
-            File fileToOpen = new File(recordPath);
-
-            // LET'S USE A FAST LOADING TECHNIQUE. WE'LL LOAD ALL OF THE
-            // BYTES AT ONCE INTO A BYTE ARRAY, AND THEN PICK THAT APART.
-            // THIS IS FAST BECAUSE IT ONLY HAS TO DO FILE READING ONCE
-            byte[] bytes = new byte[Long.valueOf(fileToOpen.length()).intValue()];
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            FileInputStream fis = new FileInputStream(fileToOpen);
-            BufferedInputStream bis = new BufferedInputStream(fis);
             
-            // HERE IT IS, THE ONLY READY REQUEST WE NEED
-            bis.read(bytes);
-            bis.close();
-            
-            // NOW WE NEED TO LOAD THE DATA FROM THE BYTE ARRAY
-            DataInputStream dis = new DataInputStream(bais);
-            
-            // NOTE THAT WE NEED TO LOAD THE DATA IN THE SAME
-            // ORDER AND FORMAT AS WE SAVED IT
-            // FIRST READ THE NUMBER OF LEVELS
-            int numLevels = dis.readInt();
-
-            for (int i = 0; i < numLevels; i++)
-            {
-                String levelName = dis.readUTF();
-                PathXLevelRecord rec = new PathXLevelRecord();
-                rec.algorithm = dis.readUTF();
-                rec.gamesPlayed = dis.readInt();
-                rec.wins = dis.readInt();
-                rec.perfectWins = dis.readInt();
-                rec.fastestPerfectWinTime = dis.readLong();
-                recordToLoad.addSortingHatLevelRecord(levelName, rec);
-            }
         }
         catch(Exception e)
         {

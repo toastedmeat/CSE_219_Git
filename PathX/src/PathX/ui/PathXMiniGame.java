@@ -31,6 +31,7 @@ import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 import java.util.Random;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -134,6 +135,7 @@ public class PathXMiniGame extends MiniGame {
      */
     public void switchToSplashScreen() {
         // CHANGE THE BACKGROUND
+        dataCopy.setLoadedLevel(false);
         guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
 
         // DEACTIVATE THE TOOLBAR CONTROLS
@@ -214,6 +216,7 @@ public class PathXMiniGame extends MiniGame {
      * appropriate UI controls visible & invisible.
      */
     public void switchToGameScreen() {
+        dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         // CHANGE THE BACKGROUND
         guiDecor.get(BACKGROUND_TYPE).setState(GAME_SCREEN_STATE);
@@ -276,9 +279,12 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel1() {
-        levelSetup();
-
         insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        levelSetup();
+        
+        fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
+        dataCopy.setLoadedLevel(true);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -288,9 +294,9 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel2() {
+        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         levelSetup();
 
-        insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL2_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -517,6 +523,8 @@ public class PathXMiniGame extends MiniGame {
 
     public void menuSetup() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        dataCopy.setLoadedLevel(false);
         // ACTIVATE THE TOOLBAR AND ITS CONTROLS
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
@@ -662,7 +670,7 @@ public class PathXMiniGame extends MiniGame {
         errorHandler = new PathXErrorHandler(window);
 
         // INIT OUR FILE MANAGER
-        fileManager = new PathXFileManager(this);
+        fileManager = new PathXFileManager(this, new File(PATH_DATA_LEVELS + LEVEL_SCHEMA));
 
         // LOAD THE PLAYER'S RECORD FROM A FILE
         record = fileManager.loadRecord();

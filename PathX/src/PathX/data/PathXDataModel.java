@@ -54,8 +54,6 @@ public class PathXDataModel extends MiniGameDataModel {
     Intersection selectedIntersection;
     Road selectedRoad;
 
-    // WE'LL USE THIS WHEN WE'RE ADDING A NEW ROAD
-    Intersection startRoadIntersection;
 
     // IN CASE WE WANT TO TRACK MOVEMENTS
     int lastMouseX;
@@ -66,6 +64,7 @@ public class PathXDataModel extends MiniGameDataModel {
     boolean isMousePressed;
     boolean isDragging;
     boolean dataUpdatedSinceLastSave;
+    boolean loadedLevel;
     
     /**
      * Constructor for initializing this data model, it will create the data
@@ -80,13 +79,16 @@ public class PathXDataModel extends MiniGameDataModel {
         level = new PathXLevel();
         viewport = new Viewport();
         levelBeingEdited = false;
-        startRoadIntersection = null;
+        //startRoadIntersection = null;
 
     }
     
 
     // ACCESSOR METHODS
     public PathXLevel getLevel() {        return level;    }
+    public void setLevel(PathXLevel l) { level = l; }
+    public boolean getLoadedLevel() {        return loadedLevel;    }
+    public void setLoadedLevel(boolean loadedLevel) {        this.loadedLevel = loadedLevel;    }
     //public Viewport         getViewport()               {   return viewport;                }
     public boolean isLevelBeingEdited() {        return levelBeingEdited;    }
     public Image getBackgroundImage() {        return backgroundImage;    }
@@ -94,7 +96,7 @@ public class PathXDataModel extends MiniGameDataModel {
     public Image getDesinationImage() {        return destinationImage;    }
     public Intersection getSelectedIntersection() {        return selectedIntersection;    }
     public Road getSelectedRoad() {        return selectedRoad;    }
-    public Intersection getStartRoadIntersection() {        return startRoadIntersection;    }
+    //public Intersection getStartRoadIntersection() {        return startRoadIntersection;    }
     //public int getLastMouseX() {        return lastMouseX;    }
     //public int getLastMouseY() {        return lastMouseY;    }
     public Intersection getStartingLocation() {        return level.startingLocation;    }
@@ -430,7 +432,7 @@ public class PathXDataModel extends MiniGameDataModel {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         level.startingLocationImageFileName = newStartImage;
-        startingLocationImage = miniGame.loadImage(imgPath + level.startingLocationImageFileName);
+        startingLocationImage = miniGame.loadImage(imgPath + "/pathX/" + level.startingLocationImageFileName);
         miniGame.getCanvas().repaint();
     }
 
@@ -441,7 +443,7 @@ public class PathXDataModel extends MiniGameDataModel {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         level.destinationImageFileName = newDestImage;
-        destinationImage = miniGame.loadImage(imgPath + level.destinationImageFileName);
+        destinationImage = miniGame.loadImage(imgPath + "/pathX/"+ level.destinationImageFileName);
         miniGame.getCanvas().repaint();
     }
 

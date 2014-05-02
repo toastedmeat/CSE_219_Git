@@ -19,6 +19,11 @@ public class PathXConstants
     public static String PROPERTIES_FILE_NAME = "properties.xml";
     public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";    
     public static String PATH_DATA = "./data/";
+    public static String PATH_DATA_LEVELS = "data/";
+    
+     // FOR LOADING STUFF FROM OUR LEVEL XML FILES    
+    // THIS IS THE NAME OF THE SCHEMA
+    public static final String  LEVEL_SCHEMA = "PathXLevelSchema.xsd";
     
     // THESE ARE THE TYPES OF CONTROLS, WE USE THESE CONSTANTS BECAUSE WE'LL
     // STORE THEM BY TYPE, SO THESE WILL PROVIDE A MEANS OF IDENTIFYING THEM
@@ -132,6 +137,41 @@ public class PathXConstants
     public static final String LEVEL19_INFO = "Level 19\nUniversity of Missouri\nRob the students in UM\nand make a getaway\nto earn $1700";
     public static final String LEVEL20_INFO = "Level 20\nMissouri\nRob the natives in Missouri\nand make a getaway\nto earn $2500";
 
+    // CONSTANTS FOR LOADING DATA FROM THE XML FILES
+    // THESE ARE THE XML NODES
+    public static final String LEVEL_NODE = "level";
+    public static final String INTERSECTIONS_NODE = "intersections";
+    public static final String INTERSECTION_NODE = "intersection";
+    public static final String ROADS_NODE = "roads";
+    public static final String ROAD_NODE = "road";
+    public static final String START_INTERSECTION_NODE = "start_intersection";
+    public static final String DESTINATION_INTERSECTION_NODE = "destination_intersection";
+    public static final String MONEY_NODE = "money";
+    public static final String POLICE_NODE = "police";
+    public static final String BANDITS_NODE = "bandits";
+    public static final String ZOMBIES_NODE = "zombies";
+    
+    // AND THE ATTRIBUTES FOR THOSE NODES
+    public static final String NAME_ATT = "name";
+    public static final String IMAGE_ATT = "image";
+    public static final String ID_ATT = "id";
+    public static final String X_ATT = "x";
+    public static final String Y_ATT = "y";
+    public static final String OPEN_ATT = "open";
+    public static final String INT_ID1_ATT = "int_id1";
+    public static final String INT_ID2_ATT = "int_id2";
+    public static final String SPEED_LIMIT_ATT = "speed_limit";
+    public static final String ONE_WAY_ATT = "one_way";
+    public static final String AMOUNT_ATT = "amount";
+    public static final String NUM_ATT = "num";
+    
+      // FOR NICELY FORMATTED XML OUTPUT
+    public static final String XML_INDENT_PROPERTY = "{http://xml.apache.org/xslt}indent-amount";
+    public static final String XML_INDENT_VALUE = "5";
+    public static final String YES_VALUE = "Yes";
+    
+    
+    
     // ANIMATION SPEED
     public static final int FPS = 30;
 

@@ -59,17 +59,17 @@ public class PathXGamePanel extends JPanel {
 
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
-    
+
     private String renderedBackground;
-    
+
     Viewport viewport;
-    
-     // WE'LL RECYCLE THESE DURING RENDERING
+
+    // WE'LL RECYCLE THESE DURING RENDERING
     Ellipse2D.Double recyclableCircle;
     Line2D.Double recyclableLine;
     HashMap<Integer, BasicStroke> recyclableStrokes;
-    int triangleXPoints[] = {-ONE_WAY_TRIANGLE_WIDTH/2,  -ONE_WAY_TRIANGLE_WIDTH/2,  ONE_WAY_TRIANGLE_WIDTH/2};
-    int triangleYPoints[] = {ONE_WAY_TRIANGLE_WIDTH/2, -ONE_WAY_TRIANGLE_WIDTH/2, 0};
+    int triangleXPoints[] = {-ONE_WAY_TRIANGLE_WIDTH / 2, -ONE_WAY_TRIANGLE_WIDTH / 2, ONE_WAY_TRIANGLE_WIDTH / 2};
+    int triangleYPoints[] = {ONE_WAY_TRIANGLE_WIDTH / 2, -ONE_WAY_TRIANGLE_WIDTH / 2, 0};
     GeneralPath recyclableTriangle;
 
     /**
@@ -88,22 +88,20 @@ public class PathXGamePanel extends JPanel {
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
         renderedBackground = BACKGROUND_GAME_TYPE;
-        
+
         // MAKE THE RENDER OBJECTS TO BE RECYCLED
         recyclableCircle = new Ellipse2D.Double(0, 0, INTERSECTION_RADIUS * 2, INTERSECTION_RADIUS * 2);
-        recyclableLine = new Line2D.Double(0,0,0,0);
+        recyclableLine = new Line2D.Double(0, 0, 0, 0);
         recyclableStrokes = new HashMap();
-        for (int i = 1; i <= 10; i++)
-        {
-            recyclableStrokes.put(i, new BasicStroke(i*2));
+        for (int i = 1; i <= 10; i++) {
+            recyclableStrokes.put(i, new BasicStroke(i * 2));
         }
-        
+
         // MAKING THE TRIANGLE FOR ONE WAY STREETS IS A LITTLE MORE INVOLVED
-        recyclableTriangle =  new GeneralPath(   GeneralPath.WIND_EVEN_ODD,
-                                                triangleXPoints.length);
+        recyclableTriangle = new GeneralPath(GeneralPath.WIND_EVEN_ODD,
+                triangleXPoints.length);
         recyclableTriangle.moveTo(triangleXPoints[0], triangleYPoints[0]);
-        for (int index = 1; index < triangleXPoints.length; index++) 
-        {
+        for (int index = 1; index < triangleXPoints.length; index++) {
             recyclableTriangle.lineTo(triangleXPoints[index], triangleYPoints[index]);
         };
         recyclableTriangle.closePath();
@@ -121,35 +119,34 @@ public class PathXGamePanel extends JPanel {
         try {
             // MAKE SURE WE HAVE EXCLUSIVE ACCESS TO THE GAME DATA
             game.beginUsingData();
-            
+
             Graphics2D g2 = (Graphics2D) g;
             // CLEAR THE PANEL
             super.paintComponent(g);
 
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g2, renderedBackground);
-            
+
             renderGUIControls(g2);
-            
-            // RENDER THE ROADS
-            renderRoads(g2);
+            if (model.getLoadedLevel()) {
+                // RENDER THE ROADS
+                renderRoads(g2);
 
-            // RENDER THE INTERSECTIONS
-            renderIntersections(g2);
-        
-
+                // RENDER THE INTERSECTIONS
+                renderIntersections(g2);
+            }
             // AND THE BUTTONS AND DECOR
         } finally {
             // RELEASE THE LOCK
-            game.endUsingData();            
+            game.endUsingData();
         }
     }
-    
+
     public void setRenderedBackground(String toRender) {
         renderedBackground = toRender;
     }
-    
-    public String getRenderedBackground(){
+
+    public String getRenderedBackground() {
         return renderedBackground;
     }
 
@@ -177,7 +174,7 @@ public class PathXGamePanel extends JPanel {
             renderSprite2(g, bg);
         }
     }
-    
+
     public void renderGUIControls(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
@@ -186,7 +183,7 @@ public class PathXGamePanel extends JPanel {
                 renderSprite2(g, s);
             }
         }
-        
+
     }
 
     /**
@@ -205,7 +202,7 @@ public class PathXGamePanel extends JPanel {
             g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
         }
     }
-    
+
     public void renderSprite2(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
@@ -237,79 +234,74 @@ public class PathXGamePanel extends JPanel {
                 String text = it.next();
                 g.drawString(text, x, y);
                 y += 20;
-            }            
-        }        
+            }
+        }
     }
-    
+
     // HELPER METHOD FOR RENDERING THE LEVEL ROADS
-    private void renderRoads(Graphics2D g2)
-    {
+    private void renderRoads(Graphics2D g2) {
         // GO THROUGH THE ROADS AND RENDER ALL OF THEM
         Viewport viewport = model.getViewport();
         Iterator<Road> it = model.roadsIterator();
         g2.setStroke(recyclableStrokes.get(INT_STROKE));
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Road road = it.next();
-            if (!model.isSelectedRoad(road))
+            if (!model.isSelectedRoad(road)) {
                 renderRoad(g2, road, INT_OUTLINE_COLOR);
+            }
         }
-        
+
         // AND RENDER THE SELECTED ONE, IF THERE IS ONE
         Road selectedRoad = model.getSelectedRoad();
-        if (selectedRoad != null)
-        {
+        if (selectedRoad != null) {
             renderRoad(g2, selectedRoad, HIGHLIGHTED_COLOR);
         }
     }
-    
+
     // HELPER METHOD FOR RENDERING A SINGLE ROAD
-    private void renderRoad(Graphics2D g2, Road road, Color c)
-    {
+    private void renderRoad(Graphics2D g2, Road road, Color c) {
         g2.setColor(c);
-        int strokeId = road.getSpeedLimit()/10;
+        int strokeId = road.getSpeedLimit() / 10;
 
         // CLAMP THE SPEED LIMIT STROKE
-        if (strokeId < 1) strokeId = 1;
-        if (strokeId > 10) strokeId = 10;
+        if (strokeId < 1) {
+            strokeId = 1;
+        }
+        if (strokeId > 10) {
+            strokeId = 10;
+        }
         g2.setStroke(recyclableStrokes.get(strokeId));
 
         // LOAD ALL THE DATA INTO THE RECYCLABLE LINE
-        recyclableLine.x1 = road.getNode1().x-viewport.getViewportX();
-        recyclableLine.y1 = road.getNode1().y-viewport.getViewportY();
-        recyclableLine.x2 = road.getNode2().x-viewport.getViewportX();
-        recyclableLine.y2 = road.getNode2().y-viewport.getViewportY();
+        recyclableLine.x1 = road.getNode1().x - viewport.getViewportX();
+        recyclableLine.y1 = road.getNode1().y - viewport.getViewportY();
+        recyclableLine.x2 = road.getNode2().x - viewport.getViewportX();
+        recyclableLine.y2 = road.getNode2().y - viewport.getViewportY();
 
         // AND DRAW IT
         g2.draw(recyclableLine);
-        
+
         // AND IF IT'S A ONE WAY ROAD DRAW THE MARKER
-        if (road.isOneWay())
-        {
+        if (road.isOneWay()) {
             this.renderOneWaySignalsOnRecyclableLine(g2);
         }
     }
 
     // HELPER METHOD FOR RENDERING AN INTERSECTION
-    private void renderIntersections(Graphics2D g2)
-    {
+    private void renderIntersections(Graphics2D g2) {
         Iterator<Intersection> it = model.intersectionsIterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Intersection intersection = it.next();
 
             // ONLY RENDER IT THIS WAY IF IT'S NOT THE START OR DESTINATION
             // AND IT IS IN THE VIEWPORT
             if ((!model.isStartingLocation(intersection))
                     && (!model.isDestination(intersection))
-                    && viewport.isCircleBoundingBoxInsideViewport(intersection.x, intersection.y, INTERSECTION_RADIUS))
-            {
+                    && viewport.isCircleBoundingBoxInsideViewport(intersection.x, intersection.y, INTERSECTION_RADIUS)) {
                 // FIRST FILL
-                if (intersection.isOpen())
-                {
+                if (intersection.isOpen()) {
                     g2.setColor(OPEN_INT_COLOR);
-                } else
-                {
+                } else {
                     g2.setColor(CLOSED_INT_COLOR);
                 }
                 recyclableCircle.x = intersection.x - viewport.getViewportX() - INTERSECTION_RADIUS;
@@ -317,11 +309,9 @@ public class PathXGamePanel extends JPanel {
                 g2.fill(recyclableCircle);
 
                 // AND NOW THE OUTLINE
-                if (model.isSelectedIntersection(intersection))
-                {
+                if (model.isSelectedIntersection(intersection)) {
                     g2.setColor(HIGHLIGHTED_COLOR);
-                } else
-                {
+                } else {
                     g2.setColor(INT_OUTLINE_COLOR);
                 }
                 Stroke s = recyclableStrokes.get(INT_STROKE);
@@ -342,57 +332,55 @@ public class PathXGamePanel extends JPanel {
 
     // HELPER METHOD FOR RENDERING AN IMAGE AT AN INTERSECTION, WHICH IS
     // NEEDED BY THE STARTING LOCATION AND THE DESTINATION
-    private void renderIntersectionImage(Graphics2D g2, Image img, Intersection i)
-    {
+    private void renderIntersectionImage(Graphics2D g2, Image img, Intersection i) {
         // CALCULATE WHERE TO RENDER IT
         int w = img.getWidth(null);
         int h = img.getHeight(null);
-        int x1 = i.x-(w/2);
-        int y1 = i.y-(h/2);
+        int x1 = i.x - (w / 2);
+        int y1 = i.y - (h / 2);
         int x2 = x1 + img.getWidth(null);
         int y2 = y1 + img.getHeight(null);
-        
+        g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
         // ONLY RENDER IF INSIDE THE VIEWPORT
-        if (viewport.isRectInsideViewport(x1, y1, x2, y2))
-        {
-            g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
-        }        
+        //if (viewport.isRectInsideViewport(x1, y1, x2, y2)) {
+         //   g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
+        //}
     }
-    
-     // YOU'LL LIKELY AT THE VERY LEAST WANT THIS ONE. IT RENDERS A NICE
+
+    // YOU'LL LIKELY AT THE VERY LEAST WANT THIS ONE. IT RENDERS A NICE
     // LITTLE POINTING TRIANGLE ON ONE-WAY ROADS
-    private void renderOneWaySignalsOnRecyclableLine(Graphics2D g2)
-    {
+    private void renderOneWaySignalsOnRecyclableLine(Graphics2D g2) {
         // CALCULATE THE ROAD LINE SLOPE
         double diffX = recyclableLine.x2 - recyclableLine.x1;
         double diffY = recyclableLine.y2 - recyclableLine.y1;
-        double slope = diffY/diffX;
-        
+        double slope = diffY / diffX;
+
         // AND THEN FIND THE LINE MIDPOINT
-        double midX = (recyclableLine.x1 + recyclableLine.x2)/2.0;
-        double midY = (recyclableLine.y1 + recyclableLine.y2)/2.0;
-        
+        double midX = (recyclableLine.x1 + recyclableLine.x2) / 2.0;
+        double midY = (recyclableLine.y1 + recyclableLine.y2) / 2.0;
+
         // GET THE RENDERING TRANSFORM, WE'LL RETORE IT BACK
         // AT THE END
         AffineTransform oldAt = g2.getTransform();
-        
+
         // CALCULATE THE ROTATION ANGLE
         double theta = Math.atan(slope);
-        if (recyclableLine.x2 < recyclableLine.x1)
+        if (recyclableLine.x2 < recyclableLine.x1) {
             theta = (theta + Math.PI);
-        
+        }
+
         // MAKE A NEW TRANSFORM FOR THIS TRIANGLE AND SET IT
         // UP WITH WHERE WE WANT TO PLACE IT AND HOW MUCH WE
         // WANT TO ROTATE IT
-        AffineTransform at = new AffineTransform();        
+        AffineTransform at = new AffineTransform();
         at.setToIdentity();
         at.translate(midX, midY);
         at.rotate(theta);
         g2.setTransform(at);
-        
+
         // AND RENDER AS A SOLID TRIANGLE
         g2.fill(recyclableTriangle);
-        
+
         // RESTORE THE OLD TRANSFORM SO EVERYTHING DOESN'T END UP ROTATED 0
         g2.setTransform(oldAt);
     }
