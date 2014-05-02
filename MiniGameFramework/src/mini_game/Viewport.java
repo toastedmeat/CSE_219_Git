@@ -45,6 +45,9 @@ public class Viewport
     protected int maxViewportX;
     protected int minViewportY;
     protected int maxViewportY;
+    // WIDTH AND HEIGHT OF THE VIEWPORT WINDOW
+    public int width;
+    public int height;
 
     public Viewport()
     {
@@ -53,6 +56,8 @@ public class Viewport
         viewportY = 0;
         minViewportX = 0;
         minViewportY = 0;
+        width = 0;
+        height = 0;
     }
 
     // ACCESSOR METHODS
@@ -119,5 +124,40 @@ public class Viewport
         // MOVE
         viewportX += incX;
         viewportY += incY;
+    }
+    public void setViewportDimensions(int initWidth, int initHeight)
+    {
+        width = initWidth;
+        height = initHeight;
+        
+        if (width < screenWidth)
+            screenWidth = width;
+        if (height < screenHeight)
+            screenHeight = height;
+    }
+    
+    public void setLevelDimensions(int initLevelWidth, int initLevelHeight)
+    {
+        if ((initLevelWidth >= width) && (initLevelHeight >= height))
+        {
+            screenWidth = initLevelWidth;
+            screenHeight = initLevelHeight;
+        }
+    }
+    public void reset()
+    {
+        viewportX = 0;
+        viewportY = 0;
+    }
+    public void move(int incX, int incY)
+    {
+        viewportX += incX;
+        viewportY += incY;
+        if (viewportX < 0) viewportX = 0;
+        if (viewportY < 0) viewportY = 0;
+        if (viewportX > (screenWidth - width))
+            viewportX = screenWidth - width;
+        if (viewportY > (screenHeight - height))
+            viewportY = screenHeight - height;
     }
 }

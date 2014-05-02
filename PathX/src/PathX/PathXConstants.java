@@ -70,6 +70,13 @@ public class PathXConstants
     public static final String LEVEL20_GAME_TYPE = "LEVEL20_GAME_TYPE";
     
 
+    // DEFAULT IMAGE FILES
+    public static final String DEFAULT_BG_IMG       = "DeathValleyBackground.png";
+    public static final String DEFAULT_START_IMG    = "DefaultStartLocation.png";
+    public static final String DEFAULT_DEST_IMG     = "DefaultDestination.png";
+    
+    
+    
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
@@ -140,6 +147,14 @@ public class PathXConstants
     public static final int LEVEL_BUTTON_Y = 570;
     public static final int VIEWPORT_INC = 5;
         
+    
+    // INITIAL START/DEST LOCATIONS
+    public static final int DEFAULT_START_X = 32;
+    public static final int DEFAULT_START_Y = 100;
+    public static final int DEFAULT_DEST_X = 650;
+    public static final int DEFAULT_DEST_Y = 100;
+    
+    
     // FOR TILE RENDERING
     public static final int NUM_TILES = 30;
     public static final int TILE_WIDTH = 135;

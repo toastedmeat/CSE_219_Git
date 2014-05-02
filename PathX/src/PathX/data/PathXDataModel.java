@@ -16,6 +16,8 @@ import static PathX.PathXConstants.*;
 import PathX.ui.PathXMiniGame;
 import PathX.ui.PathXPanel;
 import PathX.ui.PathXTileState;
+import java.awt.Image;
+import mini_game.Viewport;
 
 /**
  * This class manages the game data for The Sorting Hat.
@@ -35,7 +37,36 @@ public class PathXDataModel extends MiniGameDataModel {
     // LEVEL
     private String currentLevel;
 
+    // THIS IS THE LEVEL CURRENTLY BEING EDITING
+    PathXLevel level;
 
+    // DATA FOR RENDERING
+    Viewport viewport;
+
+    // WE ONLY NEED TO TURN THIS ON ONCE
+    boolean levelBeingEdited;
+    Image backgroundImage;
+    Image startingLocationImage;
+    Image destinationImage;
+
+    // THE SELECTED INTERSECTION OR ROAD MIGHT BE EDITED OR DELETED
+    // AND IS RENDERED DIFFERENTLY
+    Intersection selectedIntersection;
+    Road selectedRoad;
+
+    // WE'LL USE THIS WHEN WE'RE ADDING A NEW ROAD
+    Intersection startRoadIntersection;
+
+    // IN CASE WE WANT TO TRACK MOVEMENTS
+    int lastMouseX;
+    int lastMouseY;
+
+    // THESE BOOLEANS HELP US KEEP TRACK OF
+    // @todo DO WE NEED THESE?
+    boolean isMousePressed;
+    boolean isDragging;
+    boolean dataUpdatedSinceLastSave;
+    
     /**
      * Constructor for initializing this data model, it will create the data
      * structures for storing tiles, but not the tile grid itself, that is
@@ -46,14 +77,40 @@ public class PathXDataModel extends MiniGameDataModel {
     public PathXDataModel(MiniGame initMiniGame) {
         // KEEP THE GAME FOR LATER
         miniGame = initMiniGame;
+        level = new PathXLevel();
+        viewport = new Viewport();
+        levelBeingEdited = false;
+        startRoadIntersection = null;
 
     }
+    
+
+    // ACCESSOR METHODS
+    public PathXLevel getLevel() {        return level;    }
+    //public Viewport         getViewport()               {   return viewport;                }
+    public boolean isLevelBeingEdited() {        return levelBeingEdited;    }
+    public Image getBackgroundImage() {        return backgroundImage;    }
+    public Image getStartingLocationImage() {        return startingLocationImage;    }
+    public Image getDesinationImage() {        return destinationImage;    }
+    public Intersection getSelectedIntersection() {        return selectedIntersection;    }
+    public Road getSelectedRoad() {        return selectedRoad;    }
+    public Intersection getStartRoadIntersection() {        return startRoadIntersection;    }
+    //public int getLastMouseX() {        return lastMouseX;    }
+    //public int getLastMouseY() {        return lastMouseY;    }
+    public Intersection getStartingLocation() {        return level.startingLocation;    }
+    public Intersection getDestination() {        return level.destination;    }
+    public boolean isDataUpdatedSinceLastSave() {        return dataUpdatedSinceLastSave;    }
+    public boolean isStartingLocation(Intersection testInt) {        return testInt == level.startingLocation;    }
+    public boolean isDestination(Intersection testInt) {        return testInt == level.destination;    }
+    public boolean isSelectedIntersection(Intersection testIntersection) {return testIntersection == selectedIntersection;}
+    public boolean isSelectedRoad(Road testRoad) {return testRoad == selectedRoad;}
+
 
     public String getCurrentLevel() {
         return currentLevel;
     }
 
-    public long getTimeInMillis(){
+    public long getTimeInMillis() {
         return endTime.getTimeInMillis() - startTime.getTimeInMillis();
     }
 
@@ -195,7 +252,7 @@ public class PathXDataModel extends MiniGameDataModel {
      * @param y The y-axis pixel location of the mouse click.
      */
     @Override
-    
+
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {
         // FIGURE OUT THE CELL IN THE GRID
         int col = calculateGridCellColumn(x);
@@ -213,15 +270,11 @@ public class PathXDataModel extends MiniGameDataModel {
         // IT'S OUTSIDE THE GRID
         if (index < 0) {
             // DESELECT A TILE IF ONE IS SELECTED
-            
         } // IT'S IN THE GRID
         else {
             // SELECT THE TILE IF NONE IS SELECTED
-            
         }
     }
-
-
 
     /**
      * Called when a game is started, the game grid is reset.
@@ -230,7 +283,6 @@ public class PathXDataModel extends MiniGameDataModel {
      */
     @Override
     public void reset(MiniGame game) {
-        
     }
 
     /**
@@ -245,8 +297,6 @@ public class PathXDataModel extends MiniGameDataModel {
             game.beginUsingData();
 
             // WE ONLY NEED TO UPDATE AND MOVE THE MOVING TILES
-            
-
             // IF THE GAME IS STILL ON, THE TIMER SHOULD CONTINUE
             if (inProgress()) {
                 // KEEP THE GAME TIMER GOING IF THE GAME STILL IS
@@ -274,4 +324,138 @@ public class PathXDataModel extends MiniGameDataModel {
     @Override
     public void updateDebugText(MiniGame game) {
     }
+    
+    
+
+    // ITERATOR METHODS FOR GOING THROUGH THE GRAPH
+    public Iterator intersectionsIterator() {
+        ArrayList<Intersection> intersections = level.getIntersections();
+        return intersections.iterator();
+    }
+
+    public Iterator roadsIterator() {
+        ArrayList<Road> roads = level.roads;
+        return roads.iterator();
+    }
+
+    // THESE ARE FOR TESTING WHAT EDIT MODE THE APP CURRENTLY IS IN
+    // MUTATOR METHODS
+    public void setLevelBeingEdited(boolean initLevelBeingEdited) {
+        levelBeingEdited = initLevelBeingEdited;
+    }
+
+    public void setLastMousePosition(int initX, int initY) {
+        //lastMouseX = initX;
+       // lastMouseY = initY;
+        //view.getCanvas().repaint();
+    }
+
+    public void setSelectedIntersection(Intersection i) {
+        selectedIntersection = i;
+        selectedRoad = null;
+        //view.getCanvas().repaint();
+    }
+
+    public void setSelectedRoad(Road r) {
+        selectedRoad = r;
+        selectedIntersection = null;
+        //view.getCanvas().repaint();
+    }
+
+    // AND THEN ALL THE SERVICE METHODS FOR UPDATING THE LEVEL
+    // AND APP STATE
+    /**
+     * Sets up the model to edit a brand new level.
+     */
+    public void startNewLevel(String levelName) {
+        // CLEAR OUT THE OLD GRAPH
+        level.reset();
+
+        // FIRST INITIALIZE THE LEVEL
+        // WE ALWAYS START WITH A DEFAULT BACKGROUND,
+        // AND START AND END LOCATIONS
+        level.init(levelName,
+                DEFAULT_BG_IMG,
+                DEFAULT_START_IMG,
+                DEFAULT_START_X,
+                DEFAULT_START_Y,
+                DEFAULT_DEST_IMG,
+                DEFAULT_DEST_X,
+                DEFAULT_DEST_Y);
+
+        // NOW MAKE THE LEVEL IMAGES
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        backgroundImage = miniGame.loadImage(imgPath + DEFAULT_BG_IMG);
+        startingLocationImage = miniGame.loadImage(imgPath + DEFAULT_START_IMG);
+        destinationImage = miniGame.loadImage(imgPath + DEFAULT_DEST_IMG);
+
+        // NOW RESET THE VIEWPORT
+        viewport.reset();
+        viewport.setLevelDimensions(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
+
+        // INTERACTIVE SETTINGS
+        isMousePressed = false;
+        isDragging = false;
+        selectedIntersection = null;
+        selectedRoad = null;
+        dataUpdatedSinceLastSave = false;
+
+        // THIS LETS THE LEVEL BE RENDERED
+        levelBeingEdited = true;
+
+        // AND NOW MAKE SURE IT GETS RENDERED FOR THE FIRST TIME
+        miniGame.getCanvas().repaint();
+    }
+
+    /**
+     * Updates the background image.
+     */
+    public void updateBackgroundImage(String newBgImage) {
+        // UPDATE THE LEVEL TO FIT THE BACKGROUDN IMAGE SIZE
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        level.backgroundImageFileName = newBgImage;
+        backgroundImage = miniGame.loadImage(imgPath + level.backgroundImageFileName);
+        int levelWidth = backgroundImage.getWidth(null);
+        int levelHeight = backgroundImage.getHeight(null);
+        viewport.setLevelDimensions(levelWidth, levelHeight);
+        miniGame.getCanvas().repaint();
+    }
+
+    /**
+     * Updates the image used for the starting location and forces rendering.
+     */
+    public void updateStartingLocationImage(String newStartImage) {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        level.startingLocationImageFileName = newStartImage;
+        startingLocationImage = miniGame.loadImage(imgPath + level.startingLocationImageFileName);
+        miniGame.getCanvas().repaint();
+    }
+
+    /**
+     * Updates the image used for the destination and forces rendering.
+     */
+    public void updateDestinationImage(String newDestImage) {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        level.destinationImageFileName = newDestImage;
+        destinationImage = miniGame.loadImage(imgPath + level.destinationImageFileName);
+        miniGame.getCanvas().repaint();
+    }
+
+    /**
+     * Used for scrolling the miniGameport by (incX, incY). Note that it won't let
+     * the viewport scroll off the level.
+     */
+    public void moveViewport(int incX, int incY) {
+        // MOVE THE VIEWPORT
+        viewport.move(incX, incY);
+
+        // AND NOW FORCE A REDRAW
+        miniGame.getCanvas().repaint();
+    }
+
+
 }
