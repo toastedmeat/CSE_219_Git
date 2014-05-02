@@ -6,6 +6,8 @@ import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
 import PathX.data.PathXDataModel;
 import PathX.file.PathXFileManager;
+import java.util.ArrayList;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -15,6 +17,8 @@ public class PathXEventHandler {
     // THE SORTING HAT GAME, IT PROVIDES ACCESS TO EVERYTHING
 
     private PathXMiniGame game;
+
+    private PropertiesManager props = PropertiesManager.getPropertiesManager();
 
     /**
      * Constructor, it just keeps the game for when the events happen.
@@ -27,7 +31,7 @@ public class PathXEventHandler {
      * Called when the user clicks the close window button.
      */
     public void respondToExitRequest() {
-        
+
         // AND CLOSE THE ALL
         System.exit(0);
     }
@@ -45,38 +49,50 @@ public class PathXEventHandler {
         game.switchToSplashScreen();
         game.getInsideCanvas().setVisible(false);
     }
-    
-    public void respondToBackToLevelSelectRequest(){
+
+    public void respondToBackToLevelSelectRequest() {
         game.switchToGameScreen();
     }
-    
-    public void respondToUpRequest(){
-        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
-           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
-           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() + 20);
+
+    public void respondToUpRequest() {
+        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+            for (String level : gameLevels) {
+                game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
+            }
         }
     }
-    
-    public void respondToDownRequest(){
-        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
-           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
-           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() - 20);
+
+    public void respondToDownRequest() {
+        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+            for (String level : gameLevels) {
+                game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
+            }
         }
     }
-    
-    public void respondToLeftRequest(){
-        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
+
+    public void respondToLeftRequest() {
+        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
             game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
-            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() + 20);
+            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+            for (String level : gameLevels) {
+                game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
+            }
         }
     }
-    
-    public void respondToRightRequest(){
-        if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
+
+    public void respondToRightRequest() {
+        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
             game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
-            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() - 20);
+            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+            for (String level : gameLevels) {
+                game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
+            }
         }
-        
+
     }
 
     /**
@@ -97,22 +113,23 @@ public class PathXEventHandler {
             game.switchToGameScreen();
         }
     }
-    
-    public void respondToGameRequest(){
+
+    public void respondToGameRequest() {
         game.switchToGameLevel();
-    
+
     }
-    
-    public void respondToResetRequest(){
-        
+
+    public void respondToResetRequest() {
     }
-    public void respondToHelpRequest(){
+
+    public void respondToHelpRequest() {
         game.switchToHelpScreen();
     }
-    public void respondToSettingsRequest(){
+
+    public void respondToSettingsRequest() {
         game.switchToSettingScreen();
     }
-    
+
     /**
      * Called when the user clicks the Stats button.
      */
@@ -123,42 +140,53 @@ public class PathXEventHandler {
 
     public void respondToUndoRequest() {
         PathXDataModel data = (PathXDataModel) game.getDataModel();
-        
+
     }
+
     /**
      * Called when the user presses a key on the keyboard.
      */
-    
     public void respondToKeyPress(int keyCode) {
         PathXDataModel data = (PathXDataModel) game.getDataModel();
 
         // CHEAT BY ONE MOVE. NOTE THAT IF WE HOLD THE C
         // KEY DOWN IT WILL CONTINUALLY CHEAT
         if (keyCode == KeyEvent.VK_UP) {
-            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360){
-           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
-           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() + 20);
-        }
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
+                }
+            }
         }
 
         if (keyCode == KeyEvent.VK_DOWN) {
-            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800){
-           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
-           game.getGUIButtons().get(LEVEL_GAME_TYPE).setY(game.getGUIButtons().get(LEVEL_GAME_TYPE).getY() - 20);
-        }
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
+                }
+            }
         }
         if (keyCode == KeyEvent.VK_LEFT) {
-            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780){
-           game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
-            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() + 20);
-        }
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
+                }
+            }
         }
         if (keyCode == KeyEvent.VK_RIGHT) {
-            if(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160){
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
-            game.getGUIButtons().get(LEVEL_GAME_TYPE).setX(game.getGUIButtons().get(LEVEL_GAME_TYPE).getX() - 20);
-        }
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
+                }
+            }
         }
     }
 }
-

@@ -10,7 +10,7 @@
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
-        <property name="IMAGE_BACKGROUND_SBU"                   value="./pathX/STONYBROOK.png"></property>
+        <property name="IMAGE_BACKGROUND_SBU"                   value="./pathX/Level1.png"></property>
         <property name="IMAGE_LEVEL_UNROBBED"                   value="./pathX/unRobbedLocations.png"></property>
         <property name="IMAGE_BUTTON_LEVEL_MOUSE_OVER"          value="./pathX/unRobbedLocationsMouseOver.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"                  value="./pathX/BackgroundMenu.png"></property>
@@ -97,5 +97,75 @@
             <option>./pathX/ButtonSettingsMouseOver.png</option>
             <option>./pathX/ButtonHelpMouseOver.png</option>
         </property_options>
+        
+        
+        
+        <property_options name="GAME_LEVELS">
+            <option>./pathX/Level1.png</option>
+            <option>./pathX/Level2.png</option>
+            <option>./pathX/Level3.png</option>
+            <option>./pathX/Level4.png</option>
+            <option>./pathX/Level5.png</option>
+            <option>./pathX/Level6.png</option>
+            <option>./pathX/Level7.png</option>
+            <option>./pathX/Level8.png</option>
+            <option>./pathX/Level9.png</option>
+            <option>./pathX/Level10.png</option>
+            <option>./pathX/Level11.png</option>
+            <option>./pathX/Level12.png</option>
+            <option>./pathX/Level13.png</option>
+            <option>./pathX/Level14.png</option>
+            <option>./pathX/Level15.png</option>
+            <option>./pathX/Level16.png</option>
+            <option>./pathX/Level17.png</option>
+            <option>./pathX/Level18.png</option>
+            <option>./pathX/Level19.png</option>
+            <option>./pathX/Level20.png</option>
+        </property_options>
+        <property_options name="GAME_LEVEL_IMAGE_OPTIONS">
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+            <option>./pathX/unRobbedLocations.png</option>
+        </property_options>
+        <property_options name="GAME_LEVEL_MOUSE_OVER_IMAGE_OPTIONS">
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+            <option>./pathX/unRobbedLocationsMouseOver.png</option>
+        </property_options>
+        
     </property_options_list>
 </properties>

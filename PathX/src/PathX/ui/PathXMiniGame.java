@@ -31,6 +31,7 @@ import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Random;
 import javax.swing.JScrollPane;
 
 /**
@@ -171,14 +172,20 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_Y);
         
-        guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(LEVEL_GAME_TYPE).setEnabled(true);
+        //guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        //guiButtons.get(LEVEL_GAME_TYPE).setEnabled(true);
 
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String level : levels) {
             guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
+        }
+        
+        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
+        for (String level : gameLevels) {
+            guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(true);
         }
 
         // AND CHANGE THE SCREEN STATE
@@ -259,8 +266,8 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
         
-        guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(LEVEL_GAME_TYPE).setEnabled(false);
+        //guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        //guiButtons.get(LEVEL_GAME_TYPE).setEnabled(false);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -269,6 +276,12 @@ public class PathXMiniGame extends MiniGame {
         for (String level : levels) {
             guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(true);
+        }
+        
+        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
+        for (String level : gameLevels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
         }
 
         // DEACTIVATE ALL DIALOGS
@@ -325,14 +338,20 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_GAME_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_GAME_Y);
         
-        guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(LEVEL_GAME_TYPE).setEnabled(false);
+       // guiButtons.get(LEVEL_GAME_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+       // guiButtons.get(LEVEL_GAME_TYPE).setEnabled(false);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String level : levels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
+        }
+        
+        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
+        for (String level : gameLevels) {
             guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
         }
@@ -351,7 +370,6 @@ public class PathXMiniGame extends MiniGame {
         data.setGameState(MiniGameState.NOT_STARTED);
         insideCanvas.setBounds(274, 19, 978, 667);
         insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
-        
         
         
         // PLAY THE WELCOME SCREEN SONG
@@ -501,22 +519,45 @@ public class PathXMiniGame extends MiniGame {
         Cursor arrowCursor = Toolkit.getDefaultToolkit().createCustomCursor(img, cursorHotSpot, cursorName);
         window.setCursor(arrowCursor);
 
-        // ADD A BUTTON FOR EACH LEVEL AVAILABLE
-        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
-        ArrayList<String> levelImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_IMAGE_OPTIONS);
-        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
-        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
+        // ADD A BUTTON FOR EACH Button on the splash screen AVAILABLE
+        ArrayList<String> buttons = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        ArrayList<String> buttonImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_IMAGE_OPTIONS);
+        ArrayList<String> buttonMouseOverImageNames = props.getPropertyOptionsList(pathXPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
+        float totalWidth = buttons.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
         Viewport viewport = data.getViewport();
         x = (viewport.getScreenWidth() - totalWidth) / 2.0f;
-        for (int i = 0; i < levels.size(); i++) {
+        for (int i = 0; i < buttons.size(); i++) {
             sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
+            img = loadImageWithColorKey(imgPath + buttonImageNames.get(i), COLOR_KEY);
+            sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+            img = loadImageWithColorKey(imgPath + buttonMouseOverImageNames.get(i), COLOR_KEY);
+            sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+            s = new Sprite(sT, x, LEVEL_BUTTON_Y, 0, 0, PathXTileState.VISIBLE_STATE.toString());
+            guiButtons.put(buttons.get(i), s);
+            x += LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN;
+        }
+        
+        // ADD A BUTTON FOR EACH Game LEVEL AVAILABLE
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
+        ArrayList<String> levelImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_IMAGE_OPTIONS);
+        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
+        int x_add = 0;
+        int y_add = 0;
+        for (int i = 0; i < levels.size(); i++) {
+            if(i == 0){
+                x_add = 0;
+                y_add = 0;
+            } else {
+                x_add += 60;
+                y_add += -10;       
+            }
+            sT = new SpriteType(LEVEL_GAME_TYPE);
             img = loadImageWithColorKey(imgPath + levelImageNames.get(i), COLOR_KEY);
             sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
             img = loadImageWithColorKey(imgPath + levelMouseOverImageNames.get(i), COLOR_KEY);
             sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
-            s = new Sprite(sT, x, LEVEL_BUTTON_Y, 0, 0, PathXTileState.VISIBLE_STATE.toString());
+            s = new Sprite(sT, 1060 - x_add, 315 - y_add, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.put(levels.get(i), s);
-            x += LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN;
         }
 
         // ADD THE CONTROLS ALONG THE GAME SCREEN
@@ -609,15 +650,7 @@ public class PathXMiniGame extends MiniGame {
         s = new Sprite(sT, RIGHT_BUTTON_X, RIGHT_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(RIGHT_BUTTON_TYPE, s);
 
-        String levelButton = props.getProperty(pathXPropertyType.IMAGE_LEVEL_UNROBBED);
-        sT = new SpriteType(LEVEL_GAME_TYPE);
-        img = loadImageWithColorKey(imgPath + levelButton, COLOR_KEY);
-        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String levelMouseOverButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_LEVEL_MOUSE_OVER);
-        img = loadImageWithColorKey(imgPath + levelMouseOverButton, COLOR_KEY);
-        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
-        s = new Sprite(sT, 1060, 315, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.put(LEVEL_GAME_TYPE, s);
+        
         
         // NOW ADD THE DIALOGS
         // AND THE STATS DISPLAY
@@ -771,11 +804,11 @@ public class PathXMiniGame extends MiniGame {
                 eventHandler.respondToRightRequest();
             }
         });
-        guiButtons.get(LEVEL_GAME_TYPE).setActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                eventHandler.respondToGameRequest();
-            }
-        });
+        //guiButtons.get(LEVEL_GAME_TYPE).setActionListener(new ActionListener() {
+          //  public void actionPerformed(ActionEvent ae) {
+           //     eventHandler.respondToGameRequest();
+         //   }
+        //});
 
 
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES

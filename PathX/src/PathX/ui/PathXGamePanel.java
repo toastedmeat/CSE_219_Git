@@ -99,6 +99,10 @@ public class PathXGamePanel extends JPanel {
     public void setRenderedBackground(String toRender) {
         renderedBackground = toRender;
     }
+    
+    public String getRenderedBackground(){
+        return renderedBackground;
+    }
 
     // RENDERING HELPER METHODS
     // - renderBackground
