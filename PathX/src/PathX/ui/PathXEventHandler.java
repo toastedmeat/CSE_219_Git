@@ -117,6 +117,63 @@ public class PathXEventHandler {
     public void respondToLevel1() {
         game.switchToLevel1();
     }
+    public void respondToLevel2() {
+        game.switchToLevel2();
+    }
+    public void respondToLevel3() {
+        game.switchToLevel3();
+    }
+    public void respondToLevel4() {
+        game.switchToLevel4();
+    }
+    public void respondToLevel5() {
+        game.switchToLevel5();
+    }
+    public void respondToLevel6() {
+        game.switchToLevel6();
+    }
+    public void respondToLevel7() {
+        game.switchToLevel7();
+    }
+    public void respondToLevel8() {
+        game.switchToLevel8();
+    }
+    public void respondToLevel9() {
+        game.switchToLevel9();
+    }
+    public void respondToLevel10() {
+        game.switchToLevel10();
+    }
+    public void respondToLevel11() {
+        game.switchToLevel11();
+    }
+    public void respondToLevel12() {
+        game.switchToLevel12();
+    }
+    public void respondToLevel13() {
+        game.switchToLevel13();
+    }
+    public void respondToLevel14() {
+        game.switchToLevel14();
+    }
+    public void respondToLevel15() {
+        game.switchToLevel15();
+    }
+    public void respondToLevel16() {
+        game.switchToLevel16();
+    }
+    public void respondToLevel17() {
+        game.switchToLevel17();
+    }
+    public void respondToLevel18() {
+        game.switchToLevel18();
+    }
+    public void respondToLevel19() {
+        game.switchToLevel19();
+    }
+    public void respondToLevel20() {
+        game.switchToLevel20();
+    }
 
     public void respondToResetRequest() {
     }

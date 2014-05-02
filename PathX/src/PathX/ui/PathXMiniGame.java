@@ -129,10 +129,88 @@ public class PathXMiniGame extends MiniGame {
     }
 
     /**
+     * This method switches the application to the menu screen, making all the
+     * appropriate UI controls visible & invisible.
+     */
+    public void switchToSplashScreen() {
+        // CHANGE THE BACKGROUND
+        guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
+
+        // DEACTIVATE THE TOOLBAR CONTROLS
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(BACK_TO_LEVEL_SELECT_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(BACK_TO_LEVEL_SELECT_TYPE).setEnabled(false);
+
+        guiButtons.get(PAUSE_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(false);
+
+        guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(DOWN_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(LEFT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
+        guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
+
+        // ACTIVATE THE LEVEL SELECT BUTTONS
+        // DEACTIVATE THE LEVEL SELECT BUTTONS
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        for (String level : levels) {
+            guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(true);
+        }
+
+        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
+        for (String level : gameLevels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
+        }
+
+        // DEACTIVATE ALL DIALOGS
+        guiDialogs.get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+
+        // HIDE THE TILES
+        ((PathXDataModel) data).enableTiles(false);
+
+        // MAKE THE CURRENT SCREEN THE MENU SCREEN
+        currentScreenState = MENU_SCREEN_STATE;
+
+        // AND UPDATE THE DATA GAME STATE
+        data.setGameState(MiniGameState.NOT_STARTED);
+
+        // PLAY THE WELCOME SCREEN SONG
+        //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
+        //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
+        ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+    }
+
+    /**
      * This method forces the file manager to save the current player record.
      */
     public void savePlayerRecord() {
         fileManager.saveRecord(record);
+    }
+
+    public void switchToSettingScreen() {
+        guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
+
+        menuSetup();
+
+        currentScreenState = SETTINGS_SCREEN_STATE;
+    }
+
+    public void switchToHelpScreen() {
+        guiDecor.get(BACKGROUND_TYPE).setState(HELP_SCREEN_STATE);
+
+        menuSetup();
+
+        currentScreenState = HELP_SCREEN_STATE;
     }
 
     /**
@@ -201,128 +279,266 @@ public class PathXMiniGame extends MiniGame {
         //audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true); 
     }
 
-    public void switchToSettingScreen() {
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
-
-        // ACTIVATE THE TOOLBAR AND ITS CONTROLS
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setX(NEW_BUTTON_X);
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setY(NEW_BUTTON_Y);
-        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(BACK_BUTTON_TYPE).setX(BACK_BUTTON_X);
-        guiButtons.get(BACK_BUTTON_TYPE).setY(BACK_BUTTON_Y);
-
-        // DEACTIVATE THE LEVEL SELECT BUTTONS
-        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
-        for (String level : levels) {
-            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
-            guiButtons.get(level).setEnabled(false);
-        }
-
-        currentScreenState = SETTINGS_SCREEN_STATE;
-    }
-
-    public void switchToHelpScreen() {
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        guiDecor.get(BACKGROUND_TYPE).setState(HELP_SCREEN_STATE);
-
-        // ACTIVATE THE TOOLBAR AND ITS CONTROLS
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setX(NEW_BUTTON_X);
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setY(NEW_BUTTON_Y);
-        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
-        guiButtons.get(BACK_BUTTON_TYPE).setX(BACK_BUTTON_X);
-        guiButtons.get(BACK_BUTTON_TYPE).setY(BACK_BUTTON_Y);
-        // DEACTIVATE THE LEVEL SELECT BUTTONS
-        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
-        for (String level : levels) {
-            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
-            guiButtons.get(level).setEnabled(false);
-        }
-
-        currentScreenState = HELP_SCREEN_STATE;
-    }
-
-    /**
-     * This method switches the application to the menu screen, making all the
-     * appropriate UI controls visible & invisible.
-     */
-    public void switchToSplashScreen() {
-        // CHANGE THE BACKGROUND
-        guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
-
-        // DEACTIVATE THE TOOLBAR CONTROLS
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(BACK_TO_LEVEL_SELECT_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(BACK_TO_LEVEL_SELECT_TYPE).setEnabled(false);
-
-        guiButtons.get(PAUSE_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(false);
-
-        guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(DOWN_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(LEFT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
-        guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
-
-        // ACTIVATE THE LEVEL SELECT BUTTONS
-        // DEACTIVATE THE LEVEL SELECT BUTTONS
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
-        for (String level : levels) {
-            guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
-            guiButtons.get(level).setEnabled(true);
-        }
-
-        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
-        for (String level : gameLevels) {
-            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
-            guiButtons.get(level).setEnabled(false);
-        }
-
-        // DEACTIVATE ALL DIALOGS
-        guiDialogs.get(WIN_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiDialogs.get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-
-        // HIDE THE TILES
-        ((PathXDataModel) data).enableTiles(false);
-
-        // MAKE THE CURRENT SCREEN THE MENU SCREEN
-        currentScreenState = MENU_SCREEN_STATE;
-
-        // AND UPDATE THE DATA GAME STATE
-        data.setGameState(MiniGameState.NOT_STARTED);
-
-        // PLAY THE WELCOME SCREEN SONG
-        //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
-        //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
-        ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
-    }
-
     public void switchToLevel1() {
         levelSetup();
-        
+
         insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
         dialog.setVisible(true);
-        
+
     }
-    
-    public void levelSetup(){
+
+    public void switchToLevel2() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL2_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel3() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL3_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel4() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL4_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel5() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL5_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel6() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL6_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel7() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL7_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel8() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL8_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel9() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL9_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel10() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL10_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel11() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL11_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel12() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL12_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel13() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL13_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel14() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL14_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel15() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL15_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel16() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL16_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel17() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL17_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel18() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL18_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel19() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL19_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void switchToLevel20() {
+        levelSetup();
+
+        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        JOptionPane jop = new JOptionPane();
+        jop.setMessage(LEVEL20_INFO);
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = jop.createDialog(insideCanvas, "Information about the Level");
+        dialog.setVisible(true);
+
+    }
+
+    public void menuSetup() {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        // ACTIVATE THE TOOLBAR AND ITS CONTROLS
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setX(NEW_BUTTON_X);
+        guiButtons.get(NEW_GAME_BUTTON_TYPE).setY(NEW_BUTTON_Y);
+        guiButtons.get(BACK_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
+        guiButtons.get(BACK_BUTTON_TYPE).setX(BACK_BUTTON_X);
+        guiButtons.get(BACK_BUTTON_TYPE).setY(BACK_BUTTON_Y);
+        // DEACTIVATE THE LEVEL SELECT BUTTONS
+        ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
+        for (String level : levels) {
+            guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
+            guiButtons.get(level).setEnabled(false);
+        }
+    }
+
+    public void levelSetup() {
         // CHANGE THE BACKGROUND
         guiDecor.get(BACKGROUND_TYPE).setState(LEVEL_SCREEN_STATE);
 
@@ -385,7 +601,7 @@ public class PathXMiniGame extends MiniGame {
         // AND UPDATE THE DATA GAME STATE
         data.setGameState(MiniGameState.NOT_STARTED);
         insideCanvas.setBounds(274, 19, 978, 667);
-        
+
         // PLAY THE WELCOME SCREEN SONG
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
@@ -817,18 +1033,18 @@ public class PathXMiniGame extends MiniGame {
 
         ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
         for (String level : gameLevels) {
-            switch(level){
-                case "./pathX/Level1.xml": 
+            switch (level) {
+                case "./pathX/Level1.xml":
                     guiButtons.get(level).setActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    eventHandler.respondToLevel1();
-                }
-            });
+                    public void actionPerformed(ActionEvent ae) {
+                        eventHandler.respondToLevel1();
+                    }
+                });
                     break;
                 case "./pathX/Level2.png":
                     break;
             }
-            
+
         }
 
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
