@@ -124,12 +124,17 @@ public class PathXGamePanel extends JPanel {
 
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g2, renderedBackground);
+            
             if (model.getLoadedLevel()) {
                 // RENDER THE ROADS
                 renderRoads(g2);
 
                 // RENDER THE INTERSECTIONS
                 renderIntersections(g2);
+
+                if (!game.getGUIEnemies().isEmpty()) {
+                    renderEnemies(g2);
+                }
             }
             if (game.getGUIDecor().get(BACKGROUND_TYPE).getState().equals(GAME_SCREEN_STATE)) {
                 renderGUIControls(g2);
@@ -201,6 +206,24 @@ public class PathXGamePanel extends JPanel {
 
     }
 
+    public void renderEnemies(Graphics g) {
+        // AND NOW RENDER THE BUTTONS
+        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
+        Iterator<Intersection> it = model.intersectionsIterator();
+        Iterator<Sprite> itE = game.getGUIEnemies().values().iterator();
+        while(it.hasNext() && itE.hasNext()){
+                Intersection intersection = it.next();
+                Sprite s = itE.next();
+                while ((model.isStartingLocation(intersection))
+                    || (model.isDestination(intersection))) {
+                    intersection = it.next();
+                }
+                   
+                renderEnemy(g, s, intersection);
+                
+        }
+    }
+
     /**
      * Renders the s Sprite into the Graphics context g. Note that each Sprite
      * knows its own x,y coordinate location.
@@ -214,7 +237,7 @@ public class PathXGamePanel extends JPanel {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-           g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
+            g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
         }
     }
 
@@ -242,6 +265,8 @@ public class PathXGamePanel extends JPanel {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
 
+            Road selectedRoad = model.getSelectedRoad();
+            if(selectedRoad == null){
             Image startImage = model.getStartingLocationImage();
             Intersection startInt = model.getStartingLocation();
 
@@ -251,6 +276,25 @@ public class PathXGamePanel extends JPanel {
             int y1 = startInt.y - (h / 2);
 
             g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
+            } else if(selectedRoad.getNode1() == model.getStartingLocation()){
+                recyclableCircle.x = selectedRoad.getNode2().x - viewport.getViewportX() - INTERSECTION_RADIUS;
+                recyclableCircle.y = selectedRoad.getNode2().y - viewport.getViewportY() - INTERSECTION_RADIUS;
+                
+                g.drawImage(img, (int) recyclableCircle.x, (int)recyclableCircle.y, null);
+            }
+        }
+    }
+
+    
+    public void renderEnemy(Graphics g, Sprite s, Intersection i) {
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+            
+            recyclableCircle.x = i.x - viewport.getViewportX() - INTERSECTION_RADIUS;
+            recyclableCircle.y = i.y - viewport.getViewportY() - INTERSECTION_RADIUS;
+            
+            g.drawImage(img, (int) recyclableCircle.x ,(int) recyclableCircle.y, null);
         }
     }
 

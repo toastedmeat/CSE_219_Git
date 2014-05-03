@@ -161,6 +161,7 @@ public class PathXMiniGame extends MiniGame {
         dataCopy.setLoadedLevel(false);
         guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
 
+        guiEnemies.clear();
         // DEACTIVATE THE TOOLBAR CONTROLS
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
@@ -248,6 +249,8 @@ public class PathXMiniGame extends MiniGame {
     public void switchToGameScreen() {
         pxg.setEnabled(false);
         pxg.setVisible(false);
+        
+        guiEnemies.clear();
         
         dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -340,10 +343,14 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel2() {
         pxg.setRenderedBackground(LEVEL2_GAME_TYPE);
-        levelSetup();
+        
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level2.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
+        
+        createEnemies();
+        levelSetup();        
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL2_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -354,10 +361,13 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel3() {
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
-        levelSetup();
         fileManager.loadLevel(new File("data/pathX/Level3.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL3_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL3_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -367,11 +377,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel4() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level4.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL4_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL4_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -381,11 +394,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel5() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level5.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL5_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL5_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -395,11 +411,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel6() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level6.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL6_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL6_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -409,11 +428,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel7() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level7.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL7_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL7_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -423,11 +445,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel8() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level8.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL8_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL8_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -437,11 +462,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel9() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level9.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL9_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL9_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -451,11 +479,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel10() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level10.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL10_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL10_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -465,11 +496,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel11() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level11.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL11_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL11_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -479,11 +513,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel12() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level12.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL12_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL12_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -493,11 +530,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel13() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level13.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL13_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL13_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -507,11 +547,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel14() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level14.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL14_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL14_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -521,11 +564,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel15() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL15_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL15_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -535,11 +581,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel16() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level16.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL16_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL16_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -549,11 +598,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel17() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level17.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL17_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL17_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -563,11 +615,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel18() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level18.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL18_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL18_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -577,11 +632,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel19() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level19.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL19_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL19_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -591,11 +649,14 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel20() {
-        levelSetup();
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level20.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL20_GAME_TYPE);
+        
+        createEnemies();
+        levelSetup();
+        
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL20_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -630,6 +691,8 @@ public class PathXMiniGame extends MiniGame {
         insideCanvas.setVisible(false);
         pxg.setEnabled(false);
         pxg.setVisible(false);
+        
+        guiEnemies.clear();
     }
 
     public void levelSetup() {
@@ -669,7 +732,20 @@ public class PathXMiniGame extends MiniGame {
         
         guiButtons.get(PLAYER_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(PLAYER_TYPE).setEnabled(true);
-
+        
+        if(guiEnemies.containsKey(BANDIT_TYPE)){
+        guiEnemies.get(BANDIT_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiEnemies.get(BANDIT_TYPE).setEnabled(true);
+        } 
+        if(guiEnemies.containsKey(POLICE_TYPE)){
+        guiEnemies.get(POLICE_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiEnemies.get(POLICE_TYPE).setEnabled(true);
+        }
+        if(guiEnemies.containsKey(ZOMBIE_TYPE)){
+        guiEnemies.get(ZOMBIE_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiEnemies.get(ZOMBIE_TYPE).setEnabled(true);
+        }
+        
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -712,6 +788,19 @@ public class PathXMiniGame extends MiniGame {
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
         ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+    }
+    
+    public void createEnemies(){
+        //Create enemies for the level.
+        for(int i = 0; i < dataCopy.getLevel().getNumBandits(); i++){
+            createBandits();
+        }
+        for(int i = 0; i < dataCopy.getLevel().getNumPolice(); i++){
+            createPolice();
+        }
+        for(int i = 0; i < dataCopy.getLevel().getNumZombies(); i++){
+            createZombies();
+        }
     }
     
     public void createBandits(){

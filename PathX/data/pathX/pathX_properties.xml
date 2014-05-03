@@ -9,7 +9,7 @@
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
         <property name="IMAGE_PLAYER"                            value="./pathX/playerImage.png"></property>
         <property name="IMAGE_POLICE"                            value="./pathX/policeImage.png"></property>
-        <property name="IMAGE_BANDIT"                            value="./pathX/banidtImage.png"></property>
+        <property name="IMAGE_BANDIT"                            value="./pathX/banditImage.png"></property>
         <property name="IMAGE_ZOMBIE"                            value="./pathX/zombieImage.png"></property>
         
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
