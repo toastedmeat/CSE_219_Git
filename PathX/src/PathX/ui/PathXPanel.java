@@ -218,9 +218,6 @@ public class PathXPanel extends JPanel
         if (((PathXMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
                 && data.inProgress() || data.isPaused())
         {
-            String currentLevel = data.getCurrentLevel();
-            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
-            // RENDER THE TILES LEFT
             g.setFont(FONT_TEXT_DISPLAY);
             g.setColor(Color.BLACK);
 
@@ -235,13 +232,6 @@ public class PathXPanel extends JPanel
             y = TILE_COUNT_Y + TILE_TEXT_OFFSET;
             //g.drawString(Integer.toString(data.getBadSpellsCounter()), x, y);
             
-            // Render the Sorting Type
-            g.setFont(FONT_STATS);
-            g.setColor(COLOR_ALGORITHM_HEADER);
-            x = TEMP_TILE_X + TEMP_TILE_OFFSET_X;
-            String algorithm = record.getAlgorithm(currentLevel);
-            algorithm = algorithm.replace('_', ' ');
-            g.drawString(algorithm, x - 18, 45);
         }        
         
         // IF THE STATS DIALOG IS VISIBLE, ADD THE TEXTUAL STATS
@@ -249,37 +239,7 @@ public class PathXPanel extends JPanel
         {
             g.setFont(FONT_STATS);
             g.setColor(COLOR_STATS);
-            String currentLevel = data.getCurrentLevel();
-            int lastSlash = currentLevel.lastIndexOf("/");
-            String levelName = currentLevel.substring(lastSlash+1);
-            PathXRecord record = ((PathXMiniGame)game).getPlayerRecord();
-
-            // GET ALL THE STATS
-            String algorithm = record.getAlgorithm(currentLevel);
-            int games = record.getGamesPlayed(currentLevel);
-            int wins = record.getWins(currentLevel, false);
-            int perfectWins = record.getWins(currentLevel, true);
-            long fastestPerfectWinTime = record.getFastestWinTime(currentLevel);
             
-
-            // GET ALL THE STATS PROMPTS
-            PropertiesManager props = PropertiesManager.getPropertiesManager();            
-            String algorithmPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_ALGORITHM);
-            String gamesPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_GAMES);
-            String winsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_WINS);
-            String perfectWinsPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_PERFECT_WINS);
-            String fastestPerfectWinPrompt = props.getProperty(pathXPropertyType.TEXT_LABEL_STATS_FASTEST_PERFECT_WIN);
-
-            // NOW DRAW ALL THE STATS WITH THEIR LABELS
-            int dot = levelName.indexOf(".");
-            levelName = levelName.substring(0, dot);
-            g.drawString(levelName,                                     STATS_LEVEL_X, STATS_LEVEL_Y);
-            g.drawString(algorithmPrompt + algorithm,                   STATS_LEVEL_X, STATS_ALGORITHM_Y);
-            g.drawString(gamesPrompt + games,                           STATS_LEVEL_X, STATS_GAMES_Y);
-            g.drawString(winsPrompt + wins,                             STATS_LEVEL_X, STATS_WINS_Y);
-            g.drawString(perfectWinsPrompt + perfectWins,               STATS_LEVEL_X, STATS_PERFECT_WINS_Y);
-            g.drawString(fastestPerfectWinPrompt 
-                    + data.timeToText(fastestPerfectWinTime),           STATS_LEVEL_X, STATS_FASTEST_PERFECT_WIN_Y);
         }
     }
         
