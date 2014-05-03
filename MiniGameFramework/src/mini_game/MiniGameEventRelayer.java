@@ -117,6 +117,30 @@ public class MiniGameEventRelayer implements MouseListener, MouseMotionListener,
     @Override
     public void mouseDragged(MouseEvent me)
     {
+         try
+        {
+            // LOCK THE DATA
+            game.beginUsingData();
+
+            // GET THE COORDINATES
+            int x = me.getX();
+            int y = me.getY();
+
+            // FIRST CHECK THE GUI BUTTONS
+            boolean buttonClicked = game.processButtonPress(x, y);
+
+            // IF IT WAS NOT A GUI BUTTON, THEN WE SHOULD
+            // EXECUTE THE CUSTOM GAME RESPONSE
+        
+            MiniGameDataModel data = game.getDataModel();
+            data.checkMousePressOnSprites(game, x, y);
+        } finally
+        {
+            // RELEASE THE DATA SO THAT THE TIMER THREAD MAY
+            // APPROPRIATELY UPDATE AND RENDER THE GAME
+            // WITHOUT INTERFERENCE
+            game.endUsingData();
+        }
     }
 
     /**

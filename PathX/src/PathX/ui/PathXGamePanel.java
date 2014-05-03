@@ -271,7 +271,7 @@ public class PathXGamePanel extends JPanel {
             Image img = bgST.getStateImage(s.getState());
 
             Road selectedRoad = model.getSelectedRoad();
-            if (selectedRoad == null && !moved) {
+            if (selectedRoad == null){ //&& !moved) {
                 Image startImage = model.getStartingLocationImage();
                 Intersection startInt = model.getStartingLocation();
 
@@ -281,13 +281,13 @@ public class PathXGamePanel extends JPanel {
                 int y1 = startInt.y - (h / 2);
 
                 g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
-            } else if (selectedRoad != null && selectedRoad.getNode1() == model.getStartingLocation() || moved == true) {
+            } else if (selectedRoad != null && selectedRoad.getNode1() == model.getStartingLocation()){ //|| moved == true) {
 
-                if (!moved) {
-                    moved = true;
+                //if (!moved) {
+                    //moved = true;
                     recyclableCircle.x = selectedRoad.getNode2().x - viewport.getViewportX() - INTERSECTION_RADIUS;
                     recyclableCircle.y = selectedRoad.getNode2().y - viewport.getViewportY() - INTERSECTION_RADIUS;
-                }
+                //}
 
                 g.drawImage(img, (int) recyclableCircle.x, (int) recyclableCircle.y, null);
             }
