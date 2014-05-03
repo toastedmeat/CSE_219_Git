@@ -63,6 +63,6 @@
      <destination_intersection id="1" image="DefaultDestination.png"/>
      <money amount="1500"/>
      <police num="7"/>
-     <bandits num="5"/>
+     <bandits num="1"/>
      <zombies num="3"/>
 </level>

@@ -76,6 +76,9 @@ public class PathX
                 
         /* IMAGE FILE NAMES */
         IMAGE_PLAYER,
+        IMAGE_POLICE,
+        IMAGE_ZOMBIE,
+        IMAGE_BANDIT,
         IMAGE_BACKGROUND_GAME,
         IMAGE_BACKGROUND_GAME_MENU,
         IMAGE_BACKGROUND_GAMEMAP,

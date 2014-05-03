@@ -183,11 +183,13 @@ public class PathXEventHandler{
         } else if (game.getPXG().getRenderedBackground().equals(SBU_GAME_TYPE)&& game.getGUIDecor().get(SBU_GAME_TYPE).getY() < 120) {
             game.getGUIDecor().get(SBU_GAME_TYPE).setY(game.getGUIDecor().get(SBU_GAME_TYPE).getY() + 20);
             game.getPXG().viewport.move(0, -20);
+            game.setMouseMoveY(-20);
         } else {
             for (int i = 2; i <= 20; i++) {
                 if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")&& game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() < 120) {
                     game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() + 20);
                     game.getPXG().viewport.move(0, -20);
+                    game.setMouseMoveY(-20);
                 }
             }
         }
@@ -203,11 +205,13 @@ public class PathXEventHandler{
         }else if (game.getPXG().getRenderedBackground().equals(SBU_GAME_TYPE)&& game.getGUIDecor().get(SBU_GAME_TYPE).getY() > -300) {
             game.getGUIDecor().get(SBU_GAME_TYPE).setY(game.getGUIDecor().get(SBU_GAME_TYPE).getY() - 20);
             game.getPXG().viewport.move(0, 20);
+            game.setMouseMoveY(20);
         } else {
             for (int i = 2; i <= 20; i++) {
                 if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")&& game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() > -300) {
                     game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() - 20);
                     game.getPXG().viewport.move(0, 20);
+                    game.setMouseMoveY(20);
                 }
             }
         }
@@ -223,11 +227,13 @@ public class PathXEventHandler{
         }else if (game.getPXG().getRenderedBackground().equals(SBU_GAME_TYPE)&& game.getGUIDecor().get(SBU_GAME_TYPE).getX() < 0) {
             game.getGUIDecor().get(SBU_GAME_TYPE).setX(game.getGUIDecor().get(SBU_GAME_TYPE).getX() + 20);
             game.getPXG().viewport.move(-20, 0);
+            game.setMouseMoveX(-20);
         } else {
             for (int i = 2; i <= 20; i++) {
                 if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")&& game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() < 0) {
                     game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() + 20);
                     game.getPXG().viewport.move(-20, 0);
+                    game.setMouseMoveX(-20);
                 }
             }
         }
@@ -243,11 +249,13 @@ public class PathXEventHandler{
         }else if (game.getPXG().getRenderedBackground().equals(SBU_GAME_TYPE)&& game.getGUIDecor().get(SBU_GAME_TYPE).getX() > -600) {
             game.getGUIDecor().get(SBU_GAME_TYPE).setX(game.getGUIDecor().get(SBU_GAME_TYPE).getX() - 20);
             game.getPXG().viewport.move(20, 0);
+            game.setMouseMoveX(20);
         } else {
             for (int i = 2; i <= 20; i++) {
                 if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE")&& game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() > -600) {
                     game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() - 20);
                     game.getPXG().viewport.move(20, 0);
+                    game.setMouseMoveX(20);
                 }
             }
         }

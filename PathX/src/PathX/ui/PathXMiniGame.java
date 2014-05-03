@@ -317,13 +317,19 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel1() {
-        //insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
+        
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         levelSetup();
+        
+        //Changing the background
         insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
         pxg.setRenderedBackground(SBU_GAME_TYPE);
+        
+        //Level Loading
         fileManager.loadLevel(new File("data/pathX/Level1.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
+        
+        //Dialog Box
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -706,6 +712,59 @@ public class PathXMiniGame extends MiniGame {
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
         ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+    }
+    
+    public void createBandits(){
+        // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+        BufferedImage img;
+        SpriteType sT;
+        Sprite s;
+
+        // FIRST PUT THE ICON IN THE WINDOW
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        
+        String newPlayer = props.getProperty(pathXPropertyType.IMAGE_BANDIT);
+        sT = new SpriteType(BANDIT_TYPE);
+        img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiEnemies.put(BANDIT_TYPE, s);
+    }
+    
+    public void createPolice(){
+        // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+        BufferedImage img;
+        SpriteType sT;
+        Sprite s;
+
+        // FIRST PUT THE ICON IN THE WINDOW
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        
+        String newPlayer = props.getProperty(pathXPropertyType.IMAGE_POLICE);
+        sT = new SpriteType(POLICE_TYPE);
+        img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiEnemies.put(POLICE_TYPE, s);
+    }
+    public void createZombies(){
+        // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+        BufferedImage img;
+        SpriteType sT;
+        Sprite s;
+
+        // FIRST PUT THE ICON IN THE WINDOW
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
+        
+        String newPlayer = props.getProperty(pathXPropertyType.IMAGE_ZOMBIE);
+        sT = new SpriteType(ZOMBIE_TYPE);
+        img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiEnemies.put(ZOMBIE_TYPE, s);
     }
 
     // METHODS OVERRIDDEN FROM MiniGame
@@ -1232,21 +1291,18 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(DOWN_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToDownRequest();
-                mouseMoveY += 20;
             }
         });
 
         guiButtons.get(LEFT_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToLeftRequest();
-                mouseMoveX -= 20;
             }
         });
 
         guiButtons.get(RIGHT_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToRightRequest();
-                mouseMoveX += 20;
             }
         });
 

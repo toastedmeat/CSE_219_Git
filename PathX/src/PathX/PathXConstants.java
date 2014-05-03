@@ -39,6 +39,10 @@ public class PathXConstants
 
     // IN-GAME UI CONTROL TYPES
     public static final String PLAYER_TYPE = "PLAYER_TYPE";
+    public static final String POLICE_TYPE = "POLICE_TYPE";
+    public static final String BANDIT_TYPE = "BANDIT_TYPE";
+    public static final String ZOMBIE_TYPE = "ZOMBIE_TYPE";
+    
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
@@ -90,7 +94,6 @@ public class PathXConstants
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
-    public static final String PLAYER_STATE = "PLAYER_STATE";
     
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
