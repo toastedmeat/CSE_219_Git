@@ -75,6 +75,7 @@ public class PathX
             // sorting_hat_properties.xml
                 
         /* IMAGE FILE NAMES */
+        IMAGE_PLAYER,
         IMAGE_BACKGROUND_GAME,
         IMAGE_BACKGROUND_GAME_MENU,
         IMAGE_BACKGROUND_GAMEMAP,

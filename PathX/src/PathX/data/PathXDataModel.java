@@ -18,6 +18,7 @@ import PathX.ui.PathXPanel;
 import PathX.ui.PathXTileState;
 import java.awt.Image;
 import java.awt.geom.Line2D;
+import javax.swing.JPanel;
 import mini_game.Viewport;
 
 /**
@@ -29,7 +30,7 @@ public class PathXDataModel extends MiniGameDataModel {
 
     // THIS CLASS HAS A REFERERENCE TO THE MINI GAME SO THAT IT
     // CAN NOTIFY IT TO UPDATE THE DISPLAY WHEN THE DATA MODEL CHANGES
-    private MiniGame miniGame;
+    private PathXMiniGame miniGame;
 
     // THESE ARE USED FOR TIMING THE GAME
     private GregorianCalendar startTime;
@@ -49,6 +50,7 @@ public class PathXDataModel extends MiniGameDataModel {
     Image backgroundImage;
     Image startingLocationImage;
     Image destinationImage;
+    Image playerImage;
 
     // THE SELECTED INTERSECTION OR ROAD MIGHT BE EDITED OR DELETED
     // AND IS RENDERED DIFFERENTLY
@@ -74,9 +76,9 @@ public class PathXDataModel extends MiniGameDataModel {
      * structures for storing tiles, but not the tile grid itself, that is
      * dependent on file loading, and so should be subsequently initialized.
      *
-     * @param initMiniGame The Sorting Hat game UI.
+     * @param initMiniGame The PathXGame
      */
-    public PathXDataModel(MiniGame initMiniGame) {
+    public PathXDataModel(PathXMiniGame initMiniGame) {
         // KEEP THE GAME FOR LATER
         miniGame = initMiniGame;
         level = new PathXLevel();
@@ -100,6 +102,7 @@ public class PathXDataModel extends MiniGameDataModel {
     public Image getBackgroundImage() {        return backgroundImage;    }
     public Image getStartingLocationImage() {        return startingLocationImage;    }
     public Image getDesinationImage() {        return destinationImage;    }
+    public Image getPlayerLocationImage(){ return playerImage;}
     public Intersection getSelectedIntersection() {        return selectedIntersection;    }
     public Road getSelectedRoad() {        return selectedRoad;    }
     //public Intersection getStartRoadIntersection() {        return startRoadIntersection;    }
@@ -249,7 +252,7 @@ public class PathXDataModel extends MiniGameDataModel {
      * the game screen. We'll use this to close game dialogs as well as to
      * listen for mouse clicks on grid cells.
      *
-     * @param game The Sorting Hat game.
+     * @param game The game.
      *
      * @param x The x-axis pixel location of the mouse click.
      *
@@ -258,25 +261,42 @@ public class PathXDataModel extends MiniGameDataModel {
     @Override
 
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {
-        // FIGURE OUT THE CELL IN THE GRID
-        int col = calculateGridCellColumn(x);
-        int row = calculateGridCellRow(y);
+        
+        // MAKE SURE THE CANVAS HAS FOCUS SO THAT IT
+        // WILL PROCESS THE PROPER KEY PRESSES
+        
+        // THESE ARE CANVAS COORDINATES
+        int canvasX = (x - 274) + miniGame.getMouseMoveX();
+        int canvasY = (y - 17) + miniGame.getMouseMoveY();
+        
+        
+        // IF WE ARE IN ONE OF THESE MODES WE MAY WANT TO SELECT
+        // ANOTHER INTERSECTION ROAD
+        if (this.isNothingSelected()
+                || this.isIntersectionSelected()
+                || this.isRoadSelected())
+        {
+            // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
+            Intersection i = this.findIntersectionAtCanvasLocation(canvasX, canvasY);
+            if (i != null)
+            {
+                // MAKE THIS THE SELECTED INTERSECTION
+                this.setSelectedIntersection(i);
+                return;
+            }                      
+            
+            // IF NO INTERSECTION WAS SELECTED THEN CHECK TO SEE IF 
+            // THE USER IS SELECTING A ROAD
+            Road r = this.selectRoadAtCanvasLocation(canvasX, canvasY);
+            if (r != null)
+            {
+                // MAKE THIS THE SELECTED ROAD
+                this.setSelectedRoad(r);
+                return;
+            }
 
-        // DISABLE THE STATS DIALOG IF IT IS OPEN
-        if (game.getGUIDialogs().get(STATS_DIALOG_TYPE).getState().equals(PathXTileState.VISIBLE_STATE.toString())) {
-            game.getGUIDialogs().get(STATS_DIALOG_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-            return;
-        }
-
-        // CHECK THE CELL AT col, row
-        int index = 0;//getSnakeIndex(col, row);
-
-        // IT'S OUTSIDE THE GRID
-        if (index < 0) {
-            // DESELECT A TILE IF ONE IS SELECTED
-        } // IT'S IN THE GRID
-        else {
-            // SELECT THE TILE IF NONE IS SELECTED
+            // OTHERWISE DESELECT EVERYTHING
+            this.unselectEverything();            
         }
     }
 
@@ -348,7 +368,7 @@ public class PathXDataModel extends MiniGameDataModel {
 
     public void setLastMousePosition(int initX, int initY) {
         lastMouseX = initX;
-       lastMouseY = initY;
+        lastMouseY = initY;
         miniGame.getCanvas().repaint();
     }
 
@@ -388,9 +408,9 @@ public class PathXDataModel extends MiniGameDataModel {
         // NOW MAKE THE LEVEL IMAGES
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        backgroundImage = miniGame.loadImage(imgPath + DEFAULT_BG_IMG);
-        startingLocationImage = miniGame.loadImage(imgPath + DEFAULT_START_IMG);
-        destinationImage = miniGame.loadImage(imgPath + DEFAULT_DEST_IMG);
+        startingLocationImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_START_IMG);
+        destinationImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_DEST_IMG);
+        playerImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_DEST_IMG);
 
         // NOW RESET THE VIEWPORT
         viewport.reset();
@@ -410,20 +430,6 @@ public class PathXDataModel extends MiniGameDataModel {
         miniGame.getCanvas().repaint();
     }
 
-    /**
-     * Updates the background image.
-     */
-    public void updateBackgroundImage(String newBgImage) {
-        // UPDATE THE LEVEL TO FIT THE BACKGROUDN IMAGE SIZE
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        level.backgroundImageFileName = newBgImage;
-        backgroundImage = miniGame.loadImage(imgPath + level.backgroundImageFileName);
-        int levelWidth = backgroundImage.getWidth(null);
-        int levelHeight = backgroundImage.getHeight(null);
-        viewport.setLevelDimensions(levelWidth, levelHeight);
-        miniGame.getCanvas().repaint();
-    }
 
     /**
      * Updates the image used for the starting location and forces rendering.
@@ -435,7 +441,7 @@ public class PathXDataModel extends MiniGameDataModel {
         startingLocationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/" + level.startingLocationImageFileName, COLOR_KEY);
         miniGame.getCanvas().repaint();
     }
-
+    
     /**
      * Updates the image used for the destination and forces rendering.
      */

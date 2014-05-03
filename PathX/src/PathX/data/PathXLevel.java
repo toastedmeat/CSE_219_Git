@@ -18,6 +18,9 @@ public class PathXLevel
 
     // THE LEVEL BACKGROUND
     String startingLocationImageFileName;
+    
+    //Player Image
+    String playerImageFileName;
 
     // COMPLETE LIST OF INTERSECTIONS SORTED LEFT TO RIGHT
     ArrayList<Intersection> intersections;
@@ -67,7 +70,6 @@ public class PathXLevel
         backgroundImageFileName = initBackgroundImageFileName;
         startingLocationImageFileName = initStartingLocationImageFileName;
         destinationImageFileName = initDestinationImageFileName;
-        
         // AND THE STARTING LOCATION AND DESTINATION
         startingLocation = new Intersection(startingLocationX, startingLocationY);
         intersections.add(startingLocation);

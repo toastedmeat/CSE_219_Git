@@ -38,6 +38,7 @@ public class PathXConstants
     public static final String GAME_LEVEL_SELECT_BUTTON_TYPE = "GAME_LEVEL_SELECT_BUTTON_TYPE";
 
     // IN-GAME UI CONTROL TYPES
+    public static final String PLAYER_TYPE = "PLAYER_TYPE";
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
@@ -51,6 +52,8 @@ public class PathXConstants
     public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
+    
+    
     public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
     public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
     public static final String SBU_GAME_TYPE = "SBU_GAME_TYPE";
@@ -87,6 +90,8 @@ public class PathXConstants
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
+    public static final String PLAYER_STATE = "PLAYER_STATE";
+    
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
     public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
     public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";

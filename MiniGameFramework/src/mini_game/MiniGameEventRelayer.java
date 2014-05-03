@@ -59,11 +59,9 @@ public class MiniGameEventRelayer implements MouseListener, MouseMotionListener,
 
             // IF IT WAS NOT A GUI BUTTON, THEN WE SHOULD
             // EXECUTE THE CUSTOM GAME RESPONSE
-            if (!buttonClicked && game.getDataModel().inProgress())
-            {
-                MiniGameDataModel data = game.getDataModel();
-                data.checkMousePressOnSprites(game, x, y);
-            }
+        
+            MiniGameDataModel data = game.getDataModel();
+            data.checkMousePressOnSprites(game, x, y);
         } finally
         {
             // RELEASE THE DATA SO THAT THE TIMER THREAD MAY

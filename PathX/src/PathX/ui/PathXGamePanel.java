@@ -40,7 +40,7 @@ import java.util.HashMap;
  * @author Richard McKenna & Eric Loo
  */
 public class PathXGamePanel extends JPanel {
-    
+
     private MiniGame game;
 
     // AND HERE IS ALL THE GAME DATA THAT WE NEED TO RENDER
@@ -57,9 +57,9 @@ public class PathXGamePanel extends JPanel {
 
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
-    
+
     private String renderedBackground;
-    
+
     public Viewport viewport;
 
     // WE'LL RECYCLE THESE DURING RENDERING
@@ -117,19 +117,13 @@ public class PathXGamePanel extends JPanel {
         try {
             // MAKE SURE WE HAVE EXCLUSIVE ACCESS TO THE GAME DATA
             game.beginUsingData();
-            
+
             Graphics2D g2 = (Graphics2D) g;
             // CLEAR THE PANEL
             super.paintComponent(g);
 
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g2, renderedBackground);
-            
-            if (game.getGUIDecor().get(BACKGROUND_TYPE).getState().equals(GAME_SCREEN_STATE)) {
-                renderGUIControls(g2);
-            } else {
-                renderGUIControls2(g2);
-            }
             if (model.getLoadedLevel()) {
                 // RENDER THE ROADS
                 renderRoads(g2);
@@ -137,17 +131,23 @@ public class PathXGamePanel extends JPanel {
                 // RENDER THE INTERSECTIONS
                 renderIntersections(g2);
             }
+            if (game.getGUIDecor().get(BACKGROUND_TYPE).getState().equals(GAME_SCREEN_STATE)) {
+                renderGUIControls(g2);
+            } else {
+                renderGUIControls2(g2);
+            }
+
             // AND THE BUTTONS AND DECOR
         } finally {
             // RELEASE THE LOCK
             game.endUsingData();
         }
     }
-    
+
     public void setRenderedBackground(String toRender) {
         renderedBackground = toRender;
     }
-    
+
     public String getRenderedBackground() {
         return renderedBackground;
     }
@@ -176,7 +176,7 @@ public class PathXGamePanel extends JPanel {
             renderSprite2(g, bg);
         }
     }
-    
+
     public void renderGUIControls(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
@@ -185,17 +185,20 @@ public class PathXGamePanel extends JPanel {
                 renderSprite2(g, s);
             }
         }
-        
+
     }
+
     public void renderGUIControls2(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
                 renderSprite3(g, s);
+            } else if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
+                renderPlayer(g, s);
             }
         }
-        
+
     }
 
     /**
@@ -211,10 +214,10 @@ public class PathXGamePanel extends JPanel {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
+           g.drawImage(img, (int) s.getX() - 1800, (int) s.getY() - 400, null);
         }
     }
-    
+
     public void renderSprite2(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
@@ -223,13 +226,31 @@ public class PathXGamePanel extends JPanel {
             g.drawImage(img, (int) s.getX() - 17, (int) s.getY() - 129, null);
         }
     }
-    
+
     public void renderSprite3(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int) s.getX() - 274, (int) s.getY() - 14, null);
+        }
+    }
+
+    public void renderPlayer(Graphics g, Sprite s) {
+        // ONLY RENDER THE VISIBLE ONES
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+
+            Image startImage = model.getStartingLocationImage();
+            Intersection startInt = model.getStartingLocation();
+
+            int w = startImage.getWidth(null);
+            int h = startImage.getHeight(null);
+            int x1 = startInt.x - (w / 2);
+            int y1 = startInt.y - (h / 2);
+
+            g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
         }
     }
 
@@ -344,7 +365,7 @@ public class PathXGamePanel extends JPanel {
         Image startImage = model.getStartingLocationImage();
         Intersection startInt = model.getStartingLocation();
         renderIntersectionImage(g2, startImage, startInt);
-        
+
         Image destImage = model.getDesinationImage();
         Intersection destInt = model.getDestination();
         renderIntersectionImage(g2, destImage, destInt);
@@ -404,5 +425,5 @@ public class PathXGamePanel extends JPanel {
         // RESTORE THE OLD TRANSFORM SO EVERYTHING DOESN'T END UP ROTATED 0
         g2.setTransform(oldAt);
     }
-    
+
 }

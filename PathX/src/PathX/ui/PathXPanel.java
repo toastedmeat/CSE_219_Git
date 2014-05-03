@@ -190,7 +190,8 @@ public class PathXPanel extends JPanel
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites)
         {
-            if(!s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)){
+            if(!s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE) 
+                    && !s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)){
             renderSprite(g, s);
             }
         }

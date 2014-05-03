@@ -67,6 +67,9 @@ public class PathXMiniGame extends MiniGame {
     private PathXGamePanel insideCanvas;
     
     private PathXGamePanel pxg;
+    
+    private int mouseMoveX;
+    private int mouseMoveY;
     // ACCESSOR METHODS
     // - getPlayerRecord
     // - getErrorHandler
@@ -81,6 +84,22 @@ public class PathXMiniGame extends MiniGame {
      */
     public PathXRecord getPlayerRecord() {
         return record;
+    }
+    
+    public int getMouseMoveX(){
+        return mouseMoveX;
+    }
+    
+    public int getMouseMoveY(){
+        return mouseMoveY;
+    }
+    
+    public void setMouseMoveX(int incX){
+        mouseMoveX += incX;
+    }
+    
+    public void setMouseMoveY(int incY){
+        mouseMoveY += incY;
     }
 
     /**
@@ -161,6 +180,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
+        
+        guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(PLAYER_TYPE).setEnabled(false);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -190,6 +212,10 @@ public class PathXMiniGame extends MiniGame {
         // AND UPDATE THE DATA GAME STATE
         data.setGameState(MiniGameState.NOT_STARTED);
 
+        insideCanvas.setEnabled(false);
+        insideCanvas.setVisible(false);
+        pxg.setEnabled(false);
+        pxg.setVisible(false);
         // PLAY THE WELCOME SCREEN SONG
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
@@ -242,6 +268,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(PAUSE_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(false);
 
+        guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(PLAYER_TYPE).setEnabled(false);
+        
         guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(UP_BUTTON_TYPE).setX(UP_BUTTON_X);
@@ -588,6 +617,13 @@ public class PathXMiniGame extends MiniGame {
             guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
         }
+        guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(PLAYER_TYPE).setEnabled(false);
+        
+        insideCanvas.setEnabled(false);
+        insideCanvas.setVisible(false);
+        pxg.setEnabled(false);
+        pxg.setVisible(false);
     }
 
     public void levelSetup() {
@@ -624,6 +660,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_GAME_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_GAME_Y);
+        
+        guiButtons.get(PLAYER_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(PLAYER_TYPE).setEnabled(true);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -736,6 +775,9 @@ public class PathXMiniGame extends MiniGame {
         data = new PathXDataModel(this);
         dataCopy = (PathXDataModel) data;
         
+        mouseMoveX = 0;
+        mouseMoveY = 0;
+        
     }
 
     public static PathXDataModel getData() {
@@ -775,8 +817,8 @@ public class PathXMiniGame extends MiniGame {
         canvas.add(insideCanvas);
         insideCanvas.setVisible(false);
         pxg = new PathXGamePanel(this, (PathXDataModel) data);
-        pxg.addMouseListener(new PathXMouseController((PathXDataModel) data));
-        pxg.addKeyListener(keyHandler);
+        //pxg.addMouseListener(new PathXMouseController((PathXDataModel) data));
+        //pxg.addKeyListener(keyHandler);
         canvas.add(pxg);
 
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
@@ -904,6 +946,7 @@ public class PathXMiniGame extends MiniGame {
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL20_SCREEN_STATE);
         guiDecor.put(LEVEL20_GAME_TYPE, s);
         
+        
         // LOAD THE Arrow CURSOR
         String cursorName = props.getProperty(pathXPropertyType.IMAGE_CURSOR_WAND);
         img = loadImageWithColorKey(imgPath + cursorName, COLOR_KEY);
@@ -953,6 +996,14 @@ public class PathXMiniGame extends MiniGame {
         }
 
         // ADD THE CONTROLS ALONG THE GAME SCREEN
+        
+        String newPlayer = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
+        sT = new SpriteType(PLAYER_TYPE);
+        img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(PLAYER_TYPE, s);
+        
         // THEN THE NEW BUTTON
         String newButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
@@ -1181,18 +1232,21 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(DOWN_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToDownRequest();
+                mouseMoveY += 20;
             }
         });
 
         guiButtons.get(LEFT_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToLeftRequest();
+                mouseMoveX -= 20;
             }
         });
 
         guiButtons.get(RIGHT_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToRightRequest();
+                mouseMoveX += 20;
             }
         });
 
