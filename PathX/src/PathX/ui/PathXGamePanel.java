@@ -62,6 +62,8 @@ public class PathXGamePanel extends JPanel {
 
     public Viewport viewport;
 
+    private boolean moved;
+
     // WE'LL RECYCLE THESE DURING RENDERING
     Ellipse2D.Double recyclableCircle;
     Line2D.Double recyclableLine;
@@ -86,6 +88,7 @@ public class PathXGamePanel extends JPanel {
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
         renderedBackground = BACKGROUND_GAME_TYPE;
+        moved = false;
 
         // MAKE THE RENDER OBJECTS TO BE RECYCLED
         recyclableCircle = new Ellipse2D.Double(0, 0, INTERSECTION_RADIUS * 2, INTERSECTION_RADIUS * 2);
@@ -124,7 +127,7 @@ public class PathXGamePanel extends JPanel {
 
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g2, renderedBackground);
-            
+
             if (model.getLoadedLevel()) {
                 // RENDER THE ROADS
                 renderRoads(g2);
@@ -151,6 +154,7 @@ public class PathXGamePanel extends JPanel {
 
     public void setRenderedBackground(String toRender) {
         renderedBackground = toRender;
+        moved = false;
     }
 
     public String getRenderedBackground() {
@@ -211,16 +215,16 @@ public class PathXGamePanel extends JPanel {
         Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
         Iterator<Intersection> it = model.intersectionsIterator();
         Iterator<Sprite> itE = game.getGUIEnemies().values().iterator();
-        while(it.hasNext() && itE.hasNext()){
-                Intersection intersection = it.next();
-                Sprite s = itE.next();
-                while ((model.isStartingLocation(intersection))
+        while (it.hasNext() && itE.hasNext()) {
+            Intersection intersection = it.next();
+            Sprite s = itE.next();
+            while ((model.isStartingLocation(intersection))
                     || (model.isDestination(intersection))) {
-                    intersection = it.next();
-                }
-                   
-                renderEnemy(g, s, intersection);
-                
+                intersection = it.next();
+            }
+
+            renderEnemy(g, s, intersection);
+
         }
     }
 
@@ -261,40 +265,44 @@ public class PathXGamePanel extends JPanel {
 
     public void renderPlayer(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
+
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
 
             Road selectedRoad = model.getSelectedRoad();
-            if(selectedRoad == null){
-            Image startImage = model.getStartingLocationImage();
-            Intersection startInt = model.getStartingLocation();
+            if (selectedRoad == null && !moved) {
+                Image startImage = model.getStartingLocationImage();
+                Intersection startInt = model.getStartingLocation();
 
-            int w = startImage.getWidth(null);
-            int h = startImage.getHeight(null);
-            int x1 = startInt.x - (w / 2);
-            int y1 = startInt.y - (h / 2);
+                int w = startImage.getWidth(null);
+                int h = startImage.getHeight(null);
+                int x1 = startInt.x - (w / 2);
+                int y1 = startInt.y - (h / 2);
 
-            g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
-            } else if(selectedRoad.getNode1() == model.getStartingLocation()){
-                recyclableCircle.x = selectedRoad.getNode2().x - viewport.getViewportX() - INTERSECTION_RADIUS;
-                recyclableCircle.y = selectedRoad.getNode2().y - viewport.getViewportY() - INTERSECTION_RADIUS;
-                
-                g.drawImage(img, (int) recyclableCircle.x, (int)recyclableCircle.y, null);
+                g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
+            } else if (selectedRoad != null && selectedRoad.getNode1() == model.getStartingLocation() || moved == true) {
+
+                if (!moved) {
+                    moved = true;
+                    recyclableCircle.x = selectedRoad.getNode2().x - viewport.getViewportX() - INTERSECTION_RADIUS;
+                    recyclableCircle.y = selectedRoad.getNode2().y - viewport.getViewportY() - INTERSECTION_RADIUS;
+                }
+
+                g.drawImage(img, (int) recyclableCircle.x, (int) recyclableCircle.y, null);
             }
         }
     }
 
-    
     public void renderEnemy(Graphics g, Sprite s, Intersection i) {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            
+
             recyclableCircle.x = i.x - viewport.getViewportX() - INTERSECTION_RADIUS;
             recyclableCircle.y = i.y - viewport.getViewportY() - INTERSECTION_RADIUS;
-            
-            g.drawImage(img, (int) recyclableCircle.x ,(int) recyclableCircle.y, null);
+
+            g.drawImage(img, (int) recyclableCircle.x, (int) recyclableCircle.y, null);
         }
     }
 
