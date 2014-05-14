@@ -259,7 +259,7 @@ public class PathXEventHandler {
                         game.getPXG().viewport.move(0, -20);
                         game.setMouseMoveY(-20);
                         game.getGUIButtons().get(PLAYER_TYPE).setY(game.getGUIButtons().get(PLAYER_TYPE).getY() + 20);
-                        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
+                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
                         for (Sprite s : buttonSprites) {
                             s.setY(s.getY() + 20);
                         }
@@ -282,7 +282,7 @@ public class PathXEventHandler {
                         game.getPXG().viewport.move(0, 20);
                         game.setMouseMoveY(20);
                         game.getGUIButtons().get(PLAYER_TYPE).setY(game.getGUIButtons().get(PLAYER_TYPE).getY() - 20);
-                        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
+                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
                         for (Sprite s : buttonSprites) {
                             s.setY(s.getY() - 20);
                         }
@@ -304,7 +304,7 @@ public class PathXEventHandler {
                         game.getPXG().viewport.move(-20, 0);
                         game.setMouseMoveX(-20);
                         game.getGUIButtons().get(PLAYER_TYPE).setX(game.getGUIButtons().get(PLAYER_TYPE).getX() + 20);
-                        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
+                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
                         for (Sprite s : buttonSprites) {
                             s.setX(s.getX() + 20);
                         }
@@ -326,7 +326,7 @@ public class PathXEventHandler {
                         game.getPXG().viewport.move(20, 0);
                         game.setMouseMoveX(20);
                         game.getGUIButtons().get(PLAYER_TYPE).setX(game.getGUIButtons().get(PLAYER_TYPE).getX() - 20);
-                        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
+                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
                         for (Sprite s : buttonSprites) {
                             s.setX(s.getX() - 20);
                         }

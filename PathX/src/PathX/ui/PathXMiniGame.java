@@ -36,6 +36,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.Collection;
 import java.util.Random;
+import java.util.TreeMap;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -73,6 +74,8 @@ public class PathXMiniGame extends MiniGame {
     private int mouseMoveX;
     private int mouseMoveY;
     
+    protected  TreeMap<String, carSprite> guiEnemies;
+    
     /**
      * Accessor method for getting the player record object, which summarizes
      * the player's record on all levels.
@@ -89,6 +92,10 @@ public class PathXMiniGame extends MiniGame {
 
     public int getMouseMoveY() {
         return mouseMoveY;
+    }
+    
+    public TreeMap<String, carSprite> getGUIEnemies(){
+        return guiEnemies;
     }
 
     public void setMouseMoveX(int incX) {
@@ -798,7 +805,7 @@ public class PathXMiniGame extends MiniGame {
 
         BufferedImage img;
         SpriteType sT;
-        enemiesSprite s;
+        carSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -816,7 +823,7 @@ public class PathXMiniGame extends MiniGame {
                 || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
             intersection = it.next();
         }
-        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
         guiEnemies.put(sprite, s);
     }
@@ -824,7 +831,7 @@ public class PathXMiniGame extends MiniGame {
     public void createPolice(String sprite) {
         BufferedImage img;
         SpriteType sT;
-        enemiesSprite s;
+        carSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -842,7 +849,7 @@ public class PathXMiniGame extends MiniGame {
                 || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
             intersection = it.next();
         }
-        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
         guiEnemies.put(sprite, s);
     }
@@ -850,7 +857,7 @@ public class PathXMiniGame extends MiniGame {
     public void createZombies(String sprite) {
        BufferedImage img;
         SpriteType sT;
-        enemiesSprite s;
+        carSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -868,7 +875,7 @@ public class PathXMiniGame extends MiniGame {
                 || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
             intersection = it.next();
         }
-        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
         guiEnemies.put(sprite, s);
     }
@@ -928,6 +935,7 @@ public class PathXMiniGame extends MiniGame {
     @Override
     public void initData() {
         // INIT OUR ERROR HANDLER
+        
         errorHandler = new PathXErrorHandler(window);
 
         // INIT OUR FILE MANAGER
@@ -965,6 +973,9 @@ public class PathXMiniGame extends MiniGame {
     @Override
     public void initGUIControls() {
         // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+        
+        guiEnemies = new TreeMap();
+        
         BufferedImage img;
         float x, y;
         SpriteType sT;

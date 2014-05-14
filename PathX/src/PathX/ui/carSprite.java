@@ -12,7 +12,7 @@ import mini_game.SpriteType;
  *
  * @author Eric
  */
-public class enemiesSprite extends Sprite{
+public class carSprite extends Sprite{
     // EACH TILE HAS AN ID, WHICH WE'LL USE FOR SORTING
 
     private int tileId;
@@ -25,7 +25,7 @@ public class enemiesSprite extends Sprite{
     private float targetX;
     private float targetY;
 
-    public enemiesSprite(SpriteType initSpriteType,
+    public carSprite(SpriteType initSpriteType,
             float initX, float initY,
             float initVx, float initVy,
             String initState) {

@@ -41,7 +41,7 @@ import java.util.HashMap;
  */
 public class PathXGamePanel extends JPanel {
 
-    private MiniGame game;
+    private PathXMiniGame game;
 
     // AND HERE IS ALL THE GAME DATA THAT WE NEED TO RENDER
     private PathXDataModel model;
@@ -80,7 +80,7 @@ public class PathXGamePanel extends JPanel {
      * rendering.
      *
      */
-    public PathXGamePanel(MiniGame initGame, PathXDataModel m) {
+    public PathXGamePanel(PathXMiniGame initGame, PathXDataModel m) {
         game = initGame;
         model = m;
         viewport = model.getViewport();
@@ -214,17 +214,18 @@ public class PathXGamePanel extends JPanel {
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites) {
         if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
-                renderCars(g, s);
+                renderPlayer(g, s);
             }
         }
     }
 
     public void renderEnemies(Graphics g) {
         // AND NOW RENDER THE BUTTONS
-        Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
-        Iterator<Sprite> itE = buttonSprites.iterator();
+        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
+        Iterator<carSprite> itE = buttonSprites.iterator();
         while (itE.hasNext()) {
-            Sprite s = itE.next();
+            carSprite s = itE.next();
+            
             renderCars(g, s);
         }
     }
@@ -263,8 +264,16 @@ public class PathXGamePanel extends JPanel {
             g.drawImage(img, (int) s.getX() - 274, (int) s.getY() - 14, null);
         }
     }
+    
+    public void renderPlayer(Graphics g, Sprite s){
+        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+            g.drawImage(img, (int) s.getX() - 30, (int) s.getY() - 34, null);
+        }
+    }
 
-    public void renderCars(Graphics g, Sprite s) {
+    public void renderCars(Graphics g, carSprite s) {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());

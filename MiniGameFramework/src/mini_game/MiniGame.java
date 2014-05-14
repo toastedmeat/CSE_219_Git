@@ -75,7 +75,6 @@ public abstract class MiniGame
     protected TreeMap<String, Sprite> guiButtons;
     protected TreeMap<String, Sprite> guiDecor;
     protected TreeMap<String, Sprite> guiDialogs;
-    protected TreeMap<String, Sprite> guiEnemies;
     
     // WE WILL HAVE A TIMER RUNNING IN ANOTHER THREAD THAT
     // EVERY frameDuration AMOUNT OF TIME WILL UPDATE THE
@@ -218,10 +217,6 @@ public abstract class MiniGame
         return guiButtons;
     }
     
-    public TreeMap<String, Sprite> getGUIEnemies()
-    {
-        return guiEnemies;
-    }
     /**
      * For accessing the game GUI decor.
      *
@@ -311,7 +306,6 @@ public abstract class MiniGame
     {
         // INITIALIZE OUR GUI DATA STRUCTURES
         guiButtons = new TreeMap();
-        guiEnemies = new TreeMap();
         guiDecor = new TreeMap();
         guiDialogs = new TreeMap();
 
