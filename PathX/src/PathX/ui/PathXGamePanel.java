@@ -134,6 +134,8 @@ public class PathXGamePanel extends JPanel {
 
                 // RENDER THE INTERSECTIONS
                 renderIntersections(g2);
+                
+                renderPlayer(g2);
 
                 if (!game.getGUIEnemies().isEmpty()) {
                     renderEnemies(g2);
@@ -203,28 +205,27 @@ public class PathXGamePanel extends JPanel {
         for (Sprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
                 renderSprite3(g, s);
-            } else if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
-                renderPlayer(g, s);
-            }
+            } 
         }
 
+    }
+    
+    public void renderPlayer(Graphics g){
+        Collection<Sprite> buttonSprites = game.getGUIButtons().values();
+        for (Sprite s : buttonSprites) {
+        if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
+                renderCars(g, s);
+            }
+        }
     }
 
     public void renderEnemies(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<Sprite> buttonSprites = game.getGUIEnemies().values();
-        Iterator<Intersection> it = model.intersectionsIterator();
-        Iterator<Sprite> itE = game.getGUIEnemies().values().iterator();
-        while (it.hasNext() && itE.hasNext()) {
-            Intersection intersection = it.next();
+        Iterator<Sprite> itE = buttonSprites.iterator();
+        while (itE.hasNext()) {
             Sprite s = itE.next();
-            while ((model.isStartingLocation(intersection))
-                    || (model.isDestination(intersection))) {
-                intersection = it.next();
-            }
-
-            renderEnemy(g, s, intersection);
-
+            renderCars(g, s);
         }
     }
 
@@ -263,46 +264,11 @@ public class PathXGamePanel extends JPanel {
         }
     }
 
-    public void renderPlayer(Graphics g, Sprite s) {
-        // ONLY RENDER THE VISIBLE ONES
-
+    public void renderCars(Graphics g, Sprite s) {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-
-            Road selectedRoad = model.getSelectedRoad();
-            if (selectedRoad == null){ //&& !moved) {
-                Image startImage = model.getStartingLocationImage();
-                Intersection startInt = model.getStartingLocation();
-
-                int w = startImage.getWidth(null);
-                int h = startImage.getHeight(null);
-                int x1 = startInt.x - (w / 2);
-                int y1 = startInt.y - (h / 2);
-
-                g.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
-            } else if (selectedRoad != null && selectedRoad.getNode1() == model.getStartingLocation()){ //|| moved == true) {
-
-                //if (!moved) {
-                    //moved = true;
-                    recyclableCircle.x = selectedRoad.getNode2().x - viewport.getViewportX() - INTERSECTION_RADIUS;
-                    recyclableCircle.y = selectedRoad.getNode2().y - viewport.getViewportY() - INTERSECTION_RADIUS;
-                //}
-
-                g.drawImage(img, (int) recyclableCircle.x, (int) recyclableCircle.y, null);
-            }
-        }
-    }
-
-    public void renderEnemy(Graphics g, Sprite s, Intersection i) {
-        if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
-            SpriteType bgST = s.getSpriteType();
-            Image img = bgST.getStateImage(s.getState());
-
-            recyclableCircle.x = i.x - viewport.getViewportX() - INTERSECTION_RADIUS;
-            recyclableCircle.y = i.y - viewport.getViewportY() - INTERSECTION_RADIUS;
-
-            g.drawImage(img, (int) recyclableCircle.x, (int) recyclableCircle.y, null);
+            g.drawImage(img, (int) s.getX() - 30, (int) s.getY() - 34, null);
         }
     }
 

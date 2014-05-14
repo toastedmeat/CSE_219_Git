@@ -4,8 +4,8 @@
           <intersection id="0" open="false" x="267" y="308"/>
           <intersection id="1" open="true" x="809" y="313"/>
           <intersection id="2" open="true" x="441" y="311"/>
-          <intersection id="3" open="true" x="608" y="315"/>
-          <intersection id="4" open="true" x="531" y="217"/>
+          <intersection id="3" open="true" x="611" y="313"/>
+          <intersection id="4" open="true" x="628" y="183"/>
      </intersections>
      <roads>
           <road int_id1="0" int_id2="2" one_way="false" speed_limit="30"/>

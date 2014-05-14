@@ -12,7 +12,7 @@ import static PathX.PathXConstants.*;
  * from Harry Potter, but it could easily be swapped out just by changing
  * the artwork and audio files.
  * 
- * @author Richard McKenna & ________________________
+ * @author Richard McKenna 
  */
 public class PathX
 {
@@ -82,7 +82,7 @@ public class PathX
         IMAGE_BACKGROUND_GAME,
         IMAGE_BACKGROUND_GAME_MENU,
         IMAGE_BACKGROUND_GAMEMAP,
-        IMAGE_BACKGROUND_SBU,
+        IMAGE_BACKGROUND_LEVEL1,
         IMAGE_BACKGROUND_LEVEL2,
         IMAGE_BACKGROUND_LEVEL3,
         IMAGE_BACKGROUND_LEVEL4,

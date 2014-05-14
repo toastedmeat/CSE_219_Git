@@ -60,7 +60,7 @@ public class PathXConstants
     
     public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
     public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
-    public static final String SBU_GAME_TYPE = "SBU_GAME_TYPE";
+    public static final String LEVEL1_GAME_TYPE = "LEVEL1_GAME_TYPE";
     public static final String LEVEL2_GAME_TYPE = "LEVEL2_GAME_TYPE";
     public static final String LEVEL3_GAME_TYPE = "LEVEL3_GAME_TYPE";
     public static final String LEVEL4_GAME_TYPE = "LEVEL4_GAME_TYPE";
@@ -102,7 +102,7 @@ public class PathXConstants
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
     
-    public static final String SBU_SCREEN_STATE = "SBU_SCREEN_STATE";
+    public static final String LEVEL1_SCREEN_STATE = "LEVEL1_SCREEN_STATE";
     public static final String LEVEL2_SCREEN_STATE = "LEVEL2_SCREEN_STATE";
     public static final String LEVEL3_SCREEN_STATE = "LEVEL3_SCREEN_STATE";
     public static final String LEVEL4_SCREEN_STATE = "LEVEL4_SCREEN_STATE";

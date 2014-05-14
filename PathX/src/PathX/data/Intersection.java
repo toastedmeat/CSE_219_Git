@@ -17,6 +17,8 @@ public class Intersection
     
     // IS IT OPEN OR NOT
     public boolean open;
+    
+    private boolean hasStarter;
 
     /**
      * Constructor allows for a custom location, note that all
@@ -27,6 +29,15 @@ public class Intersection
         x = initX;
         y = initY;
         open = true;
+        hasStarter = false;
+    }
+    
+    public boolean getHasStarter(){
+        return hasStarter;
+    }
+    
+    public void setHasStarter(boolean h){
+        hasStarter = h;
     }
 
     // ACCESSOR METHODS

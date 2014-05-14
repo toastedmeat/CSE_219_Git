@@ -15,7 +15,7 @@
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
-        <property name="IMAGE_BACKGROUND_SBU"                   value="./pathX/Level1.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL1"                   value="./pathX/Level1.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL2"                value="./pathX/Level2.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL3"                value="./pathX/Level3.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL4"                value="./pathX/Level4.png"></property>

@@ -92,6 +92,9 @@ public class PathXDataModel extends MiniGameDataModel {
     
 
     // ACCESSOR METHODS
+    public PathXMiniGame getGame(){
+        return miniGame;
+    }
     public PathXLevel getLevel() {        return level;    }
     public void setLevel(PathXLevel l) { level = l; }
     public boolean getLoadedLevel() {        return loadedLevel;    }

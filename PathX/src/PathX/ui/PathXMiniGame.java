@@ -27,12 +27,14 @@ import mini_game.SpriteType;
 import mini_game.Viewport;
 import properties_manager.PropertiesManager;
 import PathX.PathX.pathXPropertyType;
+import PathX.data.Intersection;
 import PathX.data.PathXEditMode;
 import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.util.Collection;
 import java.util.Random;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -65,17 +67,12 @@ public class PathXMiniGame extends MiniGame {
     private static PathXDataModel dataCopy;
 
     private PathXGamePanel insideCanvas;
-    
+
     private PathXGamePanel pxg;
-    
+
     private int mouseMoveX;
     private int mouseMoveY;
-    // ACCESSOR METHODS
-    // - getPlayerRecord
-    // - getErrorHandler
-    // - getFileManager
-    // - isCurrentScreenState
-
+    
     /**
      * Accessor method for getting the player record object, which summarizes
      * the player's record on all levels.
@@ -85,20 +82,20 @@ public class PathXMiniGame extends MiniGame {
     public PathXRecord getPlayerRecord() {
         return record;
     }
-    
-    public int getMouseMoveX(){
+
+    public int getMouseMoveX() {
         return mouseMoveX;
     }
-    
-    public int getMouseMoveY(){
+
+    public int getMouseMoveY() {
         return mouseMoveY;
     }
-    
-    public void setMouseMoveX(int incX){
+
+    public void setMouseMoveX(int incX) {
         mouseMoveX += incX;
     }
-    
-    public void setMouseMoveY(int incY){
+
+    public void setMouseMoveY(int incY) {
         mouseMoveY += incY;
     }
 
@@ -132,16 +129,6 @@ public class PathXMiniGame extends MiniGame {
         return testScreenState.equals(currentScreenState);
     }
 
-    // VIEWPORT UPDATE METHODS
-    // - initViewport
-    // - scroll
-    // - moveViewport
-    // SERVICE METHODS
-    // - displayStats
-    // - savePlayerRecord
-    // - switchToGameScreen
-    // - switchToSplashScreen
-    // - updateBoundaries
     /**
      * This method displays makes the stats dialog display visible, which
      * includes the text inside.
@@ -181,7 +168,7 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
-        
+
         guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(PLAYER_TYPE).setEnabled(false);
 
@@ -206,7 +193,6 @@ public class PathXMiniGame extends MiniGame {
 
         // HIDE THE TILES
         //((PathXDataModel) data).enableTiles(false);
-
         // MAKE THE CURRENT SCREEN THE MENU SCREEN
         currentScreenState = MENU_SCREEN_STATE;
 
@@ -249,9 +235,9 @@ public class PathXMiniGame extends MiniGame {
     public void switchToGameScreen() {
         pxg.setEnabled(false);
         pxg.setVisible(false);
-        
+
         guiEnemies.clear();
-        
+
         dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         // CHANGE THE BACKGROUND
@@ -273,7 +259,7 @@ public class PathXMiniGame extends MiniGame {
 
         guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(PLAYER_TYPE).setEnabled(false);
-        
+
         guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(UP_BUTTON_TYPE).setX(UP_BUTTON_X);
@@ -311,8 +297,6 @@ public class PathXMiniGame extends MiniGame {
         canvas.setLayout(null);
         insideCanvas.setBounds(17, 129, 1247, 551);
         insideCanvas.setRenderedBackground(BACKGROUND_GAME_TYPE);
-        
-        
 
         // PLAY THE GAMEPLAY SCREEN SONG
         //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
@@ -320,18 +304,16 @@ public class PathXMiniGame extends MiniGame {
     }
 
     public void switchToLevel1() {
-        
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        levelSetup();
-        
         //Changing the background
-        insideCanvas.setRenderedBackground(SBU_GAME_TYPE);
-        pxg.setRenderedBackground(SBU_GAME_TYPE);
-        
+        insideCanvas.setRenderedBackground(LEVEL1_GAME_TYPE);
+        pxg.setRenderedBackground(LEVEL1_GAME_TYPE);
+
         //Level Loading
         fileManager.loadLevel(new File("data/pathX/Level1.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         
+        levelSetup();
+
         //Dialog Box
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL1_INFO);
@@ -343,14 +325,14 @@ public class PathXMiniGame extends MiniGame {
 
     public void switchToLevel2() {
         pxg.setRenderedBackground(LEVEL2_GAME_TYPE);
-        
+
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level2.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-        
+
         createEnemies();
-        levelSetup();        
-        
+        levelSetup();
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL2_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -364,10 +346,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level3.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL3_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL3_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -381,10 +363,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level4.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL4_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL4_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -398,10 +380,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level5.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL5_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL5_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -415,10 +397,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level6.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL6_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL6_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -432,10 +414,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level7.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL7_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL7_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -449,10 +431,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level8.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL8_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL8_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -466,10 +448,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level9.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL9_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL9_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -483,10 +465,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level10.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL10_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL10_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -500,10 +482,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level11.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL11_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL11_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -517,10 +499,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level12.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL12_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL12_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -534,10 +516,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level13.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL13_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL13_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -551,10 +533,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level14.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL14_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL14_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -568,10 +550,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL15_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL15_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -585,10 +567,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level16.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL16_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL16_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -602,10 +584,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level17.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL17_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL17_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -619,10 +601,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level18.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL18_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL18_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -636,10 +618,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level19.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL19_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL19_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -653,10 +635,10 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level20.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL20_GAME_TYPE);
-        
+
         createEnemies();
         levelSetup();
-        
+
         JOptionPane jop = new JOptionPane();
         jop.setMessage(LEVEL20_INFO);
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -667,7 +649,7 @@ public class PathXMiniGame extends MiniGame {
 
     public void menuSetup() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        
+
         dataCopy.setLoadedLevel(false);
         // ACTIVATE THE TOOLBAR AND ITS CONTROLS
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
@@ -686,12 +668,12 @@ public class PathXMiniGame extends MiniGame {
         }
         guiButtons.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(PLAYER_TYPE).setEnabled(false);
-        
+
         insideCanvas.setEnabled(false);
         insideCanvas.setVisible(false);
         pxg.setEnabled(false);
         pxg.setVisible(false);
-        
+
         guiEnemies.clear();
     }
 
@@ -729,23 +711,29 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_GAME_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_GAME_Y);
-        
+
         guiButtons.get(PLAYER_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(PLAYER_TYPE).setEnabled(true);
-        
-        if(guiEnemies.containsKey(BANDIT_TYPE)){
-        guiEnemies.get(BANDIT_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiEnemies.get(BANDIT_TYPE).setEnabled(true);
-        } 
-        if(guiEnemies.containsKey(POLICE_TYPE)){
-        guiEnemies.get(POLICE_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiEnemies.get(POLICE_TYPE).setEnabled(true);
+
+        for (int i = 0; i < dataCopy.getLevel().getNumBandits(); i++) {
+            if (guiEnemies.containsKey(BANDIT_TYPE + i)) {
+                guiEnemies.get(BANDIT_TYPE + i).setState(PathXTileState.VISIBLE_STATE.toString());
+                guiEnemies.get(BANDIT_TYPE + i).setEnabled(true);
+            }
         }
-        if(guiEnemies.containsKey(ZOMBIE_TYPE)){
-        guiEnemies.get(ZOMBIE_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
-        guiEnemies.get(ZOMBIE_TYPE).setEnabled(true);
+        for (int i = 0; i < dataCopy.getLevel().getNumPolice(); i++) {
+            if (guiEnemies.containsKey(POLICE_TYPE + i)) {
+                guiEnemies.get(POLICE_TYPE + i).setState(PathXTileState.VISIBLE_STATE.toString());
+                guiEnemies.get(POLICE_TYPE + i).setEnabled(true);
+            }
         }
-        
+        for (int i = 0; i < dataCopy.getLevel().getNumZombies(); i++) {
+            if (guiEnemies.containsKey(ZOMBIE_TYPE + i)) {
+                guiEnemies.get(ZOMBIE_TYPE + i).setState(PathXTileState.VISIBLE_STATE.toString());
+                guiEnemies.get(ZOMBIE_TYPE + i).setEnabled(true);
+            }
+        }
+
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -767,93 +755,122 @@ public class PathXMiniGame extends MiniGame {
 
         // HIDE THE TILES
         //((PathXDataModel) data).enableTiles(false);
-
         // MAKE THE CURRENT SCREEN THE MENU SCREEN
         currentScreenState = MENU_SCREEN_STATE;
 
         // AND UPDATE THE DATA GAME STATE
         data.setGameState(MiniGameState.NOT_STARTED);
         //insideCanvas.setBounds(274, 19, 978, 667);
-        
+
         insideCanvas.setEnabled(false);
         insideCanvas.setVisible(false);
-        
+
         pxg.setBounds(274, 19, 978, 667);
-        
+
         pxg.setEnabled(true);
         pxg.setVisible(true);
         
+        guiButtons.get(PLAYER_TYPE).setX(dataCopy.getLevel().getStartingLocation().getX());
+        guiButtons.get(PLAYER_TYPE).setY(dataCopy.getLevel().getStartingLocation().getY());
 
         // PLAY THE WELCOME SCREEN SONG
         //audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
         ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
     }
-    
-    public void createEnemies(){
+
+    public void createEnemies() {
         //Create enemies for the level.
-        for(int i = 0; i < dataCopy.getLevel().getNumBandits(); i++){
-            createBandits();
+        for (int i = 0; i < dataCopy.getLevel().getNumBandits(); i++) {
+            createBandits("BANDIT_TYPE" + i);
+            //System.out.println("BANDIT_TYPEs : " + i);
         }
-        for(int i = 0; i < dataCopy.getLevel().getNumPolice(); i++){
-            createPolice();
+        for (int i = 0; i < dataCopy.getLevel().getNumPolice(); i++) {
+            createPolice("POLICE_TYPE" + i);
         }
-        for(int i = 0; i < dataCopy.getLevel().getNumZombies(); i++){
-            createZombies();
+        for (int i = 0; i < dataCopy.getLevel().getNumZombies(); i++) {
+            createZombies("ZOMBIE_TYPE" + i);
         }
     }
-    
-    public void createBandits(){
+
+    public void createBandits(String sprite) {
         // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+
         BufferedImage img;
         SpriteType sT;
-        Sprite s;
+        enemiesSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        
+
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_BANDIT);
-        sT = new SpriteType(BANDIT_TYPE);
+        sT = new SpriteType(sprite);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.put(BANDIT_TYPE, s);
+
+        Iterator<Intersection> it = dataCopy.getLevel().getIntersections().iterator();
+        Intersection intersection = it.next();
+
+        while (it.hasNext() && ((dataCopy.isStartingLocation(intersection))
+                || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
+            intersection = it.next();
+        }
+        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        intersection.setHasStarter(true);
+        guiEnemies.put(sprite, s);
     }
-    
-    public void createPolice(){
-        // WE'LL USE AND REUSE THESE FOR LOADING STUFF
+
+    public void createPolice(String sprite) {
         BufferedImage img;
         SpriteType sT;
-        Sprite s;
+        enemiesSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        
+
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_POLICE);
-        sT = new SpriteType(POLICE_TYPE);
+        sT = new SpriteType(sprite);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.put(POLICE_TYPE, s);
+
+        Iterator<Intersection> it = dataCopy.getLevel().getIntersections().iterator();
+        Intersection intersection = it.next();
+
+        while (it.hasNext() && ((dataCopy.isStartingLocation(intersection))
+                || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
+            intersection = it.next();
+        }
+        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        intersection.setHasStarter(true);
+        guiEnemies.put(sprite, s);
     }
-    public void createZombies(){
-        // WE'LL USE AND REUSE THESE FOR LOADING STUFF
-        BufferedImage img;
+
+    public void createZombies(String sprite) {
+       BufferedImage img;
         SpriteType sT;
-        Sprite s;
+        enemiesSprite s;
 
         // FIRST PUT THE ICON IN THE WINDOW
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        
+
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_ZOMBIE);
-        sT = new SpriteType(ZOMBIE_TYPE);
+        sT = new SpriteType(sprite);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.put(ZOMBIE_TYPE, s);
+
+        Iterator<Intersection> it = dataCopy.getLevel().getIntersections().iterator();
+        Intersection intersection = it.next();
+
+        while (it.hasNext() && ((dataCopy.isStartingLocation(intersection))
+                || (dataCopy.isDestination(intersection)) || intersection.getHasStarter())) {
+            intersection = it.next();
+        }
+        s = new enemiesSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        intersection.setHasStarter(true);
+        guiEnemies.put(sprite, s);
     }
 
     // METHODS OVERRIDDEN FROM MiniGame
@@ -922,10 +939,10 @@ public class PathXMiniGame extends MiniGame {
         // INIT OUR DATA MANAGER
         data = new PathXDataModel(this);
         dataCopy = (PathXDataModel) data;
-        
+
         mouseMoveX = 0;
         mouseMoveY = 0;
-        
+
     }
 
     public static PathXDataModel getData() {
@@ -935,8 +952,10 @@ public class PathXMiniGame extends MiniGame {
     public PathXGamePanel getInsideCanvas() {
         return insideCanvas;
     }
-    
-    public PathXGamePanel getPXG(){ return pxg; }
+
+    public PathXGamePanel getPXG() {
+        return pxg;
+    }
 
     /**
      * Initializes the game controls, like buttons, used by the game
@@ -988,16 +1007,16 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(GAMES_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, GAMES_SCREEN_STATE);
         guiDecor.put(BACKGROUND_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_GAME_MENU)); // Level MENU
         sT.addState(LEVEL_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, GAMES_SCREEN_STATE);
         guiDecor.put(LEVEL_GAME_TYPE, s);
 
-        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_SBU)); // Level SBU
-        sT.addState(SBU_SCREEN_STATE, img);
-        s = new Sprite(sT, 0, 0, 0, 0, SBU_SCREEN_STATE);
-        guiDecor.put(SBU_GAME_TYPE, s);
+        img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL1)); // Level SBU
+        sT.addState(LEVEL1_SCREEN_STATE, img);
+        s = new Sprite(sT, 0, 0, 0, 0, LEVEL1_SCREEN_STATE);
+        guiDecor.put(LEVEL1_GAME_TYPE, s);
 
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL2)); // Level SBU
         sT.addState(LEVEL2_SCREEN_STATE, img);
@@ -1008,47 +1027,47 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(LEVEL3_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL3_SCREEN_STATE);
         guiDecor.put(LEVEL3_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL4)); // Level SBU
         sT.addState(LEVEL4_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL4_SCREEN_STATE);
         guiDecor.put(LEVEL4_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL5)); // Level SBU
         sT.addState(LEVEL5_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL5_SCREEN_STATE);
         guiDecor.put(LEVEL5_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL6)); // Level SBU
         sT.addState(LEVEL6_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL6_SCREEN_STATE);
         guiDecor.put(LEVEL6_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL7)); // Level SBU
         sT.addState(LEVEL7_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL7_SCREEN_STATE);
         guiDecor.put(LEVEL7_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL8)); // Level SBU
         sT.addState(LEVEL8_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL8_SCREEN_STATE);
         guiDecor.put(LEVEL8_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL9)); // Level SBU
         sT.addState(LEVEL9_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL9_SCREEN_STATE);
         guiDecor.put(LEVEL9_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL10)); // Level SBU
         sT.addState(LEVEL10_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL10_SCREEN_STATE);
         guiDecor.put(LEVEL10_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL11)); // Level SBU
         sT.addState(LEVEL11_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL11_SCREEN_STATE);
         guiDecor.put(LEVEL11_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL12)); // Level SBU
         sT.addState(LEVEL12_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL12_SCREEN_STATE);
@@ -1058,43 +1077,42 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(LEVEL13_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL13_SCREEN_STATE);
         guiDecor.put(LEVEL13_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL14)); // Level SBU
         sT.addState(LEVEL14_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL14_SCREEN_STATE);
         guiDecor.put(LEVEL14_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL15)); // Level SBU
         sT.addState(LEVEL15_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL15_SCREEN_STATE);
         guiDecor.put(LEVEL15_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL16)); // Level SBU
         sT.addState(LEVEL16_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL16_SCREEN_STATE);
         guiDecor.put(LEVEL16_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL17)); // Level SBU
         sT.addState(LEVEL17_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL17_SCREEN_STATE);
         guiDecor.put(LEVEL17_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL18)); // Level SBU
         sT.addState(LEVEL18_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL18_SCREEN_STATE);
         guiDecor.put(LEVEL18_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL19)); // Level SBU
         sT.addState(LEVEL19_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL19_SCREEN_STATE);
         guiDecor.put(LEVEL19_GAME_TYPE, s);
-        
+
         img = loadImage(imgPath + props.getProperty(pathXPropertyType.IMAGE_BACKGROUND_LEVEL20)); // Level SBU
         sT.addState(LEVEL20_SCREEN_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, LEVEL20_SCREEN_STATE);
         guiDecor.put(LEVEL20_GAME_TYPE, s);
-        
-        
+
         // LOAD THE Arrow CURSOR
         String cursorName = props.getProperty(pathXPropertyType.IMAGE_CURSOR_WAND);
         img = loadImageWithColorKey(imgPath + cursorName, COLOR_KEY);
@@ -1144,14 +1162,13 @@ public class PathXMiniGame extends MiniGame {
         }
 
         // ADD THE CONTROLS ALONG THE GAME SCREEN
-        
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
         sT = new SpriteType(PLAYER_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
         s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(PLAYER_TYPE, s);
-        
+
         // THEN THE NEW BUTTON
         String newButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
@@ -1263,7 +1280,6 @@ public class PathXMiniGame extends MiniGame {
 
         // THEN THE TILES STACKED TO THE TOP LEFT
         //((PathXDataModel) data).initTiles();
-
     }
 
     /**
@@ -1273,7 +1289,7 @@ public class PathXMiniGame extends MiniGame {
     public void initGUIHandlers() {
         // WE'LL RELAY UI EVENTS TO THIS OBJECT FOR HANDLING
         eventHandler = new PathXEventHandler(this);
-        
+
         //insideCanvas.addMouseListener(eventHandler);
         //insideCanvas.addMouseMotionListener(eventHandler);
         // WE'LL HAVE A CUSTOM RESPONSE FOR WHEN THE USER CLOSES THE WINDOW
@@ -1468,7 +1484,7 @@ public class PathXMiniGame extends MiniGame {
                     }
                 });
                     break;
-                 
+
                 case "./pathX/Level11.xml":
                     guiButtons.get(level).setActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
@@ -1539,8 +1555,8 @@ public class PathXMiniGame extends MiniGame {
                     }
                 });
                     break;
-            }
 
+            }
         }
 
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
@@ -1585,5 +1601,5 @@ public class PathXMiniGame extends MiniGame {
             }
         }
     }
-    
+
 }
