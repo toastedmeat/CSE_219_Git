@@ -76,6 +76,8 @@ public class PathXDataModel extends MiniGameDataModel {
 
     boolean[] levelsLocked = new boolean[20];
     boolean[] levelsRobbed = new boolean[20];
+    boolean[] unlockedSpecials = new boolean[16];
+    
     String[] levelsNames = {"./pathX/Level1.xml","./pathX/Level2.xml",
         "./pathX/Level3.xml","./pathX/Level4.xml","./pathX/Level5.xml",
         "./pathX/Level6.xml","./pathX/Level7.xml","./pathX/Level8.xml",
@@ -223,6 +225,14 @@ public class PathXDataModel extends MiniGameDataModel {
         this.levelsRobbed = levelsRobbed;
     }
 
+    public boolean[] getUnlockedSpecials() {
+        return unlockedSpecials;
+    }
+
+    public void setUnlockedSpecials(boolean useable, int unlockedSpecial) {
+        this.unlockedSpecials[unlockedSpecial] = useable;
+    }
+    
     // THESE ARE FOR TESTING WHAT EDIT MODE THE APP CURRENTLY IS IN
     public boolean isNothingSelected() {
         return editMode == PathXEditMode.NOTHING_SELECTED;
@@ -445,7 +455,8 @@ public class PathXDataModel extends MiniGameDataModel {
             if (i != null) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 this.setSelectedIntersection(i);
-                if (player.isEnabled() && miniGame.getPXG().isEnabled()) {
+                if (player.isEnabled() && miniGame.getPXG().isEnabled()
+                        && i.isOpen() && !isPaused()) {
                     player.setTarget(i.getX(), i.getY());
                     if(speed < 1){
                         speed = 1;

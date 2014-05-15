@@ -56,6 +56,8 @@ public class PathXConstants
     public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
+    public static final String SOUND_CHECK_BOX_TYPE = "SOUND_CHECK_BOX_TYPE";
+    public static final String MUSIC_CHECK_BOX_TYPE = "MUSIC_CHECK_BOX_TYPE";
     
     
     public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
@@ -92,6 +94,9 @@ public class PathXConstants
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
+    
+    public static final String UNCHECKED_STATE = "UNCHECKED_STATE";
+    public static final String CHECKED_STATE = "CHECKED_STATE";
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     
@@ -194,6 +199,11 @@ public class PathXConstants
     public static final int LEVEL_BUTTON_MARGIN = 5;
     public static final int LEVEL_BUTTON_Y = 570;
     public static final int VIEWPORT_INC = 5;
+    
+    public static final int MUSIC_X = 450;
+    public static final int MUSIC_Y = 370;
+    public static final int SOUND_X = 450;
+    public static final int SOUND_Y = 290;
         
      // RENDERING SETTINGS
     public static final int INTERSECTION_RADIUS = 20;

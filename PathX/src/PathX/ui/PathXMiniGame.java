@@ -33,10 +33,12 @@ import PathX.file.PathXFileManager;
 import PathX.data.PathXRecord;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.Collection;
 import java.util.Random;
 import java.util.TreeMap;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -77,6 +79,7 @@ public class PathXMiniGame extends MiniGame {
     private boolean isOnGameLevel;
 
     private boolean muted;
+    private boolean soundMuted;
 
     public boolean isMuted() {
         return muted;
@@ -124,6 +127,14 @@ public class PathXMiniGame extends MiniGame {
 
     public boolean isIsOnGameLevel() {
         return isOnGameLevel;
+    }
+
+    public boolean isSoundMuted() {
+        return soundMuted;
+    }
+
+    public void setSoundMuted(boolean soundMuted) {
+        this.soundMuted = soundMuted;
     }
 
     public void setIsOnGameLevel(boolean isOnGameLevel) {
@@ -182,6 +193,12 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
 
+        guiButtons.get(MUSIC_CHECK_BOX_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(MUSIC_CHECK_BOX_TYPE).setEnabled(false);
+
+        guiButtons.get(SOUND_CHECK_BOX_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(SOUND_CHECK_BOX_TYPE).setEnabled(false);
+
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -219,7 +236,7 @@ public class PathXMiniGame extends MiniGame {
             audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
             audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
         }
-        
+
         isOnGameLevel = false;
         isOnLevelSelect = false;
     }
@@ -227,6 +244,22 @@ public class PathXMiniGame extends MiniGame {
     public void switchToSettingScreen() {
         guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
         menuSetup();
+
+        if (isMuted()) {
+            guiButtons.get(MUSIC_CHECK_BOX_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+            guiButtons.get(MUSIC_CHECK_BOX_TYPE).setEnabled(true);
+        } else {
+            guiButtons.get(MUSIC_CHECK_BOX_TYPE).setState(PathXTileState.CHECKED_STATE.toString());
+            guiButtons.get(MUSIC_CHECK_BOX_TYPE).setEnabled(true);
+        }
+        if (isSoundMuted()) {
+            guiButtons.get(SOUND_CHECK_BOX_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+            guiButtons.get(SOUND_CHECK_BOX_TYPE).setEnabled(true);
+        } else {
+            guiButtons.get(SOUND_CHECK_BOX_TYPE).setState(PathXTileState.CHECKED_STATE.toString());
+            guiButtons.get(SOUND_CHECK_BOX_TYPE).setEnabled(true);
+        }
+
         currentScreenState = SETTINGS_SCREEN_STATE;
     }
 
@@ -294,8 +327,7 @@ public class PathXMiniGame extends MiniGame {
             if (dataCopy.getLevelsLocked()[i]) {
                 guiButtons.get(dataCopy.getLevelsNames()[i]).setState(PathXTileState.LOCKED_STATE.toString());
                 guiButtons.get(dataCopy.getLevelsNames()[i]).setEnabled(false);
-            }
-            else if (dataCopy.getLevelsRobbed()[i]){
+            } else if (dataCopy.getLevelsRobbed()[i]) {
                 guiButtons.get(dataCopy.getLevelsNames()[i]).setState(PathXTileState.ROBBED_STATE.toString());
                 guiButtons.get(dataCopy.getLevelsNames()[i]).setEnabled(true);
             } else {
@@ -319,8 +351,9 @@ public class PathXMiniGame extends MiniGame {
         if (!audio.isPlaying(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()) && !isMuted()) {
             audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
             audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+            audio.stop(pathXPropertyType.AUDIO_CUE_WIN.toString());
         }
-        
+
         isOnGameLevel = false;
     }
 
@@ -687,8 +720,6 @@ public class PathXMiniGame extends MiniGame {
             guiButtons.get(level).setState(PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.get(level).setEnabled(false);
         }
-        guiEnemies.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.get(PLAYER_TYPE).setEnabled(false);
 
         insideCanvas.setEnabled(false);
         insideCanvas.setVisible(false);
@@ -807,7 +838,7 @@ public class PathXMiniGame extends MiniGame {
             audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
         }
         dataCopy.setSpeed(26);
-        
+
         isOnGameLevel = true;
     }
 
@@ -1200,6 +1231,34 @@ public class PathXMiniGame extends MiniGame {
         s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(NEW_GAME_BUTTON_TYPE, s);
 
+        // THEN THE CHECK BUTTON FOR MUSIC
+        String newButtonMusic = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX);
+        sT = new SpriteType(MUSIC_CHECK_BOX_TYPE);
+        img = loadImageWithColorKey(imgPath + newButtonMusic, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String newButtonMusicChecked = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX_CHECKED);
+        img = loadImageWithColorKey(imgPath + newButtonMusicChecked, COLOR_KEY);
+        sT.addState(PathXTileState.CHECKED_STATE.toString(), img);
+        String newButtonMusicCheckedOver = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX);
+        img = loadImageWithColorKey(imgPath + newButtonMusicCheckedOver, COLOR_KEY);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, MUSIC_X, MUSIC_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(MUSIC_CHECK_BOX_TYPE, s);
+
+        // THEN THE CHECK BUTTON FOR SOUND
+        String newButtonSound = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX);
+        sT = new SpriteType(SOUND_CHECK_BOX_TYPE);
+        img = loadImageWithColorKey(imgPath + newButtonSound, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String newButtonSoundChecked = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX_CHECKED);
+        img = loadImageWithColorKey(imgPath + newButtonSoundChecked, COLOR_KEY);
+        sT.addState(PathXTileState.CHECKED_STATE.toString(), img);
+        String newButtonSoundCheckedOver = props.getProperty(pathXPropertyType.IMAGE_BUTTON_CHECK_BOX);
+        img = loadImageWithColorKey(imgPath + newButtonSoundCheckedOver, COLOR_KEY);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, SOUND_X, SOUND_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(SOUND_CHECK_BOX_TYPE, s);
+
         // THEN THE BACK BUTTON
         String backButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_BACK);
         sT = new SpriteType(BACK_BUTTON_TYPE);
@@ -1440,6 +1499,18 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(PAUSE_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToPauseRequest();
+            }
+        });
+
+        guiButtons.get(SOUND_CHECK_BOX_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToMuteSoundRequest();
+            }
+        });
+
+        guiButtons.get(MUSIC_CHECK_BOX_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToMuteMusicRequest();
             }
         });
 

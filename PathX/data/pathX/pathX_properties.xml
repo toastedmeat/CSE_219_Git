@@ -15,7 +15,7 @@
         <property name="IMAGE_BACKGROUND_GAME"                  value="./pathX/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_GAME_MENU"             value="./pathX/BackgroundGameMenu.png"></property>
         <property name="IMAGE_BACKGROUND_GAMEMAP"               value="./pathX/BackgroundGameMap.png"></property>
-        <property name="IMAGE_BACKGROUND_LEVEL1"                   value="./pathX/Level1.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL1"                value="./pathX/Level1.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL2"                value="./pathX/Level2.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL3"                value="./pathX/Level3.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL4"                value="./pathX/Level4.png"></property>
@@ -72,6 +72,8 @@
         <property name="IMAGE_TILE_BACKGROUND_SELECTED"         value="./pathX/TileBackgroundSelected.png"></property>
         <property name="IMAGE_TILE_BACKGROUND_MOUSE_OVER"       value="./pathX/TileBackgroundMouseOver.png"></property>
         <property name="IMAGE_WINDOW_ICON"                      value="./pathX/WindowIcon.png"></property>
+        <property name="IMAGE_BUTTON_CHECK_BOX"                 value="./pathX/checkBox.png"></property>
+        <property name="IMAGE_BUTTON_CHECK_BOX_CHECKED"         value="./pathX/checkBoxChecked.png"></property>
 
         <!-- ALL THE TEXT TO BE DISPLAYED -->
         <property name="TEXT_ERROR_LOADING_AUDIO"               value="Error Loading an Audio File"></property>

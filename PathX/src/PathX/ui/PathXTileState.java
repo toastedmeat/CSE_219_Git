@@ -27,5 +27,6 @@ public enum PathXTileState
     SELECTED_STATE,
     MOUSE_OVER_STATE,
     LOCKED_STATE,
-    ROBBED_STATE
+    ROBBED_STATE,
+    CHECKED_STATE
 }
