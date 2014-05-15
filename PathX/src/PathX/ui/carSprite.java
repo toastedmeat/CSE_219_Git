@@ -148,7 +148,8 @@ public class carSprite extends Sprite {
      */
     @Override
     public void update(MiniGame game) {
-        if ((x >= targetX - 5 && x <= targetX + 5) && (y >= targetY - 10 && y <= targetY + 10)) {
+        System.out.println("X: " + x + " TargetX: " + targetX + " Y: " + y + " TargetY: " + targetY);
+        if ((x >= targetX - 10 && x <= targetX + 10) && (y >= targetY - 10 && y <= targetY + 10)) {
             movingToTarget = false;
             currentIntersection = nextIntersection;
         } else {

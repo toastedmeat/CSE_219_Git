@@ -129,8 +129,6 @@ public class PathXMiniGame extends MiniGame {
         this.isOnLevelSelect = isOnLevelSelect;
     }
     
-    
-
     /**
      * This method displays makes the stats dialog display visible, which
      * includes the text inside.
@@ -1189,6 +1187,9 @@ public class PathXMiniGame extends MiniGame {
         sT = new SpriteType(PLAYER_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String playerOverButton = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
+        img = loadImageWithColorKey(imgPath + playerOverButton, COLOR_KEY);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(PLAYER_TYPE, s);
 

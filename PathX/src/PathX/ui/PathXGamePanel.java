@@ -290,13 +290,13 @@ public class PathXGamePanel extends JPanel {
                 Iterator<Road> it = model.roadsIterator();
                 while (it.hasNext()) {
                     Road road = it.next();
-                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation())) {
+                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
                         if (!s.isMovingToTarget()) {
                             s.setTarget(road.getNode2().getX(), road.getNode2().getY());
                             s.startMovingToTarget(road.getSpeedLimit());
                             s.setNextIntersection(road.getNode2());
                         }
-                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation())) {
+                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
                         if (!s.isMovingToTarget()) {
                             s.setTarget(road.getNode1().getX(), road.getNode1().getY());
                             s.startMovingToTarget(road.getSpeedLimit());
@@ -306,10 +306,42 @@ public class PathXGamePanel extends JPanel {
                 }
             }
             if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
-                //System.out.println("POO1");
+                Iterator<Road> it = model.roadsIterator();
+                while (it.hasNext()) {
+                    Road road = it.next();
+                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode2());
+                        }
+                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode1());
+                        }
+                    }
+                }
             }
             if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
-                //System.out.println("POO2");
+                Iterator<Road> it = model.roadsIterator();
+                while (it.hasNext()) {
+                    Road road = it.next();
+                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode2());
+                        }
+                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode1());
+                        }
+                    }
+                }
             }
             s.update(game);
             g.drawImage(img, (int) s.getX() - viewport.getViewportX() - 30, (int) s.getY() - viewport.getViewportY() - 34, null);

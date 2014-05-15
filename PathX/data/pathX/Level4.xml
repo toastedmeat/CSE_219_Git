@@ -5,15 +5,15 @@
           <intersection id="1" open="true" x="809" y="313"/>
           <intersection id="2" open="true" x="441" y="311"/>
           <intersection id="3" open="true" x="608" y="315"/>
-          <intersection id="4" open="true" x="531" y="217"/>
-          <intersection id="5" open="true" x="519" y="376"/>
-          <intersection id="6" open="true" x="397" y="387"/>
+          <intersection id="4" open="true" x="526" y="97"/>
+          <intersection id="5" open="true" x="566" y="469"/>
+          <intersection id="6" open="true" x="374" y="461"/>
      </intersections>
      <roads>
           <road int_id1="0" int_id2="2" one_way="false" speed_limit="30"/>
           <road int_id1="2" int_id2="3" one_way="false" speed_limit="10"/>
-          <road int_id1="3" int_id2="1" one_way="true" speed_limit="100"/>
-          <road int_id1="2" int_id2="4" one_way="false" speed_limit="80"/>
+          <road int_id1="3" int_id2="1" one_way="true" speed_limit="80"/>
+          <road int_id1="2" int_id2="4" one_way="false" speed_limit="60"/>
           <road int_id1="4" int_id2="3" one_way="false" speed_limit="30"/>
           <road int_id1="5" int_id2="2" one_way="false" speed_limit="30"/>
           <road int_id1="5" int_id2="3" one_way="false" speed_limit="30"/>
