@@ -31,6 +31,9 @@ public class carSprite extends Sprite {
 
     private boolean movingToTarget;
     private boolean reachedDestination;
+    
+    private boolean gasTank;
+    private boolean tireCondition;
 
     private float targetX;
     private float targetY;

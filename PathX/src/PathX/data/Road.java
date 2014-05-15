@@ -28,6 +28,8 @@ public class Road
     // false IF IT'S TWO-WAY, true IF IT'S ONE WAY
     boolean oneWay;
     
+    boolean isClosed;
+    
     // ROAD SPEED LIMIT
     int speedLimit;
 
@@ -43,6 +45,15 @@ public class Road
     public void setOneWay(boolean oneWay)       {   this.oneWay = oneWay;           }
     public void setSpeedLimit(int speedLimit)   {   this.speedLimit = speedLimit;   }
 
+    public boolean isIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(boolean isClosed) {
+        this.isClosed = isClosed;
+    }
+
+     
     /**
      * Builds and returns a textual representation of this road.
      */

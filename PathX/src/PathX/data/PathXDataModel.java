@@ -461,8 +461,8 @@ public class PathXDataModel extends MiniGameDataModel {
                     if(speed < 1){
                         speed = 1;
                     }
-                    if(speed > 50){
-                        speed = 50;
+                    if(speed > 60){
+                        speed = 60;
                     }
                     System.out.println(speed);
                     player.startMovingToTarget((int)speed);

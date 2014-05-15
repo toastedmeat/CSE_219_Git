@@ -234,7 +234,7 @@ public class PathXGamePanel extends JPanel {
         // AND NOW RENDER THE BUTTONS
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
-                renderCars(g, s);
+            renderCars(g, s);
         }
     }
 
@@ -288,6 +288,7 @@ public class PathXGamePanel extends JPanel {
         road.setPreviousNode(road.getNode1());
         s.setNextIntersection(road.getNode2());
     }
+
     public void moveToDestination2(carSprite s, Road road) {
         s.setTarget(road.getNode1().getX(), road.getNode1().getY());
         s.startMovingToTarget(road.getSpeedLimit());
@@ -315,12 +316,12 @@ public class PathXGamePanel extends JPanel {
                 if (!s.isMovingToTarget()) {
                     if (!s.isMovingToTarget() && !s.isReachedDestination()) {
 
-                    moveToDestination2(s, road);
+                        moveToDestination2(s, road);
 
-                } else if (!road.getNode2().equals(road.getPreviousNode())) {
-                    moveToDestination2(s, road);
-                    road.getPreviousNode().setVisited(false);
-                }
+                    } else if (!road.getNode2().equals(road.getPreviousNode())) {
+                        moveToDestination2(s, road);
+                        road.getPreviousNode().setVisited(false);
+                    }
                 }
             }
         }
@@ -382,7 +383,11 @@ public class PathXGamePanel extends JPanel {
         while (it.hasNext()) {
             Road road = it.next();
             if (!model.isSelectedRoad(road)) {
-                renderRoad(g2, road, INT_OUTLINE_COLOR);
+                if (!road.isIsClosed()) {
+                    renderRoad(g2, road, INT_OUTLINE_COLOR);
+                } else {
+                    renderRoad(g2, road, CLOSED_INT_COLOR);
+                }
             }
         }
 

@@ -6,9 +6,11 @@ import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
 import PathX.PathX.pathXPropertyType;
 import PathX.data.PathXDataModel;
+import PathX.data.Road;
 import PathX.file.PathXFileManager;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import javax.swing.JPanel;
 import mini_game.Sprite;
 import properties_manager.PropertiesManager;
@@ -444,8 +446,8 @@ public class PathXEventHandler {
                 }
             } else {
                 if (!game.isSoundMuted()) {
-                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
-                    }
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                }
             }
         }
         if (keyCode == KeyEvent.VK_G) { // MAKE LIGHTS GREEN
@@ -515,10 +517,29 @@ public class PathXEventHandler {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
+
+            if (game.getData().getTotalMoney() > 20) {
+                game.getData().setSpeed(game.getData().getSpeed() + game.getData().getSpeed() * .2);
+                game.getData().setTotalMoney(game.getData().getTotalMoney() - 20);
+            } else {
+                if (!game.isSoundMuted()) {
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                }
+            }
+
+        }
+        if (keyCode == KeyEvent.VK_T) { // FLAT TIRE
+        }
+        if (keyCode == KeyEvent.VK_E) { // EMPTY GAS TANK
+        }
+        if (keyCode == KeyEvent.VK_H) { // CLOSE ROAD
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
             if (game.getData().getSelectedRoad() != null) {
-                if (game.getData().getTotalMoney() > 20) {
-                    game.getData().setSpeed(game.getData().getSpeed() + game.getData().getSpeed() * .2);
-                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 20);
+                if (game.getData().getTotalMoney() > 25) {
+                    game.getData().getSelectedRoad().setIsClosed(true);
+                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 25);
                 } else {
                     if (!game.isSoundMuted()) {
                         game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
@@ -527,15 +548,57 @@ public class PathXEventHandler {
                 }
             }
         }
-        if (keyCode == KeyEvent.VK_T) { // FLAT TIRE
-        }
-        if (keyCode == KeyEvent.VK_E) { // EMPTY GAS TANK
-        }
-        if (keyCode == KeyEvent.VK_H) { // CLOSE ROAD
-        }
         if (keyCode == KeyEvent.VK_O) { // OPEN INTERSECTION
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getSelectedIntersection() != null) {
+                if (game.getData().getTotalMoney() > 25) {
+                    game.getData().getSelectedIntersection().setOpen(true);
+                    
+                    Iterator<Road> it = game.getData().roadsIterator();
+                    while (it.hasNext()) {
+                        Road road = it.next();
+                        if (game.getData().getSelectedIntersection().equals(road.getNode1())) {
+                            road.setIsClosed(false);
+                        } else if (game.getData().getSelectedIntersection().equals(road.getNode2())) {
+                            road.setIsClosed(false);
+                        }
+                    }
+                    
+                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 25);
+                } else {
+                    if (!game.isSoundMuted()) {
+                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                    }
+                }
+            }
         }
         if (keyCode == KeyEvent.VK_C) { // CLOSE INTERSECTION
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getSelectedIntersection() != null) {
+                if (game.getData().getTotalMoney() > 25) {
+                    game.getData().getSelectedIntersection().setOpen(false);
+
+                    Iterator<Road> it = game.getData().roadsIterator();
+                    while (it.hasNext()) {
+                        Road road = it.next();
+                        if (game.getData().getSelectedIntersection().equals(road.getNode1())) {
+                            road.setIsClosed(true);
+                        } else if (game.getData().getSelectedIntersection().equals(road.getNode2())) {
+                            road.setIsClosed(true);
+                        }
+                    }
+
+                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 25);
+                } else {
+                    if (!game.isSoundMuted()) {
+                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                    }
+                }
+            }
         }
         if (keyCode == KeyEvent.VK_Q) { // STEAL
         }
