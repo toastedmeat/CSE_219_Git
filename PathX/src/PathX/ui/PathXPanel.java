@@ -144,8 +144,9 @@ public class PathXPanel extends JPanel {
             if(data.getGame().isIsOnGameLevel()){
                 g.setFont(FONT_STATS);
                 g.setColor(INT_OUTLINE_COLOR);
-                g.drawString("Available $:" + data.getLevel().getMoney(), 40, 650);
-                g.drawString("Total $:" + data.getTotalMoney(), 40, 670);
+                g.drawString("Available $:" + data.getLevel().getMoney(), 40, 630);
+                g.drawString("Total $:" + data.getTotalMoney(), 40, 650);
+                g.drawString("Current Speed:" + data.getSpeed(), 40, 670);
             }
         } finally {
             // RELEASE THE LOCK

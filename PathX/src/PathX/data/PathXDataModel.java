@@ -64,7 +64,7 @@ public class PathXDataModel extends MiniGameDataModel {
     int lastMouseX;
     int lastMouseY;
     
-    int speed;
+    double speed;
 
     // THESE BOOLEANS HELP US KEEP TRACK OF
     // @todo DO WE NEED THESE?
@@ -291,11 +291,11 @@ public class PathXDataModel extends MiniGameDataModel {
         this.hitOnce = hitOnce;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
     
@@ -461,8 +461,11 @@ public class PathXDataModel extends MiniGameDataModel {
                     if(speed < 1){
                         speed = 1;
                     }
+                    if(speed > 50){
+                        speed = 50;
+                    }
                     System.out.println(speed);
-                    player.startMovingToTarget(speed);
+                    player.startMovingToTarget((int)speed);
 
                     player.update(miniGame);
                 }
