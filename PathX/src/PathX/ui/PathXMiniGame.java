@@ -73,6 +73,8 @@ public class PathXMiniGame extends MiniGame {
 
     protected  TreeMap<String, carSprite> guiEnemies;
     
+    private boolean isOnLevelSelect;
+    
     /**
      * Accessor method for getting the player record object, which summarizes
      * the player's record on all levels.
@@ -118,6 +120,16 @@ public class PathXMiniGame extends MiniGame {
     public boolean isCurrentScreenState(String testScreenState) {
         return testScreenState.equals(currentScreenState);
     }
+
+    public boolean isIsOnLevelSelect() {
+        return isOnLevelSelect;
+    }
+
+    public void setIsOnLevelSelect(boolean isOnLevelSelect) {
+        this.isOnLevelSelect = isOnLevelSelect;
+    }
+    
+    
 
     /**
      * This method displays makes the stats dialog display visible, which
@@ -229,6 +241,8 @@ public class PathXMiniGame extends MiniGame {
         pxg.setEnabled(false);
         pxg.setVisible(false);
         insideCanvas.setEnabled(true);
+        
+        
 
         guiEnemies.clear();
 
@@ -291,6 +305,8 @@ public class PathXMiniGame extends MiniGame {
         canvas.setLayout(null);
         insideCanvas.setBounds(17, 129, 1247, 551);
         insideCanvas.setRenderedBackground(BACKGROUND_GAME_TYPE);
+        
+        isOnLevelSelect = true;
         
         dataCopy.getViewport().reset();
 
@@ -670,12 +686,16 @@ public class PathXMiniGame extends MiniGame {
         pxg.setEnabled(false);
         pxg.setVisible(false);
 
+        isOnLevelSelect = false;
+        
         guiEnemies.clear();
         dataCopy.getViewport().reset();
         
     }
 
     public void levelSetup() {
+        
+        isOnLevelSelect = false;
         // CHANGE THE BACKGROUND
         guiDecor.get(BACKGROUND_TYPE).setState(LEVEL_SCREEN_STATE);
 

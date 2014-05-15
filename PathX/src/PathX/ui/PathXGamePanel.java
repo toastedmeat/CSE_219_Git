@@ -212,7 +212,7 @@ public class PathXGamePanel extends JPanel {
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
-                renderSprite3(g, s);
+                renderButtonsOnLeft(g, s);
             }
         }
 
@@ -264,7 +264,7 @@ public class PathXGamePanel extends JPanel {
         }
     }
 
-    public void renderSprite3(Graphics g, Sprite s) {
+    public void renderButtonsOnLeft(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();

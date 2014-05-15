@@ -248,7 +248,6 @@ public class PathXEventHandler {
                     if (game.getPXG().getViewport().getViewportY() > -100) {
                         game.getPXG().getViewport().move(0, -20);
                     }
-                System.out.println("OH NO");
             }
         }
 
@@ -263,7 +262,6 @@ public class PathXEventHandler {
                     if (game.getPXG().getViewport().getViewportY() < 300) {
                         game.getPXG().getViewport().move(0, 20);
                     }
-                System.out.println("OH NO");
             }
         }
         if (keyCode == KeyEvent.VK_LEFT) {
