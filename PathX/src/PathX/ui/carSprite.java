@@ -5,6 +5,7 @@
  */
 package PathX.ui;
 
+import PathX.PathX;
 import static PathX.PathXConstants.*;
 import PathX.data.Intersection;
 import PathX.data.Road;
@@ -38,7 +39,6 @@ public class carSprite extends Sprite {
     private Intersection nextIntersection;
     private Road currentRoad;
 
-    
     carSprite(SpriteType initSpriteType,
             float initX, float initY,
             float initVx, float initVy,
@@ -184,6 +184,7 @@ public class carSprite extends Sprite {
         }
         if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) game.getData().getDestination().getX(), (int) game.getData().getDestination().getY()) < 20) {
             Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
+            game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_WIN.toString(), false);
             if (JOptionPane.showOptionDialog(null, "Good News! \nYou've robbed the Bank. That means\nYou have earned $" + game.getData().getLevel().getMoney(), "You got Away!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                     null, options, options[0]) == 0) {
@@ -204,14 +205,19 @@ public class carSprite extends Sprite {
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE)) {
-                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 20) {
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
+                        || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30) {
                     Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
+                    game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                             null, options, options[0]) == 0) {
-                        game.switchToGameScreen();
+                        double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
+                        game.getData().setTotalMoney((int) money);
                         switcher(game);
                     } else {
+                        double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
+                        game.getData().setTotalMoney((int) money);
                         game.switchToGameScreen();
                     }
                 }
@@ -219,15 +225,37 @@ public class carSprite extends Sprite {
         }
         for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(ZOMBIE_TYPE)) {
-                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 20 && !game.getData().isHitOnce()) {
-                    game.getData().setZombieHits(game.getData().getZombieHits() + 5);
+                if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30 
+                        || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30)
+                        && !game.getData().isHitOnce()) {
+                    
+                game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
+                    game.getData().setSpeed((int)(game.getData().getSpeed() - game.getData().getSpeed() * .1));
                     game.getData().setHitOnce(true);
                 }
-                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 61) {
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 91
+                        && game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) > 91) {
                     game.getData().setHitOnce(false);
                 }
             }
         }
+        for (carSprite s : buttonSprites) {
+            if (s.getSpriteType().getSpriteTypeID().equals(BANDIT_TYPE)) {
+                
+                if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 40 
+                        || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 40)
+                        && !game.getData().isHitOnce()) {
+                    game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
+                    game.getData().getLevel().setMoney((int)(game.getData().getLevel().getMoney() - game.getData().getLevel().getMoney() * .1));
+                    game.getData().setHitOnce(true);
+                }
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 91
+                        && game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) > 91) {
+                    game.getData().setHitOnce(false);
+                }
+            }
+        }
+        
     }
 
     public void switcher(PathXMiniGame game) {

@@ -65,7 +65,6 @@ public class PathXDataModel extends MiniGameDataModel {
     int lastMouseY;
     
     int speed;
-    int zombieHits;
 
     // THESE BOOLEANS HELP US KEEP TRACK OF
     // @todo DO WE NEED THESE?
@@ -116,7 +115,6 @@ public class PathXDataModel extends MiniGameDataModel {
         }
 
         speed = 26;
-        zombieHits = 0;
     }
 
     // ACCESSOR METHODS
@@ -273,14 +271,6 @@ public class PathXDataModel extends MiniGameDataModel {
 
     public void setLevelsNames(String[] levelsNames) {
         this.levelsNames = levelsNames;
-    }
-
-    public int getZombieHits() {
-        return zombieHits;
-    }
-
-    public void setZombieHits(int zombieHits) {
-        this.zombieHits = zombieHits;
     }
 
     public boolean isHitOnce() {
@@ -455,11 +445,10 @@ public class PathXDataModel extends MiniGameDataModel {
             if (i != null) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 this.setSelectedIntersection(i);
-                if (player.isEnabled()) {
+                if (player.isEnabled() && miniGame.getPXG().isEnabled()) {
                     player.setTarget(i.getX(), i.getY());
-                    speed = speed - zombieHits;
-                    if(speed < 3){
-                        speed = 2;
+                    if(speed < 1){
+                        speed = 1;
                     }
                     System.out.println(speed);
                     player.startMovingToTarget(speed);

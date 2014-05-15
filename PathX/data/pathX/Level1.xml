@@ -2,7 +2,7 @@
 <level image="DeathValleyBackground.png" name="Level1">
      <intersections>
           <intersection id="0" open="false" x="267" y="308"/>
-          <intersection id="1" open="true" x="809" y="313"/>
+          <intersection id="1" open="true" x="841" y="495"/>
           <intersection id="2" open="true" x="441" y="311"/>
           <intersection id="3" open="true" x="608" y="315"/>
      </intersections>

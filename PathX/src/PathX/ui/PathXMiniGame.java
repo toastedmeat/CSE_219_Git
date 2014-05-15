@@ -74,6 +74,7 @@ public class PathXMiniGame extends MiniGame {
     protected TreeMap<String, carSprite> guiEnemies;
 
     private boolean isOnLevelSelect;
+    private boolean isOnGameLevel;
 
     private boolean muted;
 
@@ -121,6 +122,14 @@ public class PathXMiniGame extends MiniGame {
         return isOnLevelSelect;
     }
 
+    public boolean isIsOnGameLevel() {
+        return isOnGameLevel;
+    }
+
+    public void setIsOnGameLevel(boolean isOnGameLevel) {
+        this.isOnGameLevel = isOnGameLevel;
+    }
+
     public void setIsOnLevelSelect(boolean isOnLevelSelect) {
         this.isOnLevelSelect = isOnLevelSelect;
     }
@@ -150,11 +159,7 @@ public class PathXMiniGame extends MiniGame {
         // CHANGE THE BACKGROUND
         dataCopy.setLoadedLevel(false);
         guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
-
-        isOnLevelSelect = false;
-
         guiEnemies.clear();
-
         dataCopy.getViewport().reset();
 
         // DEACTIVATE THE TOOLBAR CONTROLS
@@ -214,6 +219,9 @@ public class PathXMiniGame extends MiniGame {
             audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
             audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
         }
+        
+        isOnGameLevel = false;
+        isOnLevelSelect = false;
     }
 
     public void switchToSettingScreen() {
@@ -312,6 +320,8 @@ public class PathXMiniGame extends MiniGame {
             audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
             audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
         }
+        
+        isOnGameLevel = false;
     }
 
     public void switchToLevel1() {
@@ -332,9 +342,6 @@ public class PathXMiniGame extends MiniGame {
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
-        
-        guiEnemies.get(PLAYER_TYPE).setTarget(dataCopy.getStartingLocation().getX(), dataCopy.getStartingLocation().getY());
-
     }
 
     public void switchToLevel2() {
@@ -799,9 +806,9 @@ public class PathXMiniGame extends MiniGame {
             audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
             audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
         }
-        
-        dataCopy.setZombieHits(0);
         dataCopy.setSpeed(26);
+        
+        isOnGameLevel = true;
     }
 
     public void createEnemies() {
@@ -937,6 +944,7 @@ public class PathXMiniGame extends MiniGame {
             loadAudioCue(pathXPropertyType.AUDIO_CUE_WIN);
             loadAudioCue(pathXPropertyType.SONG_CUE_MENU_SCREEN);
             loadAudioCue(pathXPropertyType.SONG_CUE_GAME_SCREEN);
+            loadAudioCue(pathXPropertyType.AUDIO_CUE_CRASH);
 
             // PLAY THE WELCOME SCREEN SONG
             audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);

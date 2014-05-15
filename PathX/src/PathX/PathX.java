@@ -163,6 +163,7 @@ public class PathX
         AUDIO_CUE_SELECT_TILE,
         AUDIO_CUE_UNDO,
         AUDIO_CUE_WIN,
+        AUDIO_CUE_CRASH,
         SONG_CUE_GAME_SCREEN,
         SONG_CUE_MENU_SCREEN,
         

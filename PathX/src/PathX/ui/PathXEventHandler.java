@@ -194,66 +194,61 @@ public class PathXEventHandler {
 
     public void respondToUpRequest() {
         if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() <= 360 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
-            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
-            for (String level : gameLevels) {
-                game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
-            }
-        } else if (!game.getInsideCanvas().isEnabled()) {
-            for (int i = 1; i <= 20; i++) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() + 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
+                }
+            } else if (!game.getInsideCanvas().isEnabled()) {
                 if (game.getPXG().getViewport().getViewportY() > -100) {
                     game.getPXG().getViewport().move(0, -20);
                 }
             }
-        }
     }
 
     public void respondToDownRequest() {
-        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
-            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
-            for (String level : gameLevels) {
-                game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
-            }
-        } else if (!game.getInsideCanvas().isEnabled()) {
-            for (int i = 1; i <= 20; i++) {
+       if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() >= -800 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setY(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getY() - 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
+                }
+            } else if (!game.getInsideCanvas().isEnabled()) {
                 if (game.getPXG().getViewport().getViewportY() < 300) {
                     game.getPXG().getViewport().move(0, 20);
                 }
             }
-        }
     }
 
     public void respondToLeftRequest() {
-        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
-            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
-            for (String level : gameLevels) {
-                game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
-            }
-        } else if (!game.getInsideCanvas().isEnabled()) {
-            for (int i = 1; i <= 20; i++) {
+       if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() <= 1780 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() + 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
+                }
+            } else if (!game.getInsideCanvas().isEnabled()) {
                 if (game.getPXG().getViewport().getViewportX() > 0) {
                     game.getPXG().getViewport().move(-20, 0);
                 }
+
             }
-        }
     }
 
     public void respondToRightRequest() {
-        if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
-            game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
-            ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
-            for (String level : gameLevels) {
-                game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
-            }
-        } else if (!game.getInsideCanvas().isEnabled()) {
-            for (int i = 1; i <= 20; i++) {
+         if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160
+                    && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
+                ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
+                for (String level : gameLevels) {
+                    game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
+                }
+            } else if (!game.getInsideCanvas().isEnabled()) {
                 if (game.getPXG().getViewport().getViewportX() < 600) {
                     game.getPXG().getViewport().move(20, 0);
                 }
+
             }
-        }
 
     }
 
@@ -353,7 +348,8 @@ public class PathXEventHandler {
                 }
             }
         }
-        if (keyCode == KeyEvent.VK_C) {
+        if (keyCode == KeyEvent.VK_F1) {
+            game.getAudio().play(pathXPropertyType.AUDIO_CUE_CHEAT.toString(), false);
             for (int i = 0; i < game.getData().getLevelsLocked().length; i++) {
                 game.getData().setLevelsLocked(false, i);
             }
