@@ -138,7 +138,7 @@ public class PathXPanel extends JPanel {
                 g.setFont(FONT_TEXT_DISPLAY);
                 g.setColor(INT_OUTLINE_COLOR);
                 g.drawString("$20,000", 480, 110);
-                g.drawString("$" + data.getMoney(), 520, 60);
+                g.drawString("$" + data.getTotalMoney(), 520, 60);
             }
         } finally {
             // RELEASE THE LOCK

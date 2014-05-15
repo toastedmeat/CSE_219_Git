@@ -118,11 +118,11 @@ public class PathXDataModel extends MiniGameDataModel {
         return miniGame;
     }
 
-    public int getMoney() {
+    public int getTotalMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setTotalMoney(int money) {
         this.money = money;
     }
 

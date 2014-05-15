@@ -71,82 +71,102 @@ public class PathXEventHandler {
     }
 
     public void respondToLevel1() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel1();
     }
 
     public void respondToLevel2() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel2();
     }
 
     public void respondToLevel3() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel3();
     }
 
     public void respondToLevel4() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel4();
     }
 
     public void respondToLevel5() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel5();
     }
 
     public void respondToLevel6() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel6();
     }
 
     public void respondToLevel7() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel7();
     }
 
     public void respondToLevel8() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel8();
     }
 
     public void respondToLevel9() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel9();
     }
 
     public void respondToLevel10() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel10();
     }
 
     public void respondToLevel11() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel11();
     }
 
     public void respondToLevel12() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel12();
     }
 
     public void respondToLevel13() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel13();
     }
 
     public void respondToLevel14() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel14();
     }
 
     public void respondToLevel15() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel15();
     }
 
     public void respondToLevel16() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel16();
     }
 
     public void respondToLevel17() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel17();
     }
 
     public void respondToLevel18() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel18();
     }
 
     public void respondToLevel19() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel19();
     }
 
     public void respondToLevel20() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToLevel20();
     }
 

@@ -332,6 +332,8 @@ public class PathXMiniGame extends MiniGame {
         jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = jop.createDialog(pxg, "Information about the Level");
         dialog.setVisible(true);
+        
+        guiEnemies.get(PLAYER_TYPE).setTarget(dataCopy.getStartingLocation().getX(), dataCopy.getStartingLocation().getY());
 
     }
 
@@ -906,6 +908,9 @@ public class PathXMiniGame extends MiniGame {
         sT = new SpriteType(PLAYER_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String playerOverButton = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
+        img = loadImageWithColorKey(imgPath + playerOverButton, COLOR_KEY);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         carSprite cs = new carSprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiEnemies.put(PLAYER_TYPE, cs);
     }
