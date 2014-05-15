@@ -177,9 +177,6 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
 
-        guiEnemies.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.get(PLAYER_TYPE).setEnabled(false);
-
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -241,8 +238,6 @@ public class PathXMiniGame extends MiniGame {
         insideCanvas.setEnabled(true);
 
         guiEnemies.clear();
-        
-        createPlayer();
 
         dataCopy.setLoadedLevel(false);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -262,9 +257,6 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(BACK_TO_LEVEL_SELECT_TYPE).setEnabled(false);
         guiButtons.get(PAUSE_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(false);
-
-        guiEnemies.get(PLAYER_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
-        guiEnemies.get(PLAYER_TYPE).setEnabled(false);
 
         guiButtons.get(UP_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
@@ -290,10 +282,18 @@ public class PathXMiniGame extends MiniGame {
             guiButtons.get(level).setEnabled(false);
         }
 
-        ArrayList<String> gameLevels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
-        for (String level : gameLevels) {
-            guiButtons.get(level).setState(PathXTileState.VISIBLE_STATE.toString());
-            guiButtons.get(level).setEnabled(true);
+        for (int i = 0; i < dataCopy.getLevelsLocked().length; i++) {
+            if (dataCopy.getLevelsLocked()[i]) {
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setState(PathXTileState.LOCKED_STATE.toString());
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setEnabled(false);
+            }
+            else if (dataCopy.getLevelsRobbed()[i]){
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setState(PathXTileState.ROBBED_STATE.toString());
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setEnabled(true);
+            } else {
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setState(PathXTileState.VISIBLE_STATE.toString());
+                guiButtons.get(dataCopy.getLevelsNames()[i]).setEnabled(true);
+            }
         }
 
         // AND CHANGE THE SCREEN STATE
@@ -323,6 +323,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level1.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
 
+        dataCopy.setCurrentLevel("1");
         levelSetup();
 
         //Dialog Box
@@ -340,7 +341,7 @@ public class PathXMiniGame extends MiniGame {
         insideCanvas.setRenderedBackground(LEVEL2_GAME_TYPE);
         fileManager.loadLevel(new File("data/pathX/Level2.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
-
+        dataCopy.setCurrentLevel("2");
         createEnemies();
         levelSetup();
 
@@ -357,7 +358,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level3.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL3_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("3");
         createEnemies();
         levelSetup();
 
@@ -374,7 +375,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level4.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL4_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("4");
         createEnemies();
         levelSetup();
 
@@ -391,7 +392,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level5.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL5_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("5");
         createEnemies();
         levelSetup();
 
@@ -408,7 +409,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level6.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL6_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("6");
         createEnemies();
         levelSetup();
 
@@ -425,7 +426,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level7.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL7_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("7");
         createEnemies();
         levelSetup();
 
@@ -442,7 +443,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level8.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL8_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("8");
         createEnemies();
         levelSetup();
 
@@ -459,7 +460,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level9.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL9_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("9");
         createEnemies();
         levelSetup();
 
@@ -476,7 +477,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level10.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL10_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("10");
         createEnemies();
         levelSetup();
 
@@ -493,7 +494,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level11.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL11_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("11");
         createEnemies();
         levelSetup();
 
@@ -510,7 +511,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level12.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL12_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("12");
         createEnemies();
         levelSetup();
 
@@ -527,7 +528,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level13.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL13_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("13");
         createEnemies();
         levelSetup();
 
@@ -544,7 +545,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level14.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL14_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("14");
         createEnemies();
         levelSetup();
 
@@ -561,7 +562,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level15.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL15_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("15");
         createEnemies();
         levelSetup();
 
@@ -578,7 +579,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level16.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL16_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("16");
         createEnemies();
         levelSetup();
 
@@ -595,7 +596,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level17.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL17_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("17");
         createEnemies();
         levelSetup();
 
@@ -612,7 +613,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level18.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL18_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("18");
         createEnemies();
         levelSetup();
 
@@ -629,7 +630,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level19.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL19_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("19");
         createEnemies();
         levelSetup();
 
@@ -646,7 +647,7 @@ public class PathXMiniGame extends MiniGame {
         fileManager.loadLevel(new File("data/pathX/Level20.xml"), dataCopy);
         dataCopy.setLoadedLevel(true);
         pxg.setRenderedBackground(LEVEL20_GAME_TYPE);
-
+        dataCopy.setCurrentLevel("20");
         createEnemies();
         levelSetup();
 
@@ -688,7 +689,6 @@ public class PathXMiniGame extends MiniGame {
         isOnLevelSelect = false;
 
         guiEnemies.clear();
-        createPlayer();
         dataCopy.getViewport().reset();
 
     }
@@ -698,7 +698,8 @@ public class PathXMiniGame extends MiniGame {
         isOnLevelSelect = false;
         // CHANGE THE BACKGROUND
         guiDecor.get(BACKGROUND_TYPE).setState(LEVEL_SCREEN_STATE);
-        
+
+        createPlayer();
 
         // DEACTIVATE THE TOOLBAR CONTROLS
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
@@ -894,20 +895,17 @@ public class PathXMiniGame extends MiniGame {
         s.setCurrentIntersection(intersection);
         guiEnemies.put(sprite, s);
     }
-    
-    public void createPlayer(){
+
+    public void createPlayer() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         BufferedImage img;
         SpriteType sT;
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        
+
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
         sT = new SpriteType(PLAYER_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
-        String playerOverButton = props.getProperty(pathXPropertyType.IMAGE_PLAYER);
-        img = loadImageWithColorKey(imgPath + playerOverButton, COLOR_KEY);
-        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         carSprite cs = new carSprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiEnemies.put(PLAYER_TYPE, cs);
     }
@@ -1149,6 +1147,8 @@ public class PathXMiniGame extends MiniGame {
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVELS);
         ArrayList<String> levelImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_IMAGE_OPTIONS);
         ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
+        ArrayList<String> robbedImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_ROBBED);
+        ArrayList<String> lockedImageNames = props.getPropertyOptionsList(pathXPropertyType.GAME_LEVEL_LOCKED);
         int x_add = 0;
         int y_add = 0;
         for (int i = 0; i < levels.size(); i++) {
@@ -1164,14 +1164,15 @@ public class PathXMiniGame extends MiniGame {
             sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
             img = loadImageWithColorKey(imgPath + levelMouseOverImageNames.get(i), COLOR_KEY);
             sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+            img = loadImageWithColorKey(imgPath + robbedImageNames.get(i), COLOR_KEY);
+            sT.addState(PathXTileState.ROBBED_STATE.toString(), img);
+            img = loadImageWithColorKey(imgPath + lockedImageNames.get(i), COLOR_KEY);
+            sT.addState(PathXTileState.LOCKED_STATE.toString(), img);
             s = new Sprite(sT, 1060 - x_add, 315 - y_add, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
             guiButtons.put(levels.get(i), s);
         }
 
-        
-        // ADD THE CONTROLS ALONG THE GAME SCREEN
-        createPlayer();
-
+        // ADD THE CONTROLS ALONG THE GAME SCREEn
         // THEN THE NEW BUTTON
         String newButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_NEW);
         sT = new SpriteType(NEW_GAME_BUTTON_TYPE);

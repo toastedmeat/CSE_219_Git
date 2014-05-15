@@ -40,6 +40,8 @@ public class PathXDataModel extends MiniGameDataModel {
     // LEVEL
     private String currentLevel;
 
+    private int money;
+
     // THIS IS THE LEVEL CURRENTLY BEING EDITING
     PathXLevel level;
 
@@ -58,7 +60,6 @@ public class PathXDataModel extends MiniGameDataModel {
     Intersection selectedIntersection;
     Road selectedRoad;
 
-
     // IN CASE WE WANT TO TRACK MOVEMENTS
     int lastMouseX;
     int lastMouseY;
@@ -69,11 +70,23 @@ public class PathXDataModel extends MiniGameDataModel {
     boolean isDragging;
     boolean dataUpdatedSinceLastSave;
     boolean loadedLevel;
-    
+
+    boolean[] levelsLocked = new boolean[20];
+    boolean[] levelsRobbed = new boolean[20];
+    String[] levelsNames = {"./pathX/Level1.xml","./pathX/Level2.xml",
+        "./pathX/Level3.xml","./pathX/Level4.xml","./pathX/Level5.xml",
+        "./pathX/Level6.xml","./pathX/Level7.xml","./pathX/Level8.xml",
+            "./pathX/Level9.xml","./pathX/Level10.xml",
+            "./pathX/Level11.xml","./pathX/Level12.xml",
+            "./pathX/Level13.xml","./pathX/Level14.xml",
+            "./pathX/Level15.xml","./pathX/Level16.xml",
+            "./pathX/Level17.xml", "./pathX/Level18.xml",
+            "./pathX/Level19.xml","./pathX/Level20.xml"};
+
     PathXEditMode editMode;
-    
+
     carSprite player;
-    
+
     /**
      * Constructor for initializing this data model, it will create the data
      * structures for storing tiles, but not the tile grid itself, that is
@@ -90,47 +103,174 @@ public class PathXDataModel extends MiniGameDataModel {
         editMode = PathXEditMode.NOTHING_SELECTED;
         viewport.setScreenSize(1280, 720);
         //startRoadIntersection = null;
-        
+        levelsLocked[0] = false;
+        for (int i = 1; i < levelsLocked.length; i++) {
+            levelsLocked[i] = true;
+        }
+        for (int i = 0; i < levelsRobbed.length; i++) {
+            levelsRobbed[i] = false;
+        }
 
-    }    
+    }
 
     // ACCESSOR METHODS
-    public PathXMiniGame getGame(){
+    public PathXMiniGame getGame() {
         return miniGame;
     }
-    public PathXLevel getLevel() {        return level;    }
-    public void setLevel(PathXLevel l) { level = l; }
-    public boolean getLoadedLevel() {        return loadedLevel;    }
-    public void setLoadedLevel(boolean loadedLevel) {        this.loadedLevel = loadedLevel;    }
-    public PathXEditMode    getEditMode()               {   return editMode;                }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public PathXLevel getLevel() {
+        return level;
+    }
+
+    public void setLevel(PathXLevel l) {
+        level = l;
+    }
+
+    public boolean getLoadedLevel() {
+        return loadedLevel;
+    }
+
+    public void setLoadedLevel(boolean loadedLevel) {
+        this.loadedLevel = loadedLevel;
+    }
+
+    public PathXEditMode getEditMode() {
+        return editMode;
+    }
+
     @Override
-    public Viewport         getViewport()               {   return viewport;                }
-    public boolean isLevelBeingEdited() {        return levelBeingEdited;    }
-    public Image getStartingLocationImage() {        return startingLocationImage;    }
-    public Image getDesinationImage() {        return destinationImage;    }
-    public Image getPlayerLocationImage(){ return playerImage;}
-    public Intersection getSelectedIntersection() {        return selectedIntersection;    }
-    public Road getSelectedRoad() {        return selectedRoad;    }
-    public Intersection getStartingLocation() {        return level.startingLocation;    }
-    public Intersection getDestination() {        return level.destination;    }
-    public boolean isDataUpdatedSinceLastSave() {        return dataUpdatedSinceLastSave;    }
-    public boolean isStartingLocation(Intersection testInt) {        return testInt == level.startingLocation;    }
-    public boolean isDestination(Intersection testInt) {        return testInt == level.destination;    }
-    public boolean isSelectedIntersection(Intersection testIntersection) {return testIntersection == selectedIntersection;}
-    public boolean isSelectedRoad(Road testRoad) {return testRoad == selectedRoad;}
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public boolean isLevelBeingEdited() {
+        return levelBeingEdited;
+    }
+
+    public Image getStartingLocationImage() {
+        return startingLocationImage;
+    }
+
+    public Image getDesinationImage() {
+        return destinationImage;
+    }
+
+    public Image getPlayerLocationImage() {
+        return playerImage;
+    }
+
+    public Intersection getSelectedIntersection() {
+        return selectedIntersection;
+    }
+
+    public Road getSelectedRoad() {
+        return selectedRoad;
+    }
+
+    public Intersection getStartingLocation() {
+        return level.startingLocation;
+    }
+
+    public Intersection getDestination() {
+        return level.destination;
+    }
+
+    public boolean isDataUpdatedSinceLastSave() {
+        return dataUpdatedSinceLastSave;
+    }
+
+    public boolean isStartingLocation(Intersection testInt) {
+        return testInt == level.startingLocation;
+    }
+
+    public boolean isDestination(Intersection testInt) {
+        return testInt == level.destination;
+    }
+
+    public boolean isSelectedIntersection(Intersection testIntersection) {
+        return testIntersection == selectedIntersection;
+    }
+
+    public boolean isSelectedRoad(Road testRoad) {
+        return testRoad == selectedRoad;
+    }
+
+    public boolean[] getLevelsLocked() {
+        return levelsLocked;
+    }
+
+    public void setLevelsLocked(boolean[] levelsLocked) {
+        this.levelsLocked = levelsLocked;
+    }
+
+    public boolean[] getLevelsRobbed() {
+        return levelsRobbed;
+    }
+
+    public void setLevelsRobbed(boolean[] levelsRobbed) {
+        this.levelsRobbed = levelsRobbed;
+    }
 
     // THESE ARE FOR TESTING WHAT EDIT MODE THE APP CURRENTLY IS IN
-    public boolean isNothingSelected()      { return editMode == PathXEditMode.NOTHING_SELECTED; }
-    public boolean isIntersectionSelected() { return editMode == PathXEditMode.INTERSECTION_SELECTED; }
-    public boolean isIntersectionDragged()  { return editMode == PathXEditMode.INTERSECTION_DRAGGED; }
-    public boolean isRoadSelected()         { return editMode == PathXEditMode.ROAD_SELECTED; }
-    public boolean isAddingIntersection()   { return editMode == PathXEditMode.ADDING_INTERSECTION; }
-    public boolean isAddingRoadStart()      { return editMode == PathXEditMode.ADDING_ROAD_START; }
-    public boolean isAddingRoadEnd()        { return editMode == PathXEditMode.ADDING_ROAD_END; }
-    public String getCurrentLevel() { return currentLevel;    }
-    public long getTimeInMillis() { return endTime.getTimeInMillis() - startTime.getTimeInMillis();    }
+    public boolean isNothingSelected() {
+        return editMode == PathXEditMode.NOTHING_SELECTED;
+    }
+
+    public boolean isIntersectionSelected() {
+        return editMode == PathXEditMode.INTERSECTION_SELECTED;
+    }
+
+    public boolean isIntersectionDragged() {
+        return editMode == PathXEditMode.INTERSECTION_DRAGGED;
+    }
+
+    public boolean isRoadSelected() {
+        return editMode == PathXEditMode.ROAD_SELECTED;
+    }
+
+    public boolean isAddingIntersection() {
+        return editMode == PathXEditMode.ADDING_INTERSECTION;
+    }
+
+    public boolean isAddingRoadStart() {
+        return editMode == PathXEditMode.ADDING_ROAD_START;
+    }
+
+    public boolean isAddingRoadEnd() {
+        return editMode == PathXEditMode.ADDING_ROAD_END;
+    }
+
+    public String getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public long getTimeInMillis() {
+        return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+    }
     // MUTATOR METHODS
-    public void setCurrentLevel(String initCurrentLevel) { currentLevel = initCurrentLevel;    }
+
+    public void setCurrentLevel(String initCurrentLevel) {
+        currentLevel = initCurrentLevel;
+    }
+
+    public String[] getLevelsNames() {
+        return levelsNames;
+    }
+
+    public void setLevelsNames(String[] levelsNames) {
+        this.levelsNames = levelsNames;
+    }
+    
+    
+
     /**
      * Used to calculate the x-axis pixel location in the game grid for a tile
      * placed at column with stack position z.
@@ -139,7 +279,9 @@ public class PathXDataModel extends MiniGameDataModel {
      *
      * @return The x-axis pixel location of the tile
      */
-    public int calculateGridTileX(int column) {return viewport.getViewportMarginLeft() + (column * TILE_WIDTH) - viewport.getViewportX();    }
+    public int calculateGridTileX(int column) {
+        return viewport.getViewportMarginLeft() + (column * TILE_WIDTH) - viewport.getViewportX();
+    }
 
     /**
      * Used to calculate the y-axis pixel location in the game grid for a tile
@@ -264,45 +406,44 @@ public class PathXDataModel extends MiniGameDataModel {
     @Override
 
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {
-        
+
         // MAKE SURE THE CANVAS HAS FOCUS SO THAT IT
         // WILL PROCESS THE PROPER KEY PRESSES
-        
+        player = miniGame.getGUIEnemies().get(PLAYER_TYPE);
         // THESE ARE CANVAS COORDINATES
         int canvasX = (x - 274);
         int canvasY = (y - 17);
-        
-        
+
         // IF WE ARE IN ONE OF THESE MODES WE MAY WANT TO SELECT
         // ANOTHER INTERSECTION ROAD
         if (this.isNothingSelected()
                 || this.isIntersectionSelected()
-                || this.isRoadSelected())
-        {
+                || this.isRoadSelected()) {
             // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
             Intersection i = this.findIntersectionAtCanvasLocation(canvasX, canvasY);
-            if (i != null)
-            {
+            if (i != null) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 this.setSelectedIntersection(i);
-                if(game.getGUIButtons().get(PLAYER_TYPE).isEnabled()){
-                    
+                if (player.isEnabled()) {
+                    player.setTarget(i.getX(), i.getY());
+                    player.startMovingToTarget(10);
+
+                    player.update(miniGame);
                 }
                 return;
-            }                      
-            
+            }
+
             // IF NO INTERSECTION WAS SELECTED THEN CHECK TO SEE IF 
             // THE USER IS SELECTING A ROAD
             Road r = this.selectRoadAtCanvasLocation(canvasX, canvasY);
-            if (r != null)
-            {
+            if (r != null) {
                 // MAKE THIS THE SELECTED ROAD
                 this.setSelectedRoad(r);
                 return;
             }
 
             // OTHERWISE DESELECT EVERYTHING
-            this.unselectEverything();            
+            this.unselectEverything();
         }
     }
 
@@ -354,7 +495,7 @@ public class PathXDataModel extends MiniGameDataModel {
     @Override
     public void updateDebugText(MiniGame game) {
     }
-    
+
     // ITERATOR METHODS FOR GOING THROUGH THE GRAPH
     public Iterator intersectionsIterator() {
         ArrayList<Intersection> intersections = level.getIntersections();
@@ -414,9 +555,9 @@ public class PathXDataModel extends MiniGameDataModel {
         // NOW MAKE THE LEVEL IMAGES
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
-        startingLocationImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_START_IMG);
-        destinationImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_DEST_IMG);
-        playerImage = miniGame.loadImage(imgPath + "/pathX/"+ DEFAULT_DEST_IMG);
+        startingLocationImage = miniGame.loadImage(imgPath + "/pathX/" + DEFAULT_START_IMG);
+        destinationImage = miniGame.loadImage(imgPath + "/pathX/" + DEFAULT_DEST_IMG);
+        playerImage = miniGame.loadImage(imgPath + "/pathX/" + DEFAULT_DEST_IMG);
 
         // NOW RESET THE VIEWPORT
         viewport.reset();
@@ -436,7 +577,6 @@ public class PathXDataModel extends MiniGameDataModel {
         miniGame.getCanvas().repaint();
     }
 
-
     /**
      * Updates the image used for the starting location and forces rendering.
      */
@@ -447,7 +587,7 @@ public class PathXDataModel extends MiniGameDataModel {
         startingLocationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/" + level.startingLocationImageFileName, COLOR_KEY);
         miniGame.getCanvas().repaint();
     }
-    
+
     /**
      * Updates the image used for the destination and forces rendering.
      */
@@ -455,13 +595,13 @@ public class PathXDataModel extends MiniGameDataModel {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
         level.destinationImageFileName = newDestImage;
-        destinationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/"+ level.destinationImageFileName, COLOR_KEY);
+        destinationImage = miniGame.loadImageWithColorKey(imgPath + "/pathX/" + level.destinationImageFileName, COLOR_KEY);
         miniGame.getCanvas().repaint();
     }
 
     /**
-     * Used for scrolling the miniGameport by (incX, incY). Note that it won't let
-     * the viewport scroll off the level.
+     * Used for scrolling the miniGameport by (incX, incY). Note that it won't
+     * let the viewport scroll off the level.
      */
     public void moveViewport(int incX, int incY) {
         // MOVE THE VIEWPORT
@@ -470,43 +610,36 @@ public class PathXDataModel extends MiniGameDataModel {
         // AND NOW FORCE A REDRAW
         miniGame.getCanvas().repaint();
     }
-    
-    public void switchEditMode(PathXEditMode initEditMode)
-    {
-        if (levelBeingEdited)
-        {
+
+    public void switchEditMode(PathXEditMode initEditMode) {
+        if (levelBeingEdited) {
             // SET THE NEW EDIT MODE
             editMode = initEditMode;
-            
+
             // IF WE'RE ADDING A ROAD, THEN NOTHING SHOULD BE SELECTED 
-            if (editMode == PathXEditMode.ADDING_ROAD_START)
-            {
+            if (editMode == PathXEditMode.ADDING_ROAD_START) {
                 selectedIntersection = null;
-                selectedRoad = null;            
+                selectedRoad = null;
             }
-            
+
             // RENDER
             miniGame.getCanvas().repaint();
         }
     }
-    
-    
-    public Road selectRoadAtCanvasLocation(int canvasX, int canvasY)
-    {
+
+    public Road selectRoadAtCanvasLocation(int canvasX, int canvasY) {
         Iterator<Road> it = level.roads.iterator();
         Line2D.Double tempLine = new Line2D.Double();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Road r = it.next();
             tempLine.x1 = r.node1.x;
             tempLine.y1 = r.node1.y;
             tempLine.x2 = r.node2.x;
             tempLine.y2 = r.node2.y;
-            double distance = tempLine.ptSegDist(canvasX+viewport.getViewportX(), canvasY+viewport.getViewportY());
-            
+            double distance = tempLine.ptSegDist(canvasX + viewport.getViewportX(), canvasY + viewport.getViewportY());
+
             // IS IT CLOSE ENOUGH?
-            if (distance <= INT_STROKE)
-            {
+            if (distance <= INT_STROKE) {
                 // SELECT IT
                 this.selectedRoad = r;
                 this.switchEditMode(PathXEditMode.ROAD_SELECTED);
@@ -515,47 +648,44 @@ public class PathXDataModel extends MiniGameDataModel {
         }
         return null;
     }
-    
-    public Intersection findIntersectionAtCanvasLocation(int canvasX, int canvasY)
-    {
+
+    public Intersection findIntersectionAtCanvasLocation(int canvasX, int canvasY) {
         // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
-        for (Intersection i : level.intersections)
-        {
+        for (Intersection i : level.intersections) {
             double distance = calculateDistanceBetweenPoints(i.x, i.y, canvasX + viewport.getViewportX(), canvasY + viewport.getViewportY());
-            if (distance < INTERSECTION_RADIUS)
-            {
+            if (distance < INTERSECTION_RADIUS) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 return i;
             }
         }
         return null;
     }
-    
-     public double calculateDistanceBetweenPoints(int x1, int y1, int x2, int y2)
-    {
+
+    public double calculateDistanceBetweenPoints(int x1, int y1, int x2, int y2) {
         double diffXSquared = Math.pow(x1 - x2, 2);
         double diffYSquared = Math.pow(y1 - y2, 2);
         return Math.sqrt(diffXSquared + diffYSquared);
     }
 
-     public void unselectEverything()
-    {
+    public void unselectEverything() {
         selectedIntersection = null;
         selectedRoad = null;
         //startRoadIntersection = null;
         miniGame.getCanvas().repaint();
     }
+
     @Override
-     public boolean isPaused(){
-         return super.isPaused();
-     }
-     
+    public boolean isPaused() {
+        return super.isPaused();
+    }
+
     @Override
-     public void pause(){
+    public void pause() {
         super.pause();
-     }
+    }
+
     @Override
-     public void unpause(){
-         super.unpause();
-     }
+    public void unpause() {
+        super.unpause();
+    }
 }

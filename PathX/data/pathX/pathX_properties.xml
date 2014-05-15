@@ -190,6 +190,50 @@
             <option>./pathX/unRobbedLocationsMouseOver.png</option>
             <option>./pathX/unRobbedLocationsMouseOver.png</option>
         </property_options>
+        <property_options name="GAME_LEVEL_ROBBED">
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+            <option>./pathX/clearedLocations.png</option>
+        </property_options>
+        <property_options name="GAME_LEVEL_LOCKED">
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+            <option>./pathX/lockedLocations.png</option>
+        </property_options>
         
     </property_options_list>
 </properties>

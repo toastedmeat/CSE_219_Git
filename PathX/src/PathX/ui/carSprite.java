@@ -5,9 +5,13 @@
  */
 package PathX.ui;
 
+import static PathX.PathXConstants.*;
 import PathX.data.Intersection;
 import PathX.data.Road;
+import java.util.Collection;
 import java.util.Iterator;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
@@ -90,7 +94,7 @@ public class carSprite extends Sprite {
     public boolean isMovingToTarget() {
         return movingToTarget;
     }
-    
+
     public void setMovingToTarget(boolean m) {
         movingToTarget = m;
     }
@@ -163,6 +167,10 @@ public class carSprite extends Sprite {
     //@Override
     public void update(PathXMiniGame game) {
         //System.out.println("X: " + x + " TargetX: " + targetX + " Y: " + y + " TargetY: " + targetY);
+
+        int playerX = (int) game.getGUIEnemies().get(PLAYER_TYPE).getX();
+        int playerY = (int) game.getGUIEnemies().get(PLAYER_TYPE).getY();
+
         if ((x >= targetX - 20 && x <= targetX + 20) && (y >= targetY - 50 && y <= targetY + 50)) {
             reachedDestination = true;
             movingToTarget = false;
@@ -173,6 +181,104 @@ public class carSprite extends Sprite {
             x += vX;
             y += vY;
         }
-
+        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
+        for (carSprite s : buttonSprites) {
+            if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE)) {
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 50) {
+                    Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
+                    if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, options, options[0]) == 0) {
+                        game.switchToGameScreen();
+                        switch (game.getData().getCurrentLevel()) {
+                            case "1":
+                                game.levelSetup();
+                                game.switchToLevel1();
+                                break;
+                            case "2":
+                                game.levelSetup();
+                                game.switchToLevel2();
+                                break;
+                            case "3":
+                                game.levelSetup();
+                                game.switchToLevel3();
+                                break;
+                            case "4":
+                                game.levelSetup();
+                                game.switchToLevel4();
+                                break;
+                            case "5":
+                                game.levelSetup();
+                                game.switchToLevel5();
+                                break;
+                            case "6":
+                                game.levelSetup();
+                                game.switchToLevel6();
+                                break;
+                            case "7":
+                                game.levelSetup();
+                                game.switchToLevel7();
+                                break;
+                            case "8":
+                                game.levelSetup();
+                                game.switchToLevel8();
+                                break;
+                            case "9":
+                                game.levelSetup();
+                                game.switchToLevel9();
+                                break;
+                            case "10":
+                                game.levelSetup();
+                                game.switchToLevel10();
+                                break;
+                            case "11":
+                                game.levelSetup();
+                                game.switchToLevel11();
+                                break;
+                            case "12":
+                                game.levelSetup();
+                                game.switchToLevel12();
+                                break;
+                            case "13":
+                                game.levelSetup();
+                                game.switchToLevel13();
+                                break;
+                            case "14":
+                                game.levelSetup();
+                                game.switchToLevel14();
+                                break;
+                            case "15":
+                                game.levelSetup();
+                                game.switchToLevel15();
+                                break;
+                            case "16":
+                                game.levelSetup();
+                                game.switchToLevel16();
+                                break;
+                            case "17":
+                                game.levelSetup();
+                                game.switchToLevel17();
+                                break;
+                            case "18":
+                                game.levelSetup();
+                                game.switchToLevel18();
+                                break;
+                            case "19":
+                                game.levelSetup();
+                                game.switchToLevel19();
+                                break;
+                            case "20":
+                                game.levelSetup();
+                                game.switchToLevel20();
+                                break;
+                            default: 
+                                game.switchToGameScreen();
+                        }
+                    } else {
+                        game.switchToGameScreen();
+                    }
+                }
+            }
+        }
     }
 }

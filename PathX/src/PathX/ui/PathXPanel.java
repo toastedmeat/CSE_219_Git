@@ -137,7 +137,8 @@ public class PathXPanel extends JPanel {
             if (data.getGame().isIsOnLevelSelect()) {
                 g.setFont(FONT_TEXT_DISPLAY);
                 g.setColor(INT_OUTLINE_COLOR);
-                g.drawString("$ 20,000", 480, 110);
+                g.drawString("$20,000", 480, 110);
+                g.drawString("$" + data.getMoney(), 520, 60);
             }
         } finally {
             // RELEASE THE LOCK

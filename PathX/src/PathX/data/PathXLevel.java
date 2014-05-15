@@ -50,7 +50,7 @@ public class PathXLevel
     {
         // INIT THE GRAPH DATA STRUCTURES
         intersections = new ArrayList();
-        roads = new ArrayList();         
+        roads = new ArrayList();
     }
 
     /**
@@ -96,6 +96,7 @@ public class PathXLevel
     public int                      getNumPolice()                      {   return numPolice;                       }
     public int                      getNumBandits()                     {   return numBandits;                      }
     public int                      getNumZombies()                     {   return numZombies;                      }
+    
     
     // MUTATOR METHODS
     public void setLevelName(String levelName)    

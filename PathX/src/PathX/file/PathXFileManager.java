@@ -20,7 +20,6 @@ import PathX.ui.PathXMiniGame;
 import properties_manager.PropertiesManager;
 import static PathX.PathXConstants.*;
 import PathX.data.Intersection;
-import PathX.data.PathXAlgorithmType;
 import PathX.data.PathXLevel;
 import PathX.data.Road;
 import org.w3c.dom.Document;
