@@ -38,6 +38,7 @@ public class carSprite extends Sprite {
     private Intersection nextIntersection;
     private Road currentRoad;
 
+    
     carSprite(SpriteType initSpriteType,
             float initX, float initY,
             float initVx, float initVy,
@@ -171,7 +172,7 @@ public class carSprite extends Sprite {
         int playerX = (int) game.getGUIEnemies().get(PLAYER_TYPE).getX();
         int playerY = (int) game.getGUIEnemies().get(PLAYER_TYPE).getY();
 
-        if ((x >= targetX - 20 && x <= targetX + 20) && (y >= targetY - 50 && y <= targetY + 50)) {
+        if ((x >= targetX - 20 && x <= targetX + 20) && (y >= targetY - 30 && y <= targetY + 30)) {
             reachedDestination = true;
             movingToTarget = false;
             currentIntersection = nextIntersection;
@@ -203,7 +204,7 @@ public class carSprite extends Sprite {
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE)) {
-                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 50) {
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 20) {
                     Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
                     if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
@@ -213,6 +214,17 @@ public class carSprite extends Sprite {
                     } else {
                         game.switchToGameScreen();
                     }
+                }
+            }
+        }
+        for (carSprite s : buttonSprites) {
+            if (s.getSpriteType().getSpriteTypeID().equals(ZOMBIE_TYPE)) {
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 20 && !game.getData().isHitOnce()) {
+                    game.getData().setZombieHits(game.getData().getZombieHits() + 5);
+                    game.getData().setHitOnce(true);
+                }
+                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 61) {
+                    game.getData().setHitOnce(false);
                 }
             }
         }

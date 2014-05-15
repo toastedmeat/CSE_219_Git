@@ -63,6 +63,9 @@ public class PathXDataModel extends MiniGameDataModel {
     // IN CASE WE WANT TO TRACK MOVEMENTS
     int lastMouseX;
     int lastMouseY;
+    
+    int speed;
+    int zombieHits;
 
     // THESE BOOLEANS HELP US KEEP TRACK OF
     // @todo DO WE NEED THESE?
@@ -70,6 +73,7 @@ public class PathXDataModel extends MiniGameDataModel {
     boolean isDragging;
     boolean dataUpdatedSinceLastSave;
     boolean loadedLevel;
+    boolean hitOnce;
 
     boolean[] levelsLocked = new boolean[20];
     boolean[] levelsRobbed = new boolean[20];
@@ -111,6 +115,8 @@ public class PathXDataModel extends MiniGameDataModel {
             levelsRobbed[i] = false;
         }
 
+        speed = 26;
+        zombieHits = 0;
     }
 
     // ACCESSOR METHODS
@@ -207,8 +213,8 @@ public class PathXDataModel extends MiniGameDataModel {
         return levelsLocked;
     }
 
-    public void setLevelsLocked(boolean[] levelsLocked) {
-        this.levelsLocked = levelsLocked;
+    public void setLevelsLocked(boolean levelsLocked, int place) {
+        this.levelsLocked[place] = levelsLocked;
     }
 
     public boolean[] getLevelsRobbed() {
@@ -268,6 +274,31 @@ public class PathXDataModel extends MiniGameDataModel {
     public void setLevelsNames(String[] levelsNames) {
         this.levelsNames = levelsNames;
     }
+
+    public int getZombieHits() {
+        return zombieHits;
+    }
+
+    public void setZombieHits(int zombieHits) {
+        this.zombieHits = zombieHits;
+    }
+
+    public boolean isHitOnce() {
+        return hitOnce;
+    }
+
+    public void setHitOnce(boolean hitOnce) {
+        this.hitOnce = hitOnce;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+    
     
     
 
@@ -426,7 +457,12 @@ public class PathXDataModel extends MiniGameDataModel {
                 this.setSelectedIntersection(i);
                 if (player.isEnabled()) {
                     player.setTarget(i.getX(), i.getY());
-                    player.startMovingToTarget(10);
+                    speed = speed - zombieHits;
+                    if(speed < 3){
+                        speed = 2;
+                    }
+                    System.out.println(speed);
+                    player.startMovingToTarget(speed);
 
                     player.update(miniGame);
                 }

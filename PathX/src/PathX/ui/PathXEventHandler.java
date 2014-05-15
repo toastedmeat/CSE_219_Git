@@ -314,7 +314,7 @@ public class PathXEventHandler {
             }
         }
         if (keyCode == KeyEvent.VK_RIGHT) {
-            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160
                     && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
                 game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
                 ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
@@ -336,23 +336,28 @@ public class PathXEventHandler {
                 game.getDataModel().pause();
             }
         }
-        if(keyCode == KeyEvent.VK_M){
-            if(game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString())
-                    || game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString())){
-            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
-            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
-            game.setMuted(true);
-            }
-            else{
+        if (keyCode == KeyEvent.VK_M) {
+            if (game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString())
+                    || game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString())) {
+                game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
+                game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+                game.setMuted(true);
+            } else {
                 game.setMuted(false);
-                if(game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)){
+                if (game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
                     game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
-                } else if (!game.isIsOnLevelSelect() && game.getPXG().isEnabled()){
+                } else if (!game.isIsOnLevelSelect() && game.getPXG().isEnabled()) {
                     game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
                 } else {
                     game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
                 }
             }
+        }
+        if (keyCode == KeyEvent.VK_C) {
+            for (int i = 0; i < game.getData().getLevelsLocked().length; i++) {
+                game.getData().setLevelsLocked(false, i);
+            }
+            game.switchToGameScreen();
         }
 
     }

@@ -799,6 +799,9 @@ public class PathXMiniGame extends MiniGame {
             audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
             audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
         }
+        
+        dataCopy.setZombieHits(0);
+        dataCopy.setSpeed(26);
     }
 
     public void createEnemies() {

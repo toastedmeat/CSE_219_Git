@@ -225,7 +225,7 @@ public class PathXGamePanel extends JPanel {
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
-                renderPlayer(g, s);
+                //renderPlayer(g, s);
             }
         }
     }
@@ -233,11 +233,8 @@ public class PathXGamePanel extends JPanel {
     public void renderEnemies(Graphics g) {
         // AND NOW RENDER THE BUTTONS
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
-        Iterator<carSprite> itE = buttonSprites.iterator();
-        while (itE.hasNext()) {
-            carSprite s = itE.next();
-
-            renderCars(g, s);
+        for (carSprite s : buttonSprites) {
+                renderCars(g, s);
         }
     }
 
