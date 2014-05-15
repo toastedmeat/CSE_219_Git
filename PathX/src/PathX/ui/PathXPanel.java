@@ -18,6 +18,9 @@ import PathX.data.PathXDataModel;
 import static PathX.PathXConstants.*;
 import PathX.PathX.pathXPropertyType;
 import PathX.data.PathXRecord;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 
 /**
  * This class performs all of the rendering for The Sorting Hat game
@@ -46,7 +49,6 @@ public class PathXPanel extends JPanel {
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
 
-
     /**
      * This constructor stores the game and data references, which we'll need
      * for rendering.
@@ -67,7 +69,6 @@ public class PathXPanel extends JPanel {
     // MUTATOR METHODS
     // -setBlankTileImage
     // -setBlankTileSelectedImage
-
     /**
      * This mutator method sets the base image to use for rendering tiles.
      *
@@ -128,6 +129,9 @@ public class PathXPanel extends JPanel {
                 renderStats(g);
             }
 
+            PointerInfo a = MouseInfo.getPointerInfo();
+            Point b = a.getLocation();
+            g.drawString((b.getX() - getLocationOnScreen().getX()) + ", " + (b.getY() - getLocationOnScreen().getY()), (int) b.getX() + 20, (int) b.getY() + 20);
             // AND FINALLY, TEXT FOR DEBUGGING
             renderDebuggingText(g);
             if (data.getGame().isIsOnLevelSelect()) {

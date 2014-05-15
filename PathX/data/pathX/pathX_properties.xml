@@ -96,8 +96,8 @@
         <property name="AUDIO_CUE_SELECT_TILE"                  value="./pathX/SelectTile.wav"></property>
         <property name="AUDIO_CUE_UNDO"                         value="./pathX/Undo.wav"></property>
         <property name="AUDIO_CUE_WIN"                          value="./pathX/Win.mid"></property>
-        <property name="SONG_CUE_GAME_SCREEN"                   value="./pathX/GameSong.mid"></property>        
-        <property name="SONG_CUE_MENU_SCREEN"                   value="./pathX/MenuSong.mid"></property>
+        <property name="SONG_CUE_GAME_SCREEN"                   value="./pathX/GameSong.wav"></property>        
+        <property name="SONG_CUE_MENU_SCREEN"                   value="./pathX/MenuSong.wav"></property>
     </property_list>
     
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->

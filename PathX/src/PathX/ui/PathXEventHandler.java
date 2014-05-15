@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import static PathX.PathXConstants.*;
 import static PathX.PathXConstants.MENU_SCREEN_STATE;
 import PathX.PathX;
+import PathX.PathX.pathXPropertyType;
 import PathX.data.PathXDataModel;
 import PathX.file.PathXFileManager;
 import java.util.ArrayList;
@@ -48,11 +49,13 @@ public class PathXEventHandler {
     public void respondToBackRequest() {
         // RESET THE GAME AND ITS DATA
         //game.reset();
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToSplashScreen();
         game.getInsideCanvas().setVisible(false);
     }
 
     public void respondToBackToLevelSelectRequest() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToGameScreen();
     }
 
@@ -62,6 +65,7 @@ public class PathXEventHandler {
     public void respondToSelectLevelRequest() {
         // WE ONLY LET THIS HAPPEN IF THE MENU SCREEN IS VISIBLE
         if (game.isCurrentScreenState(MENU_SCREEN_STATE)) {
+            game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
             game.switchToGameScreen();
         }
     }
@@ -147,13 +151,16 @@ public class PathXEventHandler {
     }
 
     public void respondToResetRequest() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
     }
 
     public void respondToHelpRequest() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToHelpScreen();
     }
 
     public void respondToSettingsRequest() {
+        game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
         game.switchToSettingScreen();
     }
 
@@ -172,7 +179,7 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
             }
-        } else if(!game.getInsideCanvas().isEnabled()){
+        } else if (!game.getInsideCanvas().isEnabled()) {
             for (int i = 1; i <= 20; i++) {
                 if (game.getPXG().getViewport().getViewportY() > -100) {
                     game.getPXG().getViewport().move(0, -20);
@@ -188,7 +195,7 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
             }
-        } else if(!game.getInsideCanvas().isEnabled()){
+        } else if (!game.getInsideCanvas().isEnabled()) {
             for (int i = 1; i <= 20; i++) {
                 if (game.getPXG().getViewport().getViewportY() < 300) {
                     game.getPXG().getViewport().move(0, 20);
@@ -204,7 +211,7 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
             }
-        } else if(!game.getInsideCanvas().isEnabled()){
+        } else if (!game.getInsideCanvas().isEnabled()) {
             for (int i = 1; i <= 20; i++) {
                 if (game.getPXG().getViewport().getViewportX() > 0) {
                     game.getPXG().getViewport().move(-20, 0);
@@ -220,7 +227,7 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
             }
-        } else if(!game.getInsideCanvas().isEnabled()){
+        } else if (!game.getInsideCanvas().isEnabled()) {
             for (int i = 1; i <= 20; i++) {
                 if (game.getPXG().getViewport().getViewportX() < 600) {
                     game.getPXG().getViewport().move(20, 0);
@@ -228,6 +235,14 @@ public class PathXEventHandler {
             }
         }
 
+    }
+
+    public void respondToPauseRequest() {
+        if (game.getDataModel().isPaused()) {
+            game.getDataModel().unpause();
+        } else {
+            game.getDataModel().pause();
+        }
     }
 
     /**
@@ -244,10 +259,10 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
                 }
-            } else if (!game.getInsideCanvas().isEnabled()){
-                    if (game.getPXG().getViewport().getViewportY() > -100) {
-                        game.getPXG().getViewport().move(0, -20);
-                    }
+            } else if (!game.getInsideCanvas().isEnabled()) {
+                if (game.getPXG().getViewport().getViewportY() > -100) {
+                    game.getPXG().getViewport().move(0, -20);
+                }
             }
         }
 
@@ -258,10 +273,10 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
                 }
-            } else if(!game.getInsideCanvas().isEnabled()){
-                    if (game.getPXG().getViewport().getViewportY() < 300) {
-                        game.getPXG().getViewport().move(0, 20);
-                    }
+            } else if (!game.getInsideCanvas().isEnabled()) {
+                if (game.getPXG().getViewport().getViewportY() < 300) {
+                    game.getPXG().getViewport().move(0, 20);
+                }
             }
         }
         if (keyCode == KeyEvent.VK_LEFT) {
@@ -271,25 +286,52 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
                 }
-            } else if(!game.getInsideCanvas().isEnabled()){
-                    if (game.getPXG().getViewport().getViewportX() > 0) {
-                        game.getPXG().getViewport().move(-20, 0);
-                    }
-                
+            } else if (!game.getInsideCanvas().isEnabled()) {
+                if (game.getPXG().getViewport().getViewportX() > 0) {
+                    game.getPXG().getViewport().move(-20, 0);
+                }
+
             }
         }
         if (keyCode == KeyEvent.VK_RIGHT) {
-            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+            if (game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20 > -160 
+                    && game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
                 game.getGUIDecor().get(BACKGROUND_GAME_TYPE).setX(game.getGUIDecor().get(BACKGROUND_GAME_TYPE).getX() - 20);
                 ArrayList<String> gameLevels = props.getPropertyOptionsList(PathX.pathXPropertyType.GAME_LEVELS);
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
                 }
-            } else if(!game.getInsideCanvas().isEnabled()){
+            } else if (!game.getInsideCanvas().isEnabled()) {
                 if (game.getPXG().getViewport().getViewportX() < 600) {
                     game.getPXG().getViewport().move(20, 0);
                 }
 
+            }
+        }
+        if (keyCode == KeyEvent.VK_P) {
+            if (game.getDataModel().isPaused()) {
+                game.getDataModel().unpause();
+            } // TOGGLE IT ON
+            else {
+                game.getDataModel().pause();
+            }
+        }
+        if(keyCode == KeyEvent.VK_M){
+            if(game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString())
+                    || game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString())){
+            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
+            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+            game.setMuted(true);
+            }
+            else{
+                game.setMuted(false);
+                if(game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)){
+                    game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+                } else if (!game.isIsOnLevelSelect() && game.getPXG().isEnabled()){
+                    game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
+                } else {
+                    game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+                }
             }
         }
 

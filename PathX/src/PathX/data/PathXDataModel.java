@@ -16,6 +16,7 @@ import static PathX.PathXConstants.*;
 import PathX.ui.PathXMiniGame;
 import PathX.ui.PathXPanel;
 import PathX.ui.PathXTileState;
+import PathX.ui.carSprite;
 import java.awt.Image;
 import java.awt.geom.Line2D;
 import javax.swing.JPanel;
@@ -71,6 +72,8 @@ public class PathXDataModel extends MiniGameDataModel {
     
     PathXEditMode editMode;
     
+    carSprite player;
+    
     /**
      * Constructor for initializing this data model, it will create the data
      * structures for storing tiles, but not the tile grid itself, that is
@@ -85,7 +88,6 @@ public class PathXDataModel extends MiniGameDataModel {
         viewport = new Viewport();
         levelBeingEdited = false;
         editMode = PathXEditMode.NOTHING_SELECTED;
-        
         viewport.setScreenSize(1280, 720);
         //startRoadIntersection = null;
         
@@ -283,6 +285,9 @@ public class PathXDataModel extends MiniGameDataModel {
             {
                 // MAKE THIS THE SELECTED INTERSECTION
                 this.setSelectedIntersection(i);
+                if(game.getGUIButtons().get(PLAYER_TYPE).isEnabled()){
+                    
+                }
                 return;
             }                      
             
@@ -540,4 +545,17 @@ public class PathXDataModel extends MiniGameDataModel {
         //startRoadIntersection = null;
         miniGame.getCanvas().repaint();
     }
+    @Override
+     public boolean isPaused(){
+         return super.isPaused();
+     }
+     
+    @Override
+     public void pause(){
+        super.pause();
+     }
+    @Override
+     public void unpause(){
+         super.unpause();
+     }
 }

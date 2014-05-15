@@ -157,10 +157,10 @@ public abstract class MiniGame
         initData();
         initViewport();
         initGUI();
+        initAudio();
         initHandlers();
         initTimer();
-        initAudio();
-
+        
         // LET THE USER START THE GAME ON DEMAND
         data.setGameState(MiniGameState.NOT_STARTED);
     }

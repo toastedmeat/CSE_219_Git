@@ -7,6 +7,7 @@ package PathX.ui;
 
 import PathX.data.Intersection;
 import PathX.data.Road;
+import java.util.Iterator;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
@@ -24,6 +25,7 @@ public class carSprite extends Sprite {
     private int gridRow;
 
     private boolean movingToTarget;
+    private boolean reachedDestination;
 
     private float targetX;
     private float targetY;
@@ -73,12 +75,24 @@ public class carSprite extends Sprite {
         return nextIntersection;
     }
 
+    public boolean isReachedDestination() {
+        return reachedDestination;
+    }
+
+    public void setReachedDestination(boolean reachedDestination) {
+        this.reachedDestination = reachedDestination;
+    }
+
     public void setNextIntersection(Intersection nextIntersection) {
         this.nextIntersection = nextIntersection;
     }
 
     public boolean isMovingToTarget() {
         return movingToTarget;
+    }
+    
+    public void setMovingToTarget(boolean m) {
+        movingToTarget = m;
     }
 
     public void setTarget(float initTargetX, float initTargetY) {
@@ -146,14 +160,16 @@ public class carSprite extends Sprite {
      *
      * @param game
      */
-    @Override
-    public void update(MiniGame game) {
-        System.out.println("X: " + x + " TargetX: " + targetX + " Y: " + y + " TargetY: " + targetY);
-        if ((x >= targetX - 10 && x <= targetX + 10) && (y >= targetY - 10 && y <= targetY + 10)) {
+    //@Override
+    public void update(PathXMiniGame game) {
+        //System.out.println("X: " + x + " TargetX: " + targetX + " Y: " + y + " TargetY: " + targetY);
+        if ((x >= targetX - 20 && x <= targetX + 20) && (y >= targetY - 50 && y <= targetY + 50)) {
+            reachedDestination = true;
             movingToTarget = false;
             currentIntersection = nextIntersection;
         } else {
             // MOVE THE SPRITE USING ITS VELOCITY
+            //System.out.println("vX: " + vX + " vY: " + vY);
             x += vX;
             y += vY;
         }

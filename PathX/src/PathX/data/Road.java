@@ -15,6 +15,16 @@ public class Road
     Intersection node1;
     Intersection node2;
     
+    Intersection previousNode;
+
+    public Intersection getPreviousNode() {
+        return previousNode;
+    }
+
+    public void setPreviousNode(Intersection previousNode) {
+        this.previousNode = previousNode;
+    }
+    
     // false IF IT'S TWO-WAY, true IF IT'S ONE WAY
     boolean oneWay;
     

@@ -27,6 +27,9 @@ import PathX.data.PathXRecord;
 import PathX.data.Road;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -219,8 +222,8 @@ public class PathXGamePanel extends JPanel {
     }
 
     public void renderPlayer(Graphics g) {
-        Collection<Sprite> buttonSprites = game.getGUIButtons().values();
-        for (Sprite s : buttonSprites) {
+        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
+        for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
                 renderPlayer(g, s);
             }
@@ -273,11 +276,56 @@ public class PathXGamePanel extends JPanel {
         }
     }
 
-    public void renderPlayer(Graphics g, Sprite s) {
+    public void renderPlayer(Graphics g, carSprite s) {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int) s.getX() - 30 - viewport.getViewportX(), (int) s.getY() - 34 - viewport.getViewportY(), null);
+        }
+    }
+
+    public void moveToDestination1(carSprite s, Road road) {
+        s.setTarget(road.getNode2().getX(), road.getNode2().getY());
+        s.startMovingToTarget(road.getSpeedLimit());
+        road.getNode1().setVisited(true);
+        road.setPreviousNode(road.getNode1());
+        s.setNextIntersection(road.getNode2());
+    }
+    public void moveToDestination2(carSprite s, Road road) {
+        s.setTarget(road.getNode1().getX(), road.getNode1().getY());
+        s.startMovingToTarget(road.getSpeedLimit());
+        road.getNode2().setVisited(true);
+        road.setPreviousNode(road.getNode2());
+        s.setNextIntersection(road.getNode1());
+    }
+
+    public void moveCars(carSprite s) {
+        Iterator<Road> it = model.roadsIterator();
+        while (it.hasNext()) {
+            Road road = it.next();
+            if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation())
+                    && !road.getNode2().equals(model.getDestination()) && !road.isOneWay() && !road.getNode2().isVisited()) {
+                if (!s.isMovingToTarget() && !s.isReachedDestination()) {
+
+                    moveToDestination1(s, road);
+
+                } else if (!road.getNode2().equals(road.getPreviousNode())) {
+                    moveToDestination1(s, road);
+                    road.getPreviousNode().setVisited(false);
+                }
+            } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation())
+                    && !road.getNode1().equals(model.getDestination()) && !road.isOneWay() && !road.getNode1().isVisited()) {
+                if (!s.isMovingToTarget()) {
+                    if (!s.isMovingToTarget() && !s.isReachedDestination()) {
+
+                    moveToDestination2(s, road);
+
+                } else if (!road.getNode2().equals(road.getPreviousNode())) {
+                    moveToDestination2(s, road);
+                    road.getPreviousNode().setVisited(false);
+                }
+                }
+            }
         }
     }
 
@@ -286,62 +334,17 @@ public class PathXGamePanel extends JPanel {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
 
-            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(POLICE_TYPE)) {
-                Iterator<Road> it = model.roadsIterator();
-                while (it.hasNext()) {
-                    Road road = it.next();
-                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode2());
-                        }
-                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode1());
-                        }
-                    }
+            if (!model.isPaused()) {
+                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(POLICE_TYPE)) {
+                    moveCars(s);
                 }
-            }
-            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
-                Iterator<Road> it = model.roadsIterator();
-                while (it.hasNext()) {
-                    Road road = it.next();
-                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode2());
-                        }
-                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode1());
-                        }
-                    }
+                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
+                    moveCars(s);
                 }
-            }
-            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
-                Iterator<Road> it = model.roadsIterator();
-                while (it.hasNext()) {
-                    Road road = it.next();
-                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode2());
-                        }
-                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation()) && !road.isOneWay()) {
-                        if (!s.isMovingToTarget()) {
-                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
-                            s.startMovingToTarget(road.getSpeedLimit());
-                            s.setNextIntersection(road.getNode1());
-                        }
-                    }
+                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
+                    moveCars(s);
                 }
+
             }
             s.update(game);
             g.drawImage(img, (int) s.getX() - viewport.getViewportX() - 30, (int) s.getY() - viewport.getViewportY() - 34, null);
@@ -377,7 +380,6 @@ public class PathXGamePanel extends JPanel {
     // HELPER METHOD FOR RENDERING THE LEVEL ROADS
     private void renderRoads(Graphics2D g2) {
         // GO THROUGH THE ROADS AND RENDER ALL OF THEM
-        Viewport viewport = model.getViewport();
         Iterator<Road> it = model.roadsIterator();
         g2.setStroke(recyclableStrokes.get(INT_STROKE));
         while (it.hasNext()) {
@@ -473,8 +475,6 @@ public class PathXGamePanel extends JPanel {
         int h = img.getHeight(null);
         int x1 = i.x - (w / 2);
         int y1 = i.y - (h / 2);
-        int x2 = x1 + img.getWidth(null);
-        int y2 = y1 + img.getHeight(null);
         g2.drawImage(img, x1 - viewport.getViewportX(), y1 - viewport.getViewportY(), null);
         // ONLY RENDER IF INSIDE THE VIEWPORT
         //if (viewport.isRectInsideViewport(x1, y1, x2, y2)) {
