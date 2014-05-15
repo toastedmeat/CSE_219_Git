@@ -71,9 +71,6 @@ public class PathXMiniGame extends MiniGame {
 
     private PathXGamePanel pxg;
 
-    private int mouseMoveX;
-    private int mouseMoveY;
-    
     protected  TreeMap<String, carSprite> guiEnemies;
     
     /**
@@ -86,25 +83,11 @@ public class PathXMiniGame extends MiniGame {
         return record;
     }
 
-    public int getMouseMoveX() {
-        return mouseMoveX;
-    }
-
-    public int getMouseMoveY() {
-        return mouseMoveY;
-    }
     
     public TreeMap<String, carSprite> getGUIEnemies(){
         return guiEnemies;
     }
 
-    public void setMouseMoveX(int incX) {
-        mouseMoveX += incX;
-    }
-
-    public void setMouseMoveY(int incY) {
-        mouseMoveY += incY;
-    }
 
     /**
      * Accessor method for getting the application's error handler.
@@ -147,6 +130,13 @@ public class PathXMiniGame extends MiniGame {
     }
 
     /**
+     * This method forces the file manager to save the current player record.
+     */
+    public void savePlayerRecord() {
+        fileManager.saveRecord(record);
+    }
+
+    /**
      * This method switches the application to the menu screen, making all the
      * appropriate UI controls visible & invisible.
      */
@@ -156,6 +146,9 @@ public class PathXMiniGame extends MiniGame {
         guiDecor.get(BACKGROUND_TYPE).setState(MENU_SCREEN_STATE);
 
         guiEnemies.clear();
+        
+        dataCopy.getViewport().reset();
+        
         // DEACTIVATE THE TOOLBAR CONTROLS
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(NEW_GAME_BUTTON_TYPE).setEnabled(false);
@@ -215,14 +208,7 @@ public class PathXMiniGame extends MiniGame {
         //audio.play(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true); 
         ///audio.stop(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
     }
-
-    /**
-     * This method forces the file manager to save the current player record.
-     */
-    public void savePlayerRecord() {
-        fileManager.saveRecord(record);
-    }
-
+    
     public void switchToSettingScreen() {
         guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
         menuSetup();
@@ -242,6 +228,7 @@ public class PathXMiniGame extends MiniGame {
     public void switchToGameScreen() {
         pxg.setEnabled(false);
         pxg.setVisible(false);
+        insideCanvas.setEnabled(true);
 
         guiEnemies.clear();
 
@@ -304,6 +291,8 @@ public class PathXMiniGame extends MiniGame {
         canvas.setLayout(null);
         insideCanvas.setBounds(17, 129, 1247, 551);
         insideCanvas.setRenderedBackground(BACKGROUND_GAME_TYPE);
+        
+        dataCopy.getViewport().reset();
 
         // PLAY THE GAMEPLAY SCREEN SONG
         //audio.stop(pathXPropertyType.SONG_CUE_MENU_SCREEN.toString()); 
@@ -682,6 +671,8 @@ public class PathXMiniGame extends MiniGame {
         pxg.setVisible(false);
 
         guiEnemies.clear();
+        dataCopy.getViewport().reset();
+        
     }
 
     public void levelSetup() {
@@ -812,7 +803,7 @@ public class PathXMiniGame extends MiniGame {
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
 
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_BANDIT);
-        sT = new SpriteType(sprite);
+        sT = new SpriteType(BANDIT_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
 
@@ -825,6 +816,7 @@ public class PathXMiniGame extends MiniGame {
         }
         s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
+        s.setCurrentIntersection(intersection);
         guiEnemies.put(sprite, s);
     }
 
@@ -838,7 +830,7 @@ public class PathXMiniGame extends MiniGame {
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
 
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_POLICE);
-        sT = new SpriteType(sprite);
+        sT = new SpriteType(POLICE_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
 
@@ -851,6 +843,7 @@ public class PathXMiniGame extends MiniGame {
         }
         s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
+        s.setCurrentIntersection(intersection);
         guiEnemies.put(sprite, s);
     }
 
@@ -864,7 +857,7 @@ public class PathXMiniGame extends MiniGame {
         String imgPath = props.getProperty(pathXPropertyType.PATH_IMG);
 
         String newPlayer = props.getProperty(pathXPropertyType.IMAGE_ZOMBIE);
-        sT = new SpriteType(sprite);
+        sT = new SpriteType(ZOMBIE_TYPE);
         img = loadImageWithColorKey(imgPath + newPlayer, COLOR_KEY);
         sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
 
@@ -877,6 +870,7 @@ public class PathXMiniGame extends MiniGame {
         }
         s = new carSprite(sT, intersection.getX(), intersection.getY(), 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         intersection.setHasStarter(true);
+        s.setCurrentIntersection(intersection);
         guiEnemies.put(sprite, s);
     }
 
@@ -948,8 +942,6 @@ public class PathXMiniGame extends MiniGame {
         data = new PathXDataModel(this);
         dataCopy = (PathXDataModel) data;
 
-        mouseMoveX = 0;
-        mouseMoveY = 0;
 
     }
 

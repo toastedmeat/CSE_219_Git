@@ -60,7 +60,7 @@ public class PathXGamePanel extends JPanel {
 
     private String renderedBackground;
 
-    public Viewport viewport;
+    private Viewport viewport;
 
     private boolean moved;
 
@@ -134,7 +134,7 @@ public class PathXGamePanel extends JPanel {
 
                 // RENDER THE INTERSECTIONS
                 renderIntersections(g2);
-                
+
                 renderPlayer(g2);
 
                 if (!game.getGUIEnemies().isEmpty()) {
@@ -163,6 +163,14 @@ public class PathXGamePanel extends JPanel {
         return renderedBackground;
     }
 
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public void setViewport(Viewport viewport) {
+        this.viewport = viewport;
+    }
+
     // RENDERING HELPER METHODS
     // - renderBackground
     // - renderGUIControls
@@ -182,9 +190,9 @@ public class PathXGamePanel extends JPanel {
         // THERE IS ONLY ONE CURRENTLY SET
         Sprite bg = game.getGUIDecor().get(toRender);
         if (toRender.equals(BACKGROUND_GAME_TYPE)) {
-            renderSprite(g, bg);
+            renderBackgroundPosition1(g, bg);
         } else {
-            renderSprite2(g, bg);
+            renderPosition2(g, bg);
         }
     }
 
@@ -193,7 +201,7 @@ public class PathXGamePanel extends JPanel {
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
-                renderSprite2(g, s);
+                renderPosition2(g, s);
             }
         }
 
@@ -205,15 +213,15 @@ public class PathXGamePanel extends JPanel {
         for (Sprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(LEVEL_GAME_TYPE)) {
                 renderSprite3(g, s);
-            } 
+            }
         }
 
     }
-    
-    public void renderPlayer(Graphics g){
+
+    public void renderPlayer(Graphics g) {
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites) {
-        if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
+            if (s.getSpriteType().getSpriteTypeID().equals(PLAYER_TYPE)) {
                 renderPlayer(g, s);
             }
         }
@@ -225,7 +233,7 @@ public class PathXGamePanel extends JPanel {
         Iterator<carSprite> itE = buttonSprites.iterator();
         while (itE.hasNext()) {
             carSprite s = itE.next();
-            
+
             renderCars(g, s);
         }
     }
@@ -238,7 +246,7 @@ public class PathXGamePanel extends JPanel {
      *
      * @param s the Sprite to be rendered
      */
-    public void renderSprite(Graphics g, Sprite s) {
+    public void renderBackgroundPosition1(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
@@ -247,12 +255,12 @@ public class PathXGamePanel extends JPanel {
         }
     }
 
-    public void renderSprite2(Graphics g, Sprite s) {
+    public void renderPosition2(Graphics g, Sprite s) {
         // ONLY RENDER THE VISIBLE ONES
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int) s.getX() - 17, (int) s.getY() - 129, null);
+            g.drawImage(img, (int) s.getX() - 17 - viewport.getViewportX(), (int) s.getY() - 129 - viewport.getViewportY(), null);
         }
     }
 
@@ -264,12 +272,12 @@ public class PathXGamePanel extends JPanel {
             g.drawImage(img, (int) s.getX() - 274, (int) s.getY() - 14, null);
         }
     }
-    
-    public void renderPlayer(Graphics g, Sprite s){
+
+    public void renderPlayer(Graphics g, Sprite s) {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int) s.getX() - 30, (int) s.getY() - 34, null);
+            g.drawImage(img, (int) s.getX() - 30 - viewport.getViewportX(), (int) s.getY() - 34 - viewport.getViewportY(), null);
         }
     }
 
@@ -277,7 +285,34 @@ public class PathXGamePanel extends JPanel {
         if (!s.getState().equals(PathXTileState.INVISIBLE_STATE.toString())) {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
-            g.drawImage(img, (int) s.getX() - 30, (int) s.getY() - 34, null);
+
+            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(POLICE_TYPE)) {
+                Iterator<Road> it = model.roadsIterator();
+                while (it.hasNext()) {
+                    Road road = it.next();
+                    if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation())) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode2().getX(), road.getNode2().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode2());
+                        }
+                    } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation())) {
+                        if (!s.isMovingToTarget()) {
+                            s.setTarget(road.getNode1().getX(), road.getNode1().getY());
+                            s.startMovingToTarget(road.getSpeedLimit());
+                            s.setNextIntersection(road.getNode1());
+                        }
+                    }
+                }
+            }
+            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
+                //System.out.println("POO1");
+            }
+            if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
+                //System.out.println("POO2");
+            }
+            s.update(game);
+            g.drawImage(img, (int) s.getX() - viewport.getViewportX() - 30, (int) s.getY() - viewport.getViewportY() - 34, null);
         }
     }
 

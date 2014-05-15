@@ -5,6 +5,9 @@
  */
 package PathX.ui;
 
+import PathX.data.Intersection;
+import PathX.data.Road;
+import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
 
@@ -12,7 +15,7 @@ import mini_game.SpriteType;
  *
  * @author Eric
  */
-public class carSprite extends Sprite{
+public class carSprite extends Sprite {
     // EACH TILE HAS AN ID, WHICH WE'LL USE FOR SORTING
 
     private int tileId;
@@ -25,7 +28,11 @@ public class carSprite extends Sprite{
     private float targetX;
     private float targetY;
 
-    public carSprite(SpriteType initSpriteType,
+    private Intersection currentIntersection;
+    private Intersection nextIntersection;
+    private Road currentRoad;
+
+    carSprite(SpriteType initSpriteType,
             float initX, float initY,
             float initVx, float initVy,
             String initState) {
@@ -33,6 +40,7 @@ public class carSprite extends Sprite{
         super(initSpriteType, initX, initY, initVx, initVy, initState);
 
     }
+
     public int getTileId() {
         return tileId;
     }
@@ -53,18 +61,37 @@ public class carSprite extends Sprite{
         return targetY;
     }
 
-    public boolean isMovingToTarget() {
-        return movingToTarget;
+    public Road getCurrentRoad() {
+        return currentRoad;
     }
 
-    public void setStartingIntersection(int initGridColumn, int initGridRow) {
-        gridColumn = initGridColumn;
-        gridRow = initGridRow;
+    public Intersection getCurrentIntersection() {
+        return currentIntersection;
+    }
+
+    public Intersection getNextIntersection() {
+        return nextIntersection;
+    }
+
+    public void setNextIntersection(Intersection nextIntersection) {
+        this.nextIntersection = nextIntersection;
+    }
+
+    public boolean isMovingToTarget() {
+        return movingToTarget;
     }
 
     public void setTarget(float initTargetX, float initTargetY) {
         targetX = initTargetX;
         targetY = initTargetY;
+    }
+
+    public void setCurrentIntersection(Intersection i) {
+        currentIntersection = i;
+    }
+
+    public void setCurrentRoad(Road r) {
+        currentRoad = r;
     }
 
     public float calculateDistanceToTarget() {
@@ -112,5 +139,23 @@ public class carSprite extends Sprite{
         if ((diffY > 0) && (vY < 0)) {
             vY *= -1;
         }
+    }
+
+    /**
+     * This is good ^^
+     *
+     * @param game
+     */
+    @Override
+    public void update(MiniGame game) {
+        if ((x >= targetX - 5 && x <= targetX + 5) && (y >= targetY - 10 && y <= targetY + 10)) {
+            movingToTarget = false;
+            currentIntersection = nextIntersection;
+        } else {
+            // MOVE THE SPRITE USING ITS VELOCITY
+            x += vX;
+            y += vY;
+        }
+
     }
 }

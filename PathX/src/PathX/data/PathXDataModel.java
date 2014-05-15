@@ -85,11 +85,12 @@ public class PathXDataModel extends MiniGameDataModel {
         viewport = new Viewport();
         levelBeingEdited = false;
         editMode = PathXEditMode.NOTHING_SELECTED;
+        
+        viewport.setScreenSize(1280, 720);
         //startRoadIntersection = null;
         
 
-    }
-    
+    }    
 
     // ACCESSOR METHODS
     public PathXMiniGame getGame(){
@@ -100,17 +101,14 @@ public class PathXDataModel extends MiniGameDataModel {
     public boolean getLoadedLevel() {        return loadedLevel;    }
     public void setLoadedLevel(boolean loadedLevel) {        this.loadedLevel = loadedLevel;    }
     public PathXEditMode    getEditMode()               {   return editMode;                }
-    //public Viewport         getViewport()               {   return viewport;                }
+    @Override
+    public Viewport         getViewport()               {   return viewport;                }
     public boolean isLevelBeingEdited() {        return levelBeingEdited;    }
-    public Image getBackgroundImage() {        return backgroundImage;    }
     public Image getStartingLocationImage() {        return startingLocationImage;    }
     public Image getDesinationImage() {        return destinationImage;    }
     public Image getPlayerLocationImage(){ return playerImage;}
     public Intersection getSelectedIntersection() {        return selectedIntersection;    }
     public Road getSelectedRoad() {        return selectedRoad;    }
-    //public Intersection getStartRoadIntersection() {        return startRoadIntersection;    }
-    //public int getLastMouseX() {        return lastMouseX;    }
-    //public int getLastMouseY() {        return lastMouseY;    }
     public Intersection getStartingLocation() {        return level.startingLocation;    }
     public Intersection getDestination() {        return level.destination;    }
     public boolean isDataUpdatedSinceLastSave() {        return dataUpdatedSinceLastSave;    }
@@ -269,8 +267,8 @@ public class PathXDataModel extends MiniGameDataModel {
         // WILL PROCESS THE PROPER KEY PRESSES
         
         // THESE ARE CANVAS COORDINATES
-        int canvasX = (x - 274) + miniGame.getMouseMoveX();
-        int canvasY = (y - 17) + miniGame.getMouseMoveY();
+        int canvasX = (x - 274);
+        int canvasY = (y - 17);
         
         
         // IF WE ARE IN ONE OF THESE MODES WE MAY WANT TO SELECT

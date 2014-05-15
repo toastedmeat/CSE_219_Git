@@ -45,6 +45,8 @@ public class PathXPanel extends JPanel
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
     
+    private Viewport vp; 
+    
     /**
      * This constructor stores the game and data references,
      * which we'll need for rendering.
@@ -61,6 +63,15 @@ public class PathXPanel extends JPanel
         numberFormatter = NumberFormat.getNumberInstance();
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
+        vp = data.getViewport();
+    }
+
+    public Viewport getVp() {
+        return vp;
+    }
+
+    public void setVp(Viewport vp) {
+        this.vp = vp;
     }
     
     // MUTATOR METHODS
@@ -117,18 +128,10 @@ public class PathXPanel extends JPanel
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
             if (!data.notStarted())
             {
-                // AND THE TILES
-                renderTiles(g);
                 
                 // AND THE DIALOGS, IF THERE ARE ANY
                 renderDialogs(g);
                                 
-                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
-                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
-                renderGrid(g);
-                
-                // RENDER THE ALGORITHM NAME
-                renderHeader(g);
             }
 
             // AND THE BUTTONS AND DECOR
@@ -197,11 +200,6 @@ public class PathXPanel extends JPanel
         }
     }
     
-    public void renderHeader(Graphics g)
-    {
-        g.setColor(COLOR_ALGORITHM_HEADER);
-        
-    }
     
 
     /**
@@ -243,16 +241,6 @@ public class PathXPanel extends JPanel
         }
     }
         
-    /**
-     * Renders all the game tiles, doing so carefully such
-     * that they are rendered in the proper order.
-     * 
-     * @param g the Graphics context of this panel.
-     */
-    public void renderTiles(Graphics g)
-    {
-       
-    }
 
     /**
      * Helper method for rendering the tiles that are currently moving.
@@ -312,17 +300,6 @@ public class PathXPanel extends JPanel
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int)s.getX(), (int)s.getY(), bgST.getWidth(), bgST.getHeight(), null); 
         }
-    }
-
-    /**
-     * This method renders grid lines in the game tile grid to help
-     * during debugging.
-     * 
-     * @param g Graphics context for this panel.
-     */
-    public void renderGrid(Graphics g)
-    {
-        
     }
     
     /**

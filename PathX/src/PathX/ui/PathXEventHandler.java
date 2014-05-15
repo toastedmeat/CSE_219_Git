@@ -172,12 +172,10 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
             }
-        } else {
+        } else if(!game.getInsideCanvas().isEnabled()){
             for (int i = 1; i <= 20; i++) {
-                if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() < 120) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() + 20);
-                    game.getPXG().viewport.move(0, -20);
-                    game.setMouseMoveY(-20);
+                if (game.getPXG().getViewport().getViewportY() > -100) {
+                    game.getPXG().getViewport().move(0, -20);
                 }
             }
         }
@@ -190,12 +188,10 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
             }
-        } else {
+        } else if(!game.getInsideCanvas().isEnabled()){
             for (int i = 1; i <= 20; i++) {
-                if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() > -300) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() - 20);
-                    game.getPXG().viewport.move(0, 20);
-                    game.setMouseMoveY(20);
+                if (game.getPXG().getViewport().getViewportY() < 300) {
+                    game.getPXG().getViewport().move(0, 20);
                 }
             }
         }
@@ -208,12 +204,10 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
             }
-        } else {
+        } else if(!game.getInsideCanvas().isEnabled()){
             for (int i = 1; i <= 20; i++) {
-                if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() < 0) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() + 20);
-                    game.getPXG().viewport.move(-20, 0);
-                    game.setMouseMoveX(-20);
+                if (game.getPXG().getViewport().getViewportX() > 0) {
+                    game.getPXG().getViewport().move(-20, 0);
                 }
             }
         }
@@ -226,12 +220,10 @@ public class PathXEventHandler {
             for (String level : gameLevels) {
                 game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
             }
-        } else {
+        } else if(!game.getInsideCanvas().isEnabled()){
             for (int i = 1; i <= 20; i++) {
-                if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() > -600) {
-                    game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() - 20);
-                    game.getPXG().viewport.move(20, 0);
-                    game.setMouseMoveX(20);
+                if (game.getPXG().getViewport().getViewportX() < 600) {
+                    game.getPXG().getViewport().move(20, 0);
                 }
             }
         }
@@ -252,19 +244,11 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() + 20);
                 }
-            } else {
-                for (int i = 1; i <= 20; i++) {
-                    if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() < 120) {
-                        game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() + 20);
-                        game.getPXG().viewport.move(0, -20);
-                        game.setMouseMoveY(-20);
-                        game.getGUIButtons().get(PLAYER_TYPE).setY(game.getGUIButtons().get(PLAYER_TYPE).getY() + 20);
-                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
-                        for (Sprite s : buttonSprites) {
-                            s.setY(s.getY() + 20);
-                        }
+            } else if (!game.getInsideCanvas().isEnabled()){
+                    if (game.getPXG().getViewport().getViewportY() > -100) {
+                        game.getPXG().getViewport().move(0, -20);
                     }
-                }
+                System.out.println("OH NO");
             }
         }
 
@@ -275,19 +259,11 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setY(game.getGUIButtons().get(level).getY() - 20);
                 }
-            } else {
-                for (int i = 1; i <= 20; i++) {
-                    if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() > -300) {
-                        game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setY(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getY() - 20);
-                        game.getPXG().viewport.move(0, 20);
-                        game.setMouseMoveY(20);
-                        game.getGUIButtons().get(PLAYER_TYPE).setY(game.getGUIButtons().get(PLAYER_TYPE).getY() - 20);
-                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
-                        for (Sprite s : buttonSprites) {
-                            s.setY(s.getY() - 20);
-                        }
+            } else if(!game.getInsideCanvas().isEnabled()){
+                    if (game.getPXG().getViewport().getViewportY() < 300) {
+                        game.getPXG().getViewport().move(0, 20);
                     }
-                }
+                System.out.println("OH NO");
             }
         }
         if (keyCode == KeyEvent.VK_LEFT) {
@@ -297,19 +273,11 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() + 20);
                 }
-            } else {
-                for (int i = 1; i <= 20; i++) {
-                    if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() < 0) {
-                        game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() + 20);
-                        game.getPXG().viewport.move(-20, 0);
-                        game.setMouseMoveX(-20);
-                        game.getGUIButtons().get(PLAYER_TYPE).setX(game.getGUIButtons().get(PLAYER_TYPE).getX() + 20);
-                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
-                        for (Sprite s : buttonSprites) {
-                            s.setX(s.getX() + 20);
-                        }
+            } else if(!game.getInsideCanvas().isEnabled()){
+                    if (game.getPXG().getViewport().getViewportX() > 0) {
+                        game.getPXG().getViewport().move(-20, 0);
                     }
-                }
+                
             }
         }
         if (keyCode == KeyEvent.VK_RIGHT) {
@@ -319,21 +287,14 @@ public class PathXEventHandler {
                 for (String level : gameLevels) {
                     game.getGUIButtons().get(level).setX(game.getGUIButtons().get(level).getX() - 20);
                 }
-            } else {
-                for (int i = 1; i <= 20; i++) {
-                    if (game.getPXG().getRenderedBackground().equals("LEVEL" + i + "_GAME_TYPE") && game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() > -600) {
-                        game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").setX(game.getGUIDecor().get("LEVEL" + i + "_GAME_TYPE").getX() - 20);
-                        game.getPXG().viewport.move(20, 0);
-                        game.setMouseMoveX(20);
-                        game.getGUIButtons().get(PLAYER_TYPE).setX(game.getGUIButtons().get(PLAYER_TYPE).getX() - 20);
-                        Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
-                        for (Sprite s : buttonSprites) {
-                            s.setX(s.getX() - 20);
-                        }
-                    }
+            } else if(!game.getInsideCanvas().isEnabled()){
+                if (game.getPXG().getViewport().getViewportX() < 600) {
+                    game.getPXG().getViewport().move(20, 0);
                 }
+
             }
         }
+
     }
 
 }
