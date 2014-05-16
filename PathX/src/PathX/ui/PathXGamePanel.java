@@ -284,7 +284,7 @@ public class PathXGamePanel extends JPanel {
     public void moveToDestination1(carSprite s, Road road) {
         s.setTarget(road.getNode2().getX(), road.getNode2().getY());
         s.startMovingToTarget(road.getSpeedLimit());
-        road.getNode1().setVisited(true);
+        //road.getNode1().setVisited(true);
         road.setPreviousNode(road.getNode1());
         s.setNextIntersection(road.getNode2());
     }
@@ -292,7 +292,7 @@ public class PathXGamePanel extends JPanel {
     public void moveToDestination2(carSprite s, Road road) {
         s.setTarget(road.getNode1().getX(), road.getNode1().getY());
         s.startMovingToTarget(road.getSpeedLimit());
-        road.getNode2().setVisited(true);
+        //road.getNode2().setVisited(true);
         road.setPreviousNode(road.getNode2());
         s.setNextIntersection(road.getNode1());
     }
@@ -302,7 +302,7 @@ public class PathXGamePanel extends JPanel {
         while (it.hasNext()) {
             Road road = it.next();
             if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation())
-                    && !road.getNode2().equals(model.getDestination()) && !road.isOneWay() && !road.getNode2().isVisited()) {
+                    && !road.getNode2().equals(model.getDestination()) && !road.isOneWay() && !road.getNode2().isVisited() && !road.isIsClosed() && road.getNode2().isOpen()) {
                 if (!s.isMovingToTarget() && !s.isReachedDestination()) {
 
                     moveToDestination1(s, road);
@@ -312,7 +312,7 @@ public class PathXGamePanel extends JPanel {
                     road.getPreviousNode().setVisited(false);
                 }
             } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation())
-                    && !road.getNode1().equals(model.getDestination()) && !road.isOneWay() && !road.getNode1().isVisited()) {
+                    && !road.getNode1().equals(model.getDestination()) && !road.isOneWay() && !road.getNode1().isVisited() && !road.isIsClosed()&& road.getNode1().isOpen()) {
                 if (!s.isMovingToTarget()) {
                     if (!s.isMovingToTarget() && !s.isReachedDestination()) {
 
@@ -332,17 +332,19 @@ public class PathXGamePanel extends JPanel {
             SpriteType bgST = s.getSpriteType();
             Image img = bgST.getStateImage(s.getState());
 
-            if (!model.isPaused()) {
-                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(POLICE_TYPE)) {
-                    moveCars(s);
-                }
-                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
-                    moveCars(s);
-                }
-                if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
-                    moveCars(s);
-                }
+            if (model.getIsStarted()) {
+                if (!model.isPaused()) {
+                    if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(POLICE_TYPE)) {
+                        moveCars(s);
+                    }
+                    if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(ZOMBIE_TYPE)) {
+                        moveCars(s);
+                    }
+                    if (s.getSpriteType().getSpriteTypeID().equalsIgnoreCase(BANDIT_TYPE)) {
+                        moveCars(s);
+                    }
 
+                }
             }
             s.update(game);
             g.drawImage(img, (int) s.getX() - viewport.getViewportX() - 30, (int) s.getY() - viewport.getViewportY() - 34, null);

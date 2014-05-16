@@ -59,10 +59,13 @@ public class PathXDataModel extends MiniGameDataModel {
     // AND IS RENDERED DIFFERENTLY
     Intersection selectedIntersection;
     Road selectedRoad;
+    carSprite selectedSprite;
 
     // IN CASE WE WANT TO TRACK MOVEMENTS
     int lastMouseX;
     int lastMouseY;
+    
+    boolean isStarted;
     
     double speed;
 
@@ -76,7 +79,7 @@ public class PathXDataModel extends MiniGameDataModel {
 
     boolean[] levelsLocked = new boolean[20];
     boolean[] levelsRobbed = new boolean[20];
-    boolean[] unlockedSpecials = new boolean[16];
+    boolean[] unlockedSpecials = new boolean[17];
     
     String[] levelsNames = {"./pathX/Level1.xml","./pathX/Level2.xml",
         "./pathX/Level3.xml","./pathX/Level4.xml","./pathX/Level5.xml",
@@ -180,6 +183,20 @@ public class PathXDataModel extends MiniGameDataModel {
     public Road getSelectedRoad() {
         return selectedRoad;
     }
+
+    public boolean getIsStarted() {
+        return isStarted;
+    }
+
+    public void setIsStarted(boolean isStarted) {
+        this.isStarted = isStarted;
+    }
+    
+    public carSprite getSelectedSprite(){
+        return selectedSprite;
+    }
+    
+    public void setSelectedSprite(carSprite cs){ selectedSprite = cs; }
 
     public Intersection getStartingLocation() {
         return level.startingLocation;
@@ -435,7 +452,6 @@ public class PathXDataModel extends MiniGameDataModel {
      * @param y The y-axis pixel location of the mouse click.
      */
     @Override
-
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {
 
         // MAKE SURE THE CANVAS HAS FOCUS SO THAT IT
@@ -449,14 +465,15 @@ public class PathXDataModel extends MiniGameDataModel {
         // ANOTHER INTERSECTION ROAD
         if (this.isNothingSelected()
                 || this.isIntersectionSelected()
-                || this.isRoadSelected()) {
+                || this.isRoadSelected()
+                ) {
             // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
             Intersection i = this.findIntersectionAtCanvasLocation(canvasX, canvasY);
             if (i != null) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 this.setSelectedIntersection(i);
                 if (player.isEnabled() && miniGame.getPXG().isEnabled()
-                        && i.isOpen() && !isPaused()) {
+                        && i.isOpen() && !isPaused() && isStarted) {
                     player.setTarget(i.getX(), i.getY());
                     if(speed < 1){
                         speed = 1;
@@ -470,6 +487,14 @@ public class PathXDataModel extends MiniGameDataModel {
                     player.update(miniGame);
                 }
                 return;
+            }
+            carSprite cs = this.findSpriteAtCanvasLocation(canvasX, canvasY);
+            if(cs != null){
+                if(!miniGame.isSoundMuted()){
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
+                }
+                this.setSelectedSprite(cs);
+                
             }
 
             // IF NO INTERSECTION WAS SELECTED THEN CHECK TO SEE IF 
@@ -695,6 +720,17 @@ public class PathXDataModel extends MiniGameDataModel {
             if (distance < INTERSECTION_RADIUS) {
                 // MAKE THIS THE SELECTED INTERSECTION
                 return i;
+            }
+        }
+        return null;
+    }
+    public carSprite findSpriteAtCanvasLocation(int canvasX, int canvasY) {
+        // CHECK TO SEE IF THE USER IS SELECTING AN INTERSECTION
+        for (carSprite s : miniGame.getGUIEnemies().values()) {
+            double distance = calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), canvasX + viewport.getViewportX(), canvasY + viewport.getViewportY());
+            if (distance < INTERSECTION_RADIUS) {
+                // MAKE THIS THE SELECTED INTERSECTION
+                return s;
             }
         }
         return null;

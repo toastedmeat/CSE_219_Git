@@ -198,6 +198,9 @@ public class PathXMiniGame extends MiniGame {
 
         guiButtons.get(SOUND_CHECK_BOX_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.get(SOUND_CHECK_BOX_TYPE).setEnabled(false);
+        
+        guiButtons.get(START_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
 
         // ACTIVATE THE LEVEL SELECT BUTTONS
         // DEACTIVATE THE LEVEL SELECT BUTTONS
@@ -315,6 +318,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_Y);
+        
+        guiButtons.get(START_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
 
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
@@ -714,6 +720,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(BACK_BUTTON_TYPE).setX(BACK_BUTTON_X);
         guiButtons.get(BACK_BUTTON_TYPE).setY(BACK_BUTTON_Y);
+        
+        guiButtons.get(START_BUTTON_TYPE).setState(PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
         // DEACTIVATE THE LEVEL SELECT BUTTONS
         ArrayList<String> levels = props.getPropertyOptionsList(pathXPropertyType.LEVEL_OPTIONS);
         for (String level : levels) {
@@ -771,6 +780,9 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
         guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_GAME_X);
         guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_GAME_Y);
+        
+        guiButtons.get(START_BUTTON_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
+        guiButtons.get(START_BUTTON_TYPE).setEnabled(true);
 
         guiEnemies.get(PLAYER_TYPE).setState(PathXTileState.VISIBLE_STATE.toString());
         guiEnemies.get(PLAYER_TYPE).setEnabled(true);
@@ -838,7 +850,7 @@ public class PathXMiniGame extends MiniGame {
             audio.play(pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
         }
         dataCopy.setSpeed(26);
-
+        dataCopy.setIsStarted(false);
         isOnGameLevel = true;
     }
 
@@ -1258,6 +1270,17 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         s = new Sprite(sT, SOUND_X, SOUND_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiButtons.put(SOUND_CHECK_BOX_TYPE, s);
+        
+        // THEN THE CHECK BUTTON FOR SOUND
+        String newButtonStart = props.getProperty(pathXPropertyType.IMAGE_BUTTON_START);
+        sT = new SpriteType(START_BUTTON_TYPE);
+        img = loadImageWithColorKey(imgPath + newButtonStart, COLOR_KEY);
+        sT.addState(PathXTileState.VISIBLE_STATE.toString(), img);
+        String newButtonStartCheckedOver = props.getProperty(pathXPropertyType.IMAGE_BUTTON_START_MOUSE_OVER);
+        img = loadImageWithColorKey(imgPath + newButtonStartCheckedOver, COLOR_KEY);
+        sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
+        s = new Sprite(sT, START_X, START_Y, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
+        guiButtons.put(START_BUTTON_TYPE, s);
 
         // THEN THE BACK BUTTON
         String backButton = props.getProperty(pathXPropertyType.IMAGE_BUTTON_BACK);
@@ -1499,6 +1522,12 @@ public class PathXMiniGame extends MiniGame {
         guiButtons.get(PAUSE_BUTTON_TYPE).setActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 eventHandler.respondToPauseRequest();
+            }
+        });
+        
+        guiButtons.get(START_BUTTON_TYPE).setActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                eventHandler.respondToStartRequest();
             }
         });
 

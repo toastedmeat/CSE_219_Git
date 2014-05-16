@@ -309,6 +309,13 @@ public class PathXEventHandler {
 
     }
 
+    public void respondToStartRequest() {
+        if (!game.isSoundMuted()) {
+            game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
+        }
+        game.getData().setIsStarted(true);
+    }
+
     public void respondToPauseRequest() {
         if (game.getDataModel().isPaused()) {
             game.getDataModel().unpause();
@@ -407,7 +414,6 @@ public class PathXEventHandler {
                 if (game.getPXG().getViewport().getViewportX() < 600) {
                     game.getPXG().getViewport().move(20, 0);
                 }
-
             }
         }
         if (keyCode == KeyEvent.VK_F4) {
@@ -415,8 +421,10 @@ public class PathXEventHandler {
             JOptionPane jop = new JOptionPane();
             jop.setMessage(HELP_INFO);
             jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = jop.createDialog(game.getPXG(), "HELP");
+            JDialog dialog = jop.createDialog(game.getCanvas(), "HELP");
+            dialog.setLocation(game.getCanvas().getWidth() / 3, game.getCanvas().getHeight() / 4);
             dialog.setVisible(true);
+
         }
         if (keyCode == KeyEvent.VK_F3) {
             if (game.getDataModel().isPaused()) {
@@ -439,10 +447,14 @@ public class PathXEventHandler {
             for (int i = 0; i < game.getData().getLevelsLocked().length; i++) {
                 game.getData().setLevelsLocked(false, i);
             }
+            for(int i = 0; i < game.getData().getUnlockedSpecials().length; i++){
+                game.getData().setUnlockedSpecials(true, i);
+            }
             game.switchToGameScreen();
         }
 
         if (keyCode == KeyEvent.VK_F) { // FREEZE TIME
+            if (game.getData().getUnlockedSpecials()[2]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -459,23 +471,27 @@ public class PathXEventHandler {
                     game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_G) { // MAKE LIGHTS GREEN
-            if (!game.isSoundMuted()) {
-                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
-            }
-            if (game.getData().getSelectedIntersection() != null) {
-                if (game.getData().getTotalMoney() > 5) {
-                    game.getData().getSelectedIntersection().setOpen(true);
-                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 5);
-                } else {
-                    if (!game.isSoundMuted()) {
-                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+            if (game.getData().getUnlockedSpecials()[0]) {
+                if (!game.isSoundMuted()) {
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+                }
+                if (game.getData().getSelectedIntersection() != null) {
+                    if (game.getData().getTotalMoney() > 5) {
+                        game.getData().getSelectedIntersection().setOpen(true);
+                        game.getData().setTotalMoney(game.getData().getTotalMoney() - 5);
+                    } else {
+                        if (!game.isSoundMuted()) {
+                            game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                        }
                     }
                 }
             }
         }
         if (keyCode == KeyEvent.VK_R) { // MAKE LIGHTS RED
+            if (game.getData().getUnlockedSpecials()[1]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -490,8 +506,10 @@ public class PathXEventHandler {
 
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_X) { // INCREASE SPEED LIMIT
+            if (game.getData().getUnlockedSpecials()[4]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -506,8 +524,10 @@ public class PathXEventHandler {
 
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_Z) { // DECREASE SPEED LIMIT
+            if (game.getData().getUnlockedSpecials()[3]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -522,8 +542,10 @@ public class PathXEventHandler {
 
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_P) { // INCREASE PLAYER SPEED
+            if (game.getData().getUnlockedSpecials()[5]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -536,13 +558,46 @@ public class PathXEventHandler {
                     game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
                 }
             }
-
+            }
         }
         if (keyCode == KeyEvent.VK_T) { // FLAT TIRE
+            if (game.getData().getUnlockedSpecials()[6]) {
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getSelectedSprite() != null) {
+                if (game.getData().getTotalMoney() > 20) {
+                    game.getData().getSelectedSprite().setFlatTire(true);
+                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 20);
+                } else {
+                    if (!game.isSoundMuted()) {
+                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                    }
+
+                }
+            }
+            }
         }
         if (keyCode == KeyEvent.VK_E) { // EMPTY GAS TANK
+            if (game.getData().getUnlockedSpecials()[7]) {
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getSelectedSprite() != null) {
+                if (game.getData().getTotalMoney() > 20) {
+                    game.getData().getSelectedSprite().setGasTank(true);
+                    game.getData().setTotalMoney(game.getData().getTotalMoney() - 20);
+                } else {
+                    if (!game.isSoundMuted()) {
+                        game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                    }
+
+                }
+            }
+            }
         }
         if (keyCode == KeyEvent.VK_H) { // CLOSE ROAD
+            if (game.getData().getUnlockedSpecials()[8]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -557,8 +612,10 @@ public class PathXEventHandler {
 
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_O) { // OPEN INTERSECTION
+            if (game.getData().getUnlockedSpecials()[10]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -583,8 +640,10 @@ public class PathXEventHandler {
                     }
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_C) { // CLOSE INTERSECTION
+            if (game.getData().getUnlockedSpecials()[9]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -609,14 +668,34 @@ public class PathXEventHandler {
                     }
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_Q) { // STEAL
+            if (game.getData().getUnlockedSpecials()[11]) {
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getTotalMoney() > 30) {
+                game.getGUIEnemies().get(PLAYER_TYPE).setThiefMode(true);
+                game.getData().setTotalMoney(game.getData().getTotalMoney() - 30);
+            } else {
+                if (!game.isSoundMuted()) {
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                }
+            }
+            }
         }
         if (keyCode == KeyEvent.VK_M) { // MIND CONTROL
+            if (game.getData().getUnlockedSpecials()[12]) {
+        }
         }
         if (keyCode == KeyEvent.VK_Y) { // FLYING
+            if (game.getData().getUnlockedSpecials()[15]){
+                
+            }
         }
         if (keyCode == KeyEvent.VK_V) { // INVINCIBILITY
+            if (game.getData().getUnlockedSpecials()[16]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -628,10 +707,15 @@ public class PathXEventHandler {
                     game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
                 }
             }
+            }
         }
         if (keyCode == KeyEvent.VK_L) { // MINDLESS TERROR
+            if (game.getData().getUnlockedSpecials()[14]) {
+                
+            }
         }
         if (keyCode == KeyEvent.VK_B) { // INTANGABILITY
+            if (game.getData().getUnlockedSpecials()[13]) {
             if (!game.isSoundMuted()) {
                 game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
             }
@@ -642,6 +726,7 @@ public class PathXEventHandler {
                 if (!game.isSoundMuted()) {
                     game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
                 }
+            }
             }
         }
     }

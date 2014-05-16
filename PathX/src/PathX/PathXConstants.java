@@ -40,6 +40,7 @@ public class PathXConstants {
     public static final String ZOMBIE_TYPE = "ZOMBIE_TYPE";
 
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
+    public static final String START_BUTTON_TYPE = "START_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
     public static final String PAUSE_BUTTON_TYPE = "PAUSE_BUTTON_TYPE";
@@ -120,23 +121,27 @@ public class PathXConstants {
     public static final String LEVEL20_SCREEN_STATE = "LEVEL20_SCREEN_STATE";
 
     public static final String HELP_INFO
-            = "F\t	Freeze/Unfreeze Time 3\n"
-            + "G\t	Make Lights Green 1\n"
-            + "R\t	Make Lights Red 2\n"
-            + "X\t	Increase Speed Limit 5\n"
-            + "Z\t	Decrease Speed Limit 4\n"
-            + "P\t	Increase Player Speed 6\n"
-            + "T\t	Flat Tire 7 \n"
-            + "E\t	Empty Gas Tank 8\n"
-            + "H\t	Close Road 9 \n"
-            + "O\t	Open Intersection 11\n"
-            + "C\t	Close Intersection 10 \n"
-            + "Q\t	Steal 12\n"
-            + "M\t	Mind Control 13\n"
-            + "Y\t	Flying  16 \n"
-            + "V\t	Invincibility 17\n"
-            + "L\t	Mindless Terror 15\n"
-            + "B\t	Intangibility 14";
+            = "F__	Freeze/Unfreeze Time 3\n"
+            + "G__	Make Lights Green 1\n"
+            + "R__	Make Lights Red 2\n"
+            + "X__	Increase Speed Limit 5\n"
+            + "Z__	Decrease Speed Limit 4\n"
+            + "P__	Increase Player Speed 6\n"
+            + "T__	Flat Tire 7 \n"
+            + "E__	Empty Gas Tank 8\n"
+            + "H__	Close Road 9 \n"
+            + "O__	Open Intersection 11\n"
+            + "C__	Close Intersection 10 \n"
+            + "Q__	Steal 12\n"
+            + "M__	Mind Control 13\n"
+            + "Y__	Flying  16 \n"
+            + "V__	Invincibility 17\n"
+            + "L__	Mindless Terror 15\n"
+            + "B__	Intangibility 14\n"
+            + "F1__	Unlock all Levels\n"
+            + "F2__	Add $5000\n"
+            + "F3__	Mute\n"
+            + "F4__	Help Dialog Box\n";
 
     //Level Information
     public static final String LEVEL1_INFO = "Level 1\nStony Brook University, NY\nRob the bank in SBU\nand make a getaway\nto earn $200";
@@ -212,6 +217,9 @@ public class PathXConstants {
     public static final int MUSIC_Y = 370;
     public static final int SOUND_X = 450;
     public static final int SOUND_Y = 290;
+    
+    public static final int START_X = 15;
+    public static final int START_Y = 210;
 
     // RENDERING SETTINGS
     public static final int INTERSECTION_RADIUS = 20;

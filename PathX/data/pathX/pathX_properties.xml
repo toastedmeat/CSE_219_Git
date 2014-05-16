@@ -74,6 +74,8 @@
         <property name="IMAGE_WINDOW_ICON"                      value="./pathX/WindowIcon.png"></property>
         <property name="IMAGE_BUTTON_CHECK_BOX"                 value="./pathX/checkBox.png"></property>
         <property name="IMAGE_BUTTON_CHECK_BOX_CHECKED"         value="./pathX/checkBoxChecked.png"></property>
+        <property name="IMAGE_BUTTON_START"                     value="./pathX/startButton.png"></property>
+        <property name="IMAGE_BUTTON_START_MOUSE_OVER"          value="./pathX/startButtonMouseOver.png"></property>
 
         <!-- ALL THE TEXT TO BE DISPLAYED -->
         <property name="TEXT_ERROR_LOADING_AUDIO"               value="Error Loading an Audio File"></property>

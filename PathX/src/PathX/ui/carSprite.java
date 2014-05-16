@@ -11,6 +11,7 @@ import PathX.data.Intersection;
 import PathX.data.Road;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import mini_game.MiniGame;
@@ -33,9 +34,22 @@ public class carSprite extends Sprite {
     private boolean reachedDestination;
 
     private boolean gasTank;
-    private boolean tireCondition;
+    private boolean flatTire;
 
     private boolean invincibile;
+    private boolean thiefMode;
+    private boolean mindControl;
+    private boolean mindlessTerror;
+
+    private int timerGasTank;
+    private int timerTireCondition;
+
+    private int timerInvincibile;
+    private int timerThiefMode;
+    private int timerIntangeable;
+
+    private int timerMindControl;
+    private int timerMindlessTerror;
 
     private float targetX;
     private float targetY;
@@ -45,6 +59,8 @@ public class carSprite extends Sprite {
     private Road currentRoad;
 
     private boolean intangeable;
+
+    private boolean dontMove;
 
     carSprite(SpriteType initSpriteType,
             float initX, float initY,
@@ -120,12 +136,36 @@ public class carSprite extends Sprite {
         currentRoad = r;
     }
 
+    public boolean isThiefMode() {
+        return thiefMode;
+    }
+
+    public void setThiefMode(boolean thiefMode) {
+        this.thiefMode = thiefMode;
+    }
+
     public boolean isInvincibile() {
         return invincibile;
     }
 
     public void setInvincibile(boolean invincibile) {
         this.invincibile = invincibile;
+    }
+
+    public boolean isMindControl() {
+        return mindControl;
+    }
+
+    public void setMindControl(boolean mindControl) {
+        this.mindControl = mindControl;
+    }
+
+    public boolean isMindlessTerror() {
+        return mindlessTerror;
+    }
+
+    public void setMindlessTerror(boolean mindlessTerror) {
+        this.mindlessTerror = mindlessTerror;
     }
 
     public boolean isGasTank() {
@@ -136,12 +176,12 @@ public class carSprite extends Sprite {
         this.gasTank = gasTank;
     }
 
-    public boolean isTireCondition() {
-        return tireCondition;
+    public boolean isFlatTire() {
+        return flatTire;
     }
 
-    public void setTireCondition(boolean tireCondition) {
-        this.tireCondition = tireCondition;
+    public void setFlatTire(boolean flatTire) {
+        this.flatTire = flatTire;
     }
 
     public boolean isIntangeable() {
@@ -199,6 +239,58 @@ public class carSprite extends Sprite {
         }
     }
 
+    public void timer() {
+        if (flatTire) {
+            timerTireCondition++;
+            if (timerTireCondition / FPS >= 10) {
+                flatTire = false;
+                timerTireCondition = 0;
+            }
+        }
+        if (gasTank) {
+            timerGasTank++;
+            if (timerGasTank / FPS >= 20) {
+                gasTank = false;
+                timerGasTank = 0;
+            }
+        }
+        if (thiefMode) {
+            timerThiefMode++;
+            if (timerThiefMode / FPS >= 10) {
+                thiefMode = false;
+                timerThiefMode = 0;
+            }
+        }
+        if (invincibile) {
+            timerInvincibile++;
+            if (timerInvincibile / FPS >= 10) {
+                invincibile = false;
+                timerInvincibile = 0;
+            }
+        }
+        if (intangeable) {
+            timerIntangeable++;
+            if (timerIntangeable / FPS >= 10) {
+                timerIntangeable = 0;
+                intangeable = false;
+            }
+        }
+        if (mindControl) {
+            timerMindControl++;
+            if (timerMindControl / FPS >= 20) {
+                timerMindControl = 0;
+                mindControl = false;
+            }
+        }
+        if (mindlessTerror) {
+            timerMindlessTerror++;
+            if (timerMindlessTerror / FPS >= 20) {
+                timerMindlessTerror = 0;
+                mindlessTerror = false;
+            }
+        }
+    }
+
     /**
      * This is good ^^
      *
@@ -207,6 +299,7 @@ public class carSprite extends Sprite {
     //@Override
     public void update(PathXMiniGame game) {
         //System.out.println("X: " + x + " TargetX: " + targetX + " Y: " + y + " TargetY: " + targetY);
+        timer();
 
         int playerX = (int) game.getGUIEnemies().get(PLAYER_TYPE).getX();
         int playerY = (int) game.getGUIEnemies().get(PLAYER_TYPE).getY();
@@ -218,10 +311,13 @@ public class carSprite extends Sprite {
         } else {
             // MOVE THE SPRITE USING ITS VELOCITY
             //System.out.println("vX: " + vX + " vY: " + vY);
-            x += vX;
-            y += vY;
+            if (!this.isFlatTire() && !this.isGasTank()) {
+                x += vX;
+                y += vY;
+            }
         }
-        if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) game.getData().getDestination().getX(), (int) game.getData().getDestination().getY()) < 20) {
+
+        if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) game.getData().getDestination().getX(), (int) game.getData().getDestination().getY()) < 40) {
             Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
             if (!game.isSoundMuted()) {
                 game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_WIN.toString(), false);
@@ -234,6 +330,9 @@ public class carSprite extends Sprite {
                 int currentLevel = Integer.parseInt(game.getData().getCurrentLevel());
                 game.getData().getLevelsRobbed()[currentLevel - 1] = true;
                 game.getData().getLevelsLocked()[currentLevel] = false;
+                if(currentLevel <= 17){
+                    game.getData().getUnlockedSpecials()[currentLevel - 1] = true;
+                }
                 game.switchToGameScreen();
                 switcher(game);
             } else {
@@ -241,20 +340,29 @@ public class carSprite extends Sprite {
                 int currentLevel = Integer.parseInt(game.getData().getCurrentLevel());
                 game.getData().getLevelsRobbed()[currentLevel - 1] = true;
                 game.getData().getLevelsLocked()[currentLevel] = false;
+                if(currentLevel <= 17){
+                    game.getData().getUnlockedSpecials()[currentLevel - 1] = true;
+                }
                 game.switchToGameScreen();
             }
         }
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
             if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE) && !game.getGUIEnemies().get(PLAYER_TYPE).isIntangeable()) {
-                if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
-                        || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30) {
+                if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
+                        || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30) && s.isEnabled()) {
                     Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
                     if (!game.isSoundMuted() && s.isEnabled()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
 
-                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
+                    if (game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
+                        s.setState(PathXTileState.INVISIBLE_STATE.toString());
+                        s.setEnabled(false);
+                    } else if (game.getGUIEnemies().get(PLAYER_TYPE).isThiefMode()) {
+                        double money = game.getData().getTotalMoney() + (new Random().nextInt(300) + 1);
+                        game.getData().setTotalMoney((int) money);
+                    } else {
                         if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
                                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                                 null, options, options[0]) == 0) {
@@ -266,9 +374,6 @@ public class carSprite extends Sprite {
                             game.getData().setTotalMoney((int) money);
                             game.switchToGameScreen();
                         }
-                    } else {
-                        s.setState(PathXTileState.INVISIBLE_STATE.toString());
-                        s.setEnabled(false);
                     }
 
                 }
@@ -278,17 +383,20 @@ public class carSprite extends Sprite {
             if (s.getSpriteType().getSpriteTypeID().equals(ZOMBIE_TYPE) && !game.getGUIEnemies().get(PLAYER_TYPE).isIntangeable()) {
                 if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
                         || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30)
-                        && !game.getData().isHitOnce()) {
-                    if (!game.isSoundMuted() && s.isEnabled()) {
+                        && !game.getData().isHitOnce()  && s.isEnabled()) {
+                    if (!game.isSoundMuted()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
 
-                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
-                        game.getData().setSpeed((int) (game.getData().getSpeed() - game.getData().getSpeed() * .1));
-                        game.getData().setHitOnce(true);
-                    } else {
+                    if (game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
                         s.setState(PathXTileState.INVISIBLE_STATE.toString());
                         s.setEnabled(false);
+                    } else if (game.getGUIEnemies().get(PLAYER_TYPE).isThiefMode()) {
+                        double money = game.getData().getTotalMoney() + (new Random().nextInt(300) + 1);
+                        game.getData().setTotalMoney((int) money);
+                    } else {
+                        game.getData().setSpeed((int) (game.getData().getSpeed() - game.getData().getSpeed() * .1));
+                        game.getData().setHitOnce(true);
                     }
 
                 }
@@ -303,16 +411,19 @@ public class carSprite extends Sprite {
 
                 if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 40
                         || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 40)
-                        && !game.getData().isHitOnce()) {
-                    if (!game.isSoundMuted() && s.isEnabled()) {
+                        && !game.getData().isHitOnce() && s.isEnabled()) {
+                    if (!game.isSoundMuted()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
-                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
-                        game.getData().getLevel().setMoney((int) (game.getData().getLevel().getMoney() - game.getData().getLevel().getMoney() * .1));
-                        game.getData().setHitOnce(true);
-                    } else {
+                    if (game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
                         s.setState(PathXTileState.INVISIBLE_STATE.toString());
                         s.setEnabled(false);
+                    } else if (game.getGUIEnemies().get(PLAYER_TYPE).isThiefMode()) {
+                        double money = game.getData().getTotalMoney() + (new Random().nextInt(300) + 1);
+                        game.getData().setTotalMoney((int) money);
+                    } else {
+                        game.getData().getLevel().setMoney((int) (game.getData().getLevel().getMoney() - game.getData().getLevel().getMoney() * .1));
+                        game.getData().setHitOnce(true);
                     }
 
                 }
