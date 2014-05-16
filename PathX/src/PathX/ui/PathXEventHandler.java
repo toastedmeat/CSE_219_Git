@@ -11,6 +11,8 @@ import PathX.file.PathXFileManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import mini_game.Sprite;
 import properties_manager.PropertiesManager;
@@ -408,6 +410,14 @@ public class PathXEventHandler {
 
             }
         }
+        if (keyCode == KeyEvent.VK_F4) {
+            //Dialog Box
+            JOptionPane jop = new JOptionPane();
+            jop.setMessage(HELP_INFO);
+            jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = jop.createDialog(game.getPXG(), "HELP");
+            dialog.setVisible(true);
+        }
         if (keyCode == KeyEvent.VK_F3) {
             if (game.getDataModel().isPaused()) {
                 game.getDataModel().unpause();
@@ -555,7 +565,7 @@ public class PathXEventHandler {
             if (game.getData().getSelectedIntersection() != null) {
                 if (game.getData().getTotalMoney() > 25) {
                     game.getData().getSelectedIntersection().setOpen(true);
-                    
+
                     Iterator<Road> it = game.getData().roadsIterator();
                     while (it.hasNext()) {
                         Road road = it.next();
@@ -565,7 +575,7 @@ public class PathXEventHandler {
                             road.setIsClosed(false);
                         }
                     }
-                    
+
                     game.getData().setTotalMoney(game.getData().getTotalMoney() - 25);
                 } else {
                     if (!game.isSoundMuted()) {
@@ -607,10 +617,32 @@ public class PathXEventHandler {
         if (keyCode == KeyEvent.VK_Y) { // FLYING
         }
         if (keyCode == KeyEvent.VK_V) { // INVINCIBILITY
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getTotalMoney() > 40) {
+                game.getGUIEnemies().get(PLAYER_TYPE).setInvincibile(true);
+                game.getData().setTotalMoney(game.getData().getTotalMoney() - 40);
+            } else {
+                if (!game.isSoundMuted()) {
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                }
+            }
         }
         if (keyCode == KeyEvent.VK_L) { // MINDLESS TERROR
         }
         if (keyCode == KeyEvent.VK_B) { // INTANGABILITY
+            if (!game.isSoundMuted()) {
+                game.getAudio().play(pathXPropertyType.AUDIO_CUE_GOOD_MOVE.toString(), false);
+            }
+            if (game.getData().getTotalMoney() > 30) {
+                game.getGUIEnemies().get(PLAYER_TYPE).setIntangeable(true);
+                game.getData().setTotalMoney(game.getData().getTotalMoney() - 30);
+            } else {
+                if (!game.isSoundMuted()) {
+                    game.getAudio().play(pathXPropertyType.AUDIO_CUE_BAD_MOVE.toString(), false);
+                }
+            }
         }
     }
 

@@ -3,36 +3,32 @@ package PathX;
 import java.awt.Color;
 import java.awt.Font;
 
-
 /**
- * This class stores all the constants used by The Sorting Hat application. We'll
- * do this here rather than load them from files because many of these are
+ * This class stores all the constants used by The Sorting Hat application.
+ * We'll do this here rather than load them from files because many of these are
  * derived from each other.
- * 
+ *
  * @author Richard McKenna & Eric Loo
  */
-public class PathXConstants
-{
+public class PathXConstants {
     // WE NEED THESE CONSTANTS JUST TO GET STARTED
     // LOADING SETTINGS FROM OUR XML FILES
+
     public static String PROPERTY_TYPES_LIST = "property_types.txt";
     public static String PROPERTIES_FILE_NAME = "properties.xml";
-    public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";    
+    public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";
     public static String PATH_DATA = "./data/";
     public static String PATH_DATA_LEVELS = "data/";
-    
-     // FOR LOADING STUFF FROM OUR LEVEL XML FILES    
+
+    // FOR LOADING STUFF FROM OUR LEVEL XML FILES    
     // THIS IS THE NAME OF THE SCHEMA
-    public static final String  LEVEL_SCHEMA = "PathXLevelSchema.xsd";
-    
+    public static final String LEVEL_SCHEMA = "PathXLevelSchema.xsd";
+
     // THESE ARE THE TYPES OF CONTROLS, WE USE THESE CONSTANTS BECAUSE WE'LL
     // STORE THEM BY TYPE, SO THESE WILL PROVIDE A MEANS OF IDENTIFYING THEM
-    
     // EACH SCREEN HAS ITS OWN BACKGROUND TYPE
     public static final String BACKGROUND_TYPE = "BACKGROUND_TYPE";
-    
-    
-    
+
     // THIS REPRESENTS THE BUTTONS ON THE MENU SCREEN FOR LEVEL SELECTION
     public static final String LEVEL_SELECT_BUTTON_TYPE = "LEVEL_SELECT_BUTTON_TYPE";
     public static final String GAME_LEVEL_SELECT_BUTTON_TYPE = "GAME_LEVEL_SELECT_BUTTON_TYPE";
@@ -42,7 +38,7 @@ public class PathXConstants
     public static final String POLICE_TYPE = "POLICE_TYPE";
     public static final String BANDIT_TYPE = "BANDIT_TYPE";
     public static final String ZOMBIE_TYPE = "ZOMBIE_TYPE";
-    
+
     public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     public static final String BACK_TO_LEVEL_SELECT_TYPE = "BACK_TO_LEVEL_SELECT_TYPE";
@@ -52,15 +48,14 @@ public class PathXConstants
     public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
     public static final String RIGHT_BUTTON_TYPE = "RIGHT_BUTTON_TYPE";
     public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
-    public static final String TIME_TYPE = "TIME_TYPE"; 
+    public static final String TIME_TYPE = "TIME_TYPE";
     public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
     public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
     public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
     public static final String SOUND_CHECK_BOX_TYPE = "SOUND_CHECK_BOX_TYPE";
     public static final String MUSIC_CHECK_BOX_TYPE = "MUSIC_CHECK_BOX_TYPE";
-    
-    
-    public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE"; 
+
+    public static final String BACKGROUND_GAME_TYPE = "BACKGROUND_GAME_TYPE";
     public static final String LEVEL_GAME_TYPE = "LEVEL_GAME_TYPE";
     public static final String LEVEL1_GAME_TYPE = "LEVEL1_GAME_TYPE";
     public static final String LEVEL2_GAME_TYPE = "LEVEL2_GAME_TYPE";
@@ -82,31 +77,27 @@ public class PathXConstants
     public static final String LEVEL18_GAME_TYPE = "LEVEL18_GAME_TYPE";
     public static final String LEVEL19_GAME_TYPE = "LEVEL19_GAME_TYPE";
     public static final String LEVEL20_GAME_TYPE = "LEVEL20_GAME_TYPE";
-    
 
     // DEFAULT IMAGE FILES
-    public static final String DEFAULT_BG_IMG       = "DeathValleyBackground.png";
-    public static final String DEFAULT_START_IMG    = "DefaultStartLocation.png";
-    public static final String DEFAULT_DEST_IMG     = "DefaultDestination.png";
-    
-    
-    
+    public static final String DEFAULT_BG_IMG = "DeathValleyBackground.png";
+    public static final String DEFAULT_START_IMG = "DefaultStartLocation.png";
+    public static final String DEFAULT_DEST_IMG = "DefaultDestination.png";
+
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
-    
+
     public static final String UNCHECKED_STATE = "UNCHECKED_STATE";
     public static final String CHECKED_STATE = "CHECKED_STATE";
-    
+
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
-    
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
-    public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE"; 
+    public static final String GAME_SCREEN_STATE = "GAME_SCREEN_STATE";
     public static final String GAMES_SCREEN_STATE = "GAMES_SCREEN_STATE";
     public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
-    
+
     public static final String LEVEL1_SCREEN_STATE = "LEVEL1_SCREEN_STATE";
     public static final String LEVEL2_SCREEN_STATE = "LEVEL2_SCREEN_STATE";
     public static final String LEVEL3_SCREEN_STATE = "LEVEL3_SCREEN_STATE";
@@ -127,7 +118,26 @@ public class PathXConstants
     public static final String LEVEL18_SCREEN_STATE = "LEVEL18_SCREEN_STATE";
     public static final String LEVEL19_SCREEN_STATE = "LEVEL19_SCREEN_STATE";
     public static final String LEVEL20_SCREEN_STATE = "LEVEL20_SCREEN_STATE";
-    
+
+    public static final String HELP_INFO
+            = "F\t	Freeze/Unfreeze Time 3\n"
+            + "G\t	Make Lights Green 1\n"
+            + "R\t	Make Lights Red 2\n"
+            + "X\t	Increase Speed Limit 5\n"
+            + "Z\t	Decrease Speed Limit 4\n"
+            + "P\t	Increase Player Speed 6\n"
+            + "T\t	Flat Tire 7 \n"
+            + "E\t	Empty Gas Tank 8\n"
+            + "H\t	Close Road 9 \n"
+            + "O\t	Open Intersection 11\n"
+            + "C\t	Close Intersection 10 \n"
+            + "Q\t	Steal 12\n"
+            + "M\t	Mind Control 13\n"
+            + "Y\t	Flying  16 \n"
+            + "V\t	Invincibility 17\n"
+            + "L\t	Mindless Terror 15\n"
+            + "B\t	Intangibility 14";
+
     //Level Information
     public static final String LEVEL1_INFO = "Level 1\nStony Brook University, NY\nRob the bank in SBU\nand make a getaway\nto earn $200";
     public static final String LEVEL2_INFO = "Level 2\nNew York, NY\nRob the bank in Manhatten\nand make a getaway\nto earn $200";
@@ -163,7 +173,7 @@ public class PathXConstants
     public static final String POLICE_NODE = "police";
     public static final String BANDITS_NODE = "bandits";
     public static final String ZOMBIES_NODE = "zombies";
-    
+
     // AND THE ATTRIBUTES FOR THOSE NODES
     public static final String NAME_ATT = "name";
     public static final String IMAGE_ATT = "image";
@@ -177,14 +187,12 @@ public class PathXConstants
     public static final String ONE_WAY_ATT = "one_way";
     public static final String AMOUNT_ATT = "amount";
     public static final String NUM_ATT = "num";
-    
-      // FOR NICELY FORMATTED XML OUTPUT
+
+    // FOR NICELY FORMATTED XML OUTPUT
     public static final String XML_INDENT_PROPERTY = "{http://xml.apache.org/xslt}indent-amount";
     public static final String XML_INDENT_VALUE = "5";
     public static final String YES_VALUE = "Yes";
-    
-    
-    
+
     // ANIMATION SPEED
     public static final int FPS = 30;
 
@@ -199,25 +207,24 @@ public class PathXConstants
     public static final int LEVEL_BUTTON_MARGIN = 5;
     public static final int LEVEL_BUTTON_Y = 570;
     public static final int VIEWPORT_INC = 5;
-    
+
     public static final int MUSIC_X = 450;
     public static final int MUSIC_Y = 370;
     public static final int SOUND_X = 450;
     public static final int SOUND_Y = 290;
-        
-     // RENDERING SETTINGS
+
+    // RENDERING SETTINGS
     public static final int INTERSECTION_RADIUS = 20;
     public static final int INT_STROKE = 3;
     public static final int ONE_WAY_TRIANGLE_HEIGHT = 40;
     public static final int ONE_WAY_TRIANGLE_WIDTH = 60;
-    
+
     // INITIAL START/DEST LOCATIONS
     public static final int DEFAULT_START_X = 32;
     public static final int DEFAULT_START_Y = 100;
     public static final int DEFAULT_DEST_X = 650;
     public static final int DEFAULT_DEST_Y = 100;
-    
-    
+
     // FOR TILE RENDERING
     public static final int NUM_TILES = 30;
     public static final int TILE_WIDTH = 135;
@@ -226,10 +233,10 @@ public class PathXConstants
     public static final int TILE_IMAGE_OFFSET_Y = 30;
     public static final String TILE_SPRITE_TYPE_PREFIX = "TILE_";
     public static final int COLOR_INC = 10;
-    
+
     // FOR MOVING TILES AROUND
     public static final int MAX_TILE_VELOCITY = 20;
-    
+
     // UI CONTROLS POSITIONS IN THE GAME SCREEN
     public static final int NORTH_PANEL_HEIGHT = 130;
     public static final int CONTROLS_MARGIN = 0;
@@ -241,7 +248,7 @@ public class PathXConstants
     public static final int SELECT_LEVEL_Y = 155;
     public static final int PAUSE_X = 20;
     public static final int PAUSE_Y = 155;
-    
+
     public static final int UP_BUTTON_X = 960;
     public static final int UP_BUTTON_Y = 15;
     public static final int DOWN_BUTTON_X = UP_BUTTON_X;
@@ -250,7 +257,7 @@ public class PathXConstants
     public static final int LEFT_BUTTON_Y = UP_BUTTON_Y + 25;
     public static final int RIGHT_BUTTON_X = UP_BUTTON_X + 50;
     public static final int RIGHT_BUTTON_Y = UP_BUTTON_Y + 25;
-    
+
     public static final int UP_BUTTON_GAME_X = 132;
     public static final int UP_BUTTON_GAME_Y = 525;
     public static final int DOWN_BUTTON_GAME_X = UP_BUTTON_GAME_X;
@@ -259,7 +266,7 @@ public class PathXConstants
     public static final int LEFT_BUTTON_GAME_Y = UP_BUTTON_GAME_Y + 25;
     public static final int RIGHT_BUTTON_GAME_X = UP_BUTTON_GAME_X + 50;
     public static final int RIGHT_BUTTON_GAME_Y = UP_BUTTON_GAME_Y + 25;
-    
+
     public static final int TILE_COUNT_X = NEW_BUTTON_X + 260 + CONTROLS_MARGIN;
     public static final int TILE_COUNT_Y = 0;
     public static final int TILE_COUNT_OFFSET = 145;
@@ -277,7 +284,7 @@ public class PathXConstants
     public static final int TEMP_TILE_OFFSET_X = 30;
     public static final int TEMP_TILE_OFFSET_Y = 12;
     public static final int TEMP_TILE_OFFSET2 = 105;
-    
+
     // STATS DIALOG COORDINATES
     public static final int STATS_LEVEL_INC_Y = 30;
     public static final int STATS_LEVEL_X = 460;
@@ -287,11 +294,11 @@ public class PathXConstants
     public static final int STATS_WINS_Y = STATS_GAMES_Y + STATS_LEVEL_INC_Y;
     public static final int STATS_PERFECT_WINS_Y = STATS_WINS_Y + STATS_LEVEL_INC_Y;
     public static final int STATS_FASTEST_PERFECT_WIN_Y = STATS_PERFECT_WINS_Y + STATS_LEVEL_INC_Y;
-    
+
     // THESE ARE USED FOR FORMATTING THE TIME OF GAME
     public static final long MILLIS_IN_A_SECOND = 1000;
     public static final long MILLIS_IN_A_MINUTE = 1000 * 60;
-    public static final long MILLIS_IN_AN_HOUR  = 1000 * 60 * 60;
+    public static final long MILLIS_IN_AN_HOUR = 1000 * 60 * 60;
 
     // USED FOR DOING OUR VICTORY ANIMATION
     public static final int WIN_PATH_NODES = 5;
@@ -303,15 +310,15 @@ public class PathXConstants
     // LOADING ART.
     public static final Color COLOR_KEY = new Color(255, 174, 201);
     public static final Color COLOR_DEBUG_TEXT = Color.BLACK;
-    public static final Color COLOR_TEXT_DISPLAY = new Color (10, 160, 10);
+    public static final Color COLOR_TEXT_DISPLAY = new Color(10, 160, 10);
     public static final Color COLOR_STATS = new Color(0, 60, 0);
     public static final Color COLOR_ALGORITHM_HEADER = Color.WHITE;
-    
+
     // DEFAULT COLORS
-    public static final Color   INT_OUTLINE_COLOR   = Color.BLACK;
-    public static final Color   HIGHLIGHTED_COLOR = Color.YELLOW;
-    public static final Color   OPEN_INT_COLOR      = Color.GREEN;
-    public static final Color   CLOSED_INT_COLOR    = Color.RED;
+    public static final Color INT_OUTLINE_COLOR = Color.BLACK;
+    public static final Color HIGHLIGHTED_COLOR = Color.YELLOW;
+    public static final Color OPEN_INT_COLOR = Color.GREEN;
+    public static final Color CLOSED_INT_COLOR = Color.RED;
 
     // FONTS USED DURING FOR TEXTUAL GAME DISPLAYS
     public static final Font FONT_TEXT_DISPLAY = new Font(Font.SANS_SERIF, Font.BOLD, 48);

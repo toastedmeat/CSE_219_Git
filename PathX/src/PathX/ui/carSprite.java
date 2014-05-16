@@ -31,9 +31,11 @@ public class carSprite extends Sprite {
 
     private boolean movingToTarget;
     private boolean reachedDestination;
-    
+
     private boolean gasTank;
     private boolean tireCondition;
+
+    private boolean invincibile;
 
     private float targetX;
     private float targetY;
@@ -41,6 +43,8 @@ public class carSprite extends Sprite {
     private Intersection currentIntersection;
     private Intersection nextIntersection;
     private Road currentRoad;
+
+    private boolean intangeable;
 
     carSprite(SpriteType initSpriteType,
             float initX, float initY,
@@ -116,6 +120,38 @@ public class carSprite extends Sprite {
         currentRoad = r;
     }
 
+    public boolean isInvincibile() {
+        return invincibile;
+    }
+
+    public void setInvincibile(boolean invincibile) {
+        this.invincibile = invincibile;
+    }
+
+    public boolean isGasTank() {
+        return gasTank;
+    }
+
+    public void setGasTank(boolean gasTank) {
+        this.gasTank = gasTank;
+    }
+
+    public boolean isTireCondition() {
+        return tireCondition;
+    }
+
+    public void setTireCondition(boolean tireCondition) {
+        this.tireCondition = tireCondition;
+    }
+
+    public boolean isIntangeable() {
+        return intangeable;
+    }
+
+    public void setIntangeable(boolean intangeable) {
+        this.intangeable = intangeable;
+    }
+
     public float calculateDistanceToTarget() {
         // GET THE X-AXIS DISTANCE TO GO
         float diffX = targetX - x;
@@ -187,10 +223,10 @@ public class carSprite extends Sprite {
         }
         if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) game.getData().getDestination().getX(), (int) game.getData().getDestination().getY()) < 20) {
             Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
-            if(!game.isSoundMuted()){
+            if (!game.isSoundMuted()) {
                 game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_WIN.toString(), false);
             }
-            
+
             if (JOptionPane.showOptionDialog(null, "Good News! \nYou've robbed the Bank. That means\nYou have earned $" + game.getData().getLevel().getMoney(), "You got Away!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                     null, options, options[0]) == 0) {
@@ -210,39 +246,51 @@ public class carSprite extends Sprite {
         }
         Collection<carSprite> buttonSprites = game.getGUIEnemies().values();
         for (carSprite s : buttonSprites) {
-            if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE)) {
+            if (s.getSpriteType().getSpriteTypeID().equals(POLICE_TYPE) && !game.getGUIEnemies().get(PLAYER_TYPE).isIntangeable()) {
                 if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
                         || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30) {
                     Object[] options = {"TRY AGAIN", "LEAVE TOWN"};
-                    if (!game.isSoundMuted()) {
+                    if (!game.isSoundMuted() && s.isEnabled()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
 
-                    if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                            null, options, options[0]) == 0) {
-                        double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
-                        game.getData().setTotalMoney((int) money);
-                        switcher(game);
+                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
+                        if (JOptionPane.showOptionDialog(null, "Bad News! \nYou've been caught. That means\nYou have some legal bills to pay.", "You have been caught!",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                                null, options, options[0]) == 0) {
+                            double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
+                            game.getData().setTotalMoney((int) money);
+                            switcher(game);
+                        } else {
+                            double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
+                            game.getData().setTotalMoney((int) money);
+                            game.switchToGameScreen();
+                        }
                     } else {
-                        double money = game.getData().getTotalMoney() - (game.getData().getTotalMoney() * .1);
-                        game.getData().setTotalMoney((int) money);
-                        game.switchToGameScreen();
+                        s.setState(PathXTileState.INVISIBLE_STATE.toString());
+                        s.setEnabled(false);
                     }
+
                 }
             }
         }
         for (carSprite s : buttonSprites) {
-            if (s.getSpriteType().getSpriteTypeID().equals(ZOMBIE_TYPE)) {
+            if (s.getSpriteType().getSpriteTypeID().equals(ZOMBIE_TYPE) && !game.getGUIEnemies().get(PLAYER_TYPE).isIntangeable()) {
                 if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 30
                         || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 30)
                         && !game.getData().isHitOnce()) {
-                    if (!game.isSoundMuted()) {
+                    if (!game.isSoundMuted() && s.isEnabled()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
 
-                    game.getData().setSpeed((int) (game.getData().getSpeed() - game.getData().getSpeed() * .1));
-                    game.getData().setHitOnce(true);
+                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
+                        game.getData().setSpeed((int) (game.getData().getSpeed() - game.getData().getSpeed() * .1));
+                        game.getData().setHitOnce(true);
+                    } else {
+                        s.setState(PathXTileState.INVISIBLE_STATE.toString());
+                        s.setEnabled(false);
+                    }
+
                 }
                 if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 91
                         && game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) > 91) {
@@ -251,17 +299,22 @@ public class carSprite extends Sprite {
             }
         }
         for (carSprite s : buttonSprites) {
-            if (s.getSpriteType().getSpriteTypeID().equals(BANDIT_TYPE)) {
+            if (s.getSpriteType().getSpriteTypeID().equals(BANDIT_TYPE) && !game.getGUIEnemies().get(PLAYER_TYPE).isIntangeable()) {
 
                 if ((game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) < 40
                         || game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) < 40)
                         && !game.getData().isHitOnce()) {
-                    if (!game.isSoundMuted()) {
+                    if (!game.isSoundMuted() && s.isEnabled()) {
                         game.getAudio().play(PathX.pathXPropertyType.AUDIO_CUE_CRASH.toString(), false);
                     }
+                    if (!game.getGUIEnemies().get(PLAYER_TYPE).isInvincibile()) {
+                        game.getData().getLevel().setMoney((int) (game.getData().getLevel().getMoney() - game.getData().getLevel().getMoney() * .1));
+                        game.getData().setHitOnce(true);
+                    } else {
+                        s.setState(PathXTileState.INVISIBLE_STATE.toString());
+                        s.setEnabled(false);
+                    }
 
-                    game.getData().getLevel().setMoney((int) (game.getData().getLevel().getMoney() - game.getData().getLevel().getMoney() * .1));
-                    game.getData().setHitOnce(true);
                 }
                 if (game.getData().calculateDistanceBetweenPoints(playerX, playerY, (int) s.getX(), (int) s.getY()) > 91
                         && game.getData().calculateDistanceBetweenPoints((int) s.getX(), (int) s.getY(), playerX, playerY) > 91) {
