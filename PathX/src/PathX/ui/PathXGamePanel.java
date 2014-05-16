@@ -302,14 +302,17 @@ public class PathXGamePanel extends JPanel {
         while (it.hasNext()) {
             Road road = it.next();
             if (s.getCurrentIntersection().equals(road.getNode1()) && !road.getNode2().equals(model.getStartingLocation())
-                    && !road.getNode2().equals(model.getDestination()) && !road.isOneWay() && !road.getNode2().isVisited() && !road.isIsClosed() && road.getNode2().isOpen()) {
-                if (!s.isMovingToTarget() && !s.isReachedDestination()) {
+                    && !road.getNode2().equals(model.getDestination()) && !road.isOneWay() && !road.getNode2().isVisited() && !road.isIsClosed() && road.getNode2().isOpen()) 
+            {
+                if (!s.isMovingToTarget() && !s.isReachedDestination()) 
+                {
 
                     moveToDestination1(s, road);
 
-                } else if (!road.getNode2().equals(road.getPreviousNode())) {
+                } 
+                else if (!road.getNode2().equals(road.getPreviousNode())) {
                     moveToDestination1(s, road);
-                    road.getPreviousNode().setVisited(false);
+                    //road.getPreviousNode().setVisited(false);
                 }
             } else if (s.getCurrentIntersection().equals(road.getNode2()) && !road.getNode1().equals(model.getStartingLocation())
                     && !road.getNode1().equals(model.getDestination()) && !road.isOneWay() && !road.getNode1().isVisited() && !road.isIsClosed()&& road.getNode1().isOpen()) {
@@ -320,7 +323,7 @@ public class PathXGamePanel extends JPanel {
 
                     } else if (!road.getNode2().equals(road.getPreviousNode())) {
                         moveToDestination2(s, road);
-                        road.getPreviousNode().setVisited(false);
+                        //road.getPreviousNode().setVisited(false);
                     }
                 }
             }

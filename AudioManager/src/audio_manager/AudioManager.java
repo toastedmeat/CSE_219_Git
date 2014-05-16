@@ -23,41 +23,36 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author McKillaGorilla
  */
-public class AudioManager
-{
-    public enum AudioManagerFileType
-    {
+public class AudioManager {
+
+    public enum AudioManagerFileType {
+
         WAV,
         MP3,
         MIDI
     }
-    
-    private HashMap<String, Sequencer>      midiAudio;
-    private HashMap<String, Clip>           wavAudio;
-   // private HashMap<String, MediaPlayer>    mp3Audio;
 
-    public AudioManager() 
-    {
+    private HashMap<String, Sequencer> midiAudio;
+    private HashMap<String, Clip> wavAudio;
+    // private HashMap<String, MediaPlayer>    mp3Audio;
+
+    public AudioManager() {
         midiAudio = new HashMap();
         wavAudio = new HashMap();
-   //     mp3Audio = new HashMap();
+        //     mp3Audio = new HashMap();
     }
-    
-    public void loadAudio(String audioName, String audioFileName) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InvalidMidiDataException, MidiUnavailableException
-    {
-        if (audioFileName.endsWith(".wav"))
-        {
+
+    public void loadAudio(String audioName, String audioFileName) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InvalidMidiDataException, MidiUnavailableException {
+        if (audioFileName.endsWith(".wav")) {
             File soundFile = new File(audioFileName);
             AudioInputStream sound = AudioSystem.getAudioInputStream(soundFile);
-            
+
             // load the sound into memory (a Clip)
             DataLine.Info info = new DataLine.Info(Clip.class, sound.getFormat());
             Clip clip = (Clip) AudioSystem.getLine(info);
             clip.open(sound);
             wavAudio.put(audioName, clip);
-        }
-        else if (audioFileName.endsWith(".mid"))
-        {
+        } else if (audioFileName.endsWith(".mid")) {
             Sequence sequence = MidiSystem.getSequence(new File(audioFileName));
             Sequencer sequencer = MidiSystem.getSequencer();
             sequencer.open();
@@ -65,46 +60,40 @@ public class AudioManager
             midiAudio.put(audioName, sequencer);
         }
     }
-    
-    public void play(String audioName, boolean loop)
-    {
+
+    public void play(String audioName, boolean loop) {
         Sequencer sequencer = midiAudio.get(audioName);
-        if (sequencer != null)
-        {
+        if (sequencer != null) {
             sequencer.setTickPosition(0);
             sequencer.start();
+        } else {
+            if (!loop) {
+                Clip clip = wavAudio.get(audioName);
+                clip.setFramePosition(0);
+                clip.start();
+            } else {
+                Clip clip = wavAudio.get(audioName);
+                clip.setFramePosition(0);
+                clip.loop(999);
+            }
         }
-        else
-        {
-            Clip clip = wavAudio.get(audioName);
-            clip.setFramePosition(0);
-            clip.start();
-        }   
     }
-    
-    public boolean isPlaying(String audioName)
-    {
+
+    public boolean isPlaying(String audioName) {
         Sequencer sequencer = midiAudio.get(audioName);
-        if (sequencer != null)
-        {
+        if (sequencer != null) {
             return sequencer.isRunning();
-        }
-        else
-        {
-            Clip clip = wavAudio.get(audioName);  
+        } else {
+            Clip clip = wavAudio.get(audioName);
             return clip.isRunning();
         }
     }
-    
-    public void stop(String audioName)
-    {
+
+    public void stop(String audioName) {
         Sequencer sequencer = midiAudio.get(audioName);
-        if (sequencer != null)
-        {
+        if (sequencer != null) {
             sequencer.stop();
-        }
-        else
-        {
+        } else {
             Clip clip = wavAudio.get(audioName);
             clip.stop();
         }

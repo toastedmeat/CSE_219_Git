@@ -22,7 +22,7 @@ public class Intersection
     private boolean visited;
 
     public boolean isVisited() {
-        return visited;
+        return false;
     }
 
     public void setVisited(boolean visited) {

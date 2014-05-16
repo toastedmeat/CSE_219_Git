@@ -427,12 +427,22 @@ public class PathXEventHandler {
 
         }
         if (keyCode == KeyEvent.VK_F3) {
-            if (game.getDataModel().isPaused()) {
-                game.getDataModel().unpause();
-            } // TOGGLE IT ON
-            else {
-                game.getDataModel().pause();
+            game.getAudio().play(pathXPropertyType.AUDIO_CUE_SELECT_TILE.toString(), false);
+        if (game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString())
+                || game.getAudio().isPlaying(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString())) {
+            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString());
+            game.getAudio().stop(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString());
+            game.setMuted(true);
+        } else {
+            game.setMuted(false);
+            if (game.getInsideCanvas().getRenderedBackground().equals(BACKGROUND_GAME_TYPE)) {
+                game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+            } else if (!game.isIsOnLevelSelect() && game.getPXG().isEnabled()) {
+                game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_GAME_SCREEN.toString(), true);
+            } else {
+                game.getAudio().play(PathX.pathXPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
             }
+        }
         }
         if (keyCode == KeyEvent.VK_F2) {
             if (!game.isSoundMuted()) {

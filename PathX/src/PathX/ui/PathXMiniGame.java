@@ -966,6 +966,8 @@ public class PathXMiniGame extends MiniGame {
         sT.addState(PathXTileState.MOUSE_OVER_STATE.toString(), img);
         carSprite cs = new carSprite(sT, 0, 0, 0, 0, PathXTileState.INVISIBLE_STATE.toString());
         guiEnemies.put(PLAYER_TYPE, cs);
+        
+        guiEnemies.get(PLAYER_TYPE).setCurrentIntersection(dataCopy.getStartingLocation());
     }
 
     @Override
